@@ -1,0 +1,3 @@
+
+def RequireAuth(funct):
+  pass
