@@ -6,16 +6,16 @@ def sha256(string):
   return sha256(string).hexdigest()
 
 
-class UserDoesntExist(Exception):
+class UserDoesntExistException(Exception):
   pass
 
-class IncorrectPassword(Exception):
+class UserIncorrectPasswordException(Exception):
   pass
 
-class EmailInUse(Exception):
+class UserEmailInUseException(Exception):
   pass
 
-class UsernameInUse(Exception):
+class UsernameInUseException(Exception):
   pass
 
 
@@ -37,7 +37,7 @@ class User(ndb.Model):
   def setPassword(self, password, oldpassword=None):
     if oldpassword != None:
       if not self.verifyPassword(oldpassword):
-        raise InvalidPasswordException()
+        raise UserInvalidPasswordException()
     
     self.password = sha256(password)
     self.put()
@@ -67,17 +67,17 @@ class User(ndb.Model):
     if user == None:
       user = cls.getByUsername(emailusername)
       if user == None:
-        raise UserDoesntExist()
+        raise UserDoesntExistException()
     
     if not user.verifyPassword(password):
-      raise IncorrectPassword()
+      raise UserIncorrectPasswordException()
     
-    return True
+    return user
   
   @classmethod
   def create(cls, email, password, username):
-    if cls.hasByEmail(email): raise EmailInUse()
-    if cls.hasByUsername(username): raise UsernameInUse()
+    if cls.hasByEmail(email): raise UserEmailInUseException()
+    if cls.hasByUsername(username): raise UsernameInUseException()
     
     user = cls()
     

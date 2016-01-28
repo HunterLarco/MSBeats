@@ -1,4 +1,5 @@
 import json
+from collections import namedtuple
 
 
 def JSONRequest(funct):
@@ -36,3 +37,30 @@ def JSONResponse(funct):
     self.response.headers['Content-Type'] = 'application/json'
     self.response.out.write(flattened)
   return helper
+
+
+ErrorTuple = namedtuple('ErrorTuple', 'code message')
+def ErrorHandler(error_map):
+  def decorator(funct):
+    def helper(*args, **kwargs):
+      try:
+        return funct(*args, **kwargs)
+      except Exception as error:
+        import logging
+        logging.error(error)
+        
+        errorClass = error.__class__
+        if errorClass in error_map:
+          return {
+            'success': False,
+            'code': error_map[errorClass].code,
+            'message': error_map[errorClass].message
+          }
+        else:
+          return {
+            'success': False,
+            'code': '-1',
+            'message': 'Unknown error'
+          }
+    return helper
+  return decorator
