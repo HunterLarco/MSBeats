@@ -6,6 +6,7 @@ import os
 from JsonHelpers import *
 from UserHelpers import *
 from models.User import *
+from models.Link import *
 
 
 ERROR_MAP = {
@@ -37,24 +38,26 @@ class LoginHandler(webapp2.RequestHandler):
 class LinksHandler(webapp2.RequestHandler):
   @JSONResponse
   def get(self):
-    pass
+    return {
+      'links': map(lambda x: x.toDict(), Link.queryTop())
+    }
   
   @JSONRequest
-  @RequireAuth
+  @RequireAuthByID(User, 'userid')
   @BodyParameters('title', 'artist', 'url')
-  @ErrorHandler(ERROR_MAP)
   @JSONResponse
-  def post(self):
-    pass
+  @ErrorHandler(ERROR_MAP)
+  def post(self, title=None, artist=None, url=None, user=None):
+    return Link.create(title, artist, url, user).toDict()
 
 
 class VoteHandler(webapp2.RequestHandler):
   @JSONRequest
+  @RequireAuthByID(User, 'userid')
   @BodyParameters('linkid')
-  @ErrorHandler(ERROR_MAP)
-  @RequireAuth
   @JSONResponse
-  def post(self):
+  @ErrorHandler(ERROR_MAP)
+  def post(self, linkid=None, user=None):
     pass
 
 
@@ -68,5 +71,6 @@ class MainHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
+  ('/api/links/?', LinksHandler),
   ('/.*', MainHandler)
 ], debug=True)

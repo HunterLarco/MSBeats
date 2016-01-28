@@ -16,14 +16,14 @@ def JSONRequest(funct):
 
 def BodyParameters(*params):
   def decorator(funct):
-    def helper(*args, **kwargs):
+    def helper(self, *args, **kwargs):
       json = kwargs['json']
       del kwargs['json']
       for param in params:
         if not param in json:
           return self.error(406)
         kwargs[param] = json[param]
-      return funct(*args, **kwargs)
+      return funct(self, *args, **kwargs)
     return helper
   return decorator
 

@@ -31,7 +31,8 @@ class User(ndb.Model):
       'email'    : self.email,
       'username' : self.username,
       'created'  : str(self.created),
-      'karma'    : self.karma
+      'karma'    : self.karma,
+      'userid'   : self.key.id()
     }
   
   def setPassword(self, password, oldpassword=None):
