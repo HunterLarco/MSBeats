@@ -6,3 +6,7 @@
 	@include link($color: $color-primary, $border-width: 0);
 	display: block;
 }
+
+.SongListItem-subTitle {
+	color: $color-text-meta;
+}

@@ -1,4 +1,4 @@
-@mixin link ($color: $color-bodytext, $border-width: 1px) {
+@mixin link ($color: $color-text-body, $border-width: 1px) {
 	border-bottom-width: $border-width;
 	border-bottom-style: solid;
 	border-bottom-color: rgba($color, 0.5);

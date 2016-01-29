@@ -8,12 +8,15 @@ const plumber = require('gulp-plumber');
 const csscomb = require('gulp-csscomb');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
-const devScripts = require('./config/development.json').scripts;
+const uglify = require('gulp-uglify');
+const devScripts = require('./config/development.json').scripts.map(function (script) {
+	return './src/' + script;
+});
 
 const settings = {
 	srcMainScssFile: 'src/scss/main.scss',
 	watchScssPattern: 'src/scss/**/*.scss',
-	watchJsPattern: ['src/js/*.js', 'src/js/**/*.js'],
+	watchJsPattern: 'src/js/**/*.js',
 	dist: 'public/dist/'
 };
 
@@ -31,20 +34,24 @@ function scss () {
 		.pipe(gulp.dest(settings.dist));
 }
 
+function getBase (path) {
+	// [Using event.path for source and destination](https://github.com/gulpjs/gulp/issues/212)
+	// Split the filename from the path.
+	var filename = path.split('/');
+	filename = filename[filename.length - 1];
+	// For some reason it does need a base to work
+	return path.replace(filename, '');
+}
+
 gulp.task('watchScss', function () {
 	return gulp.watch(settings.watchScssPattern, function (event) {
 
 		// Don't comb the utils
 		if (event.path.indexOf('utils') === -1) {
-			// [Using event.path for source and destination](https://github.com/gulpjs/gulp/issues/212)
-			// Split the filename from the path.
-			var filename = event.path.split('/');
-			filename = filename[filename.length - 1];
-			// For some reason it does need a base to work
-			const base = event.path.replace(filename, '');
+
 
 			// Only comb the current file if it matches to the settings
-			gulp.src(event.path, { base: base })
+			gulp.src(event.path, { base: getBase(event.path) })
 				.pipe(plumber())
 				.pipe(csscomb())
 				.pipe(gulp.dest( base ));
@@ -55,11 +62,13 @@ gulp.task('watchScss', function () {
 });
 
 gulp.task('watchJs', function () {
-	return gulp.watch(settings.watchJsPattern)
-		.pipe(babel({
-			presets: ['es2015']
-		}))
-		.pipe(gulp.dest(settings.dist + 'js'));
+	return gulp.watch(settings.watchJsPattern, function (event) {
+		gulp.src(event.path, { base: getBase(event.path) })
+			.pipe(babel({
+				presets: ['es2015']
+			}))
+			.pipe(gulp.dest(settings.dist + 'js'));
+	});
 });
 
 gulp.task('serve', function () {
@@ -76,9 +85,11 @@ gulp.task('buildJs', function () {
 			presets: ['es2015']
 		}))
 		.pipe(concat('all.min.js'))
+		.pipe(uglify())
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(settings.dist));
 });
 
-gulp.task('default', ['serve', 'scss', 'watchJs', 'watchScss']);
+gulp.task('watch', ['watchJs', 'watchScss'])
+gulp.task('default', ['serve', 'scss', 'watch']);
 gulp.task('build', ['buildJs', 'scss']);
