@@ -63,6 +63,16 @@ class VoteHandler(webapp2.RequestHandler):
     link.vote(user, upvoted)
 
 
+class UserInfoHandler(webapp2.RequestHandler):
+  @JSONRequest
+  @RequireAuthByID(User, 'userid')
+  @UnpackModelByID(User, 'targetid', 'target')
+  @JSONResponse
+  @ErrorHandler(ERROR_MAP)
+  def post(self, target=None, user=None, json=None):
+    return target.toDict()
+
+
 class MainHandler(webapp2.RequestHandler):
   def get(self):
     template_values = {}
@@ -74,6 +84,7 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', LinksHandler),
-  ('/api/vote/?', VoteHandler),
+  ('/api/links/vote/?', VoteHandler),
+  ('/api/users/info/?', UserInfoHandler),
   ('/.*', MainHandler)
 ], debug=True)
