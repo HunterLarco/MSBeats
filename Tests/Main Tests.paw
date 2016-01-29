@@ -62,7 +62,7 @@
     </databaseInfo>
     <object type="LMREQUEST" id="z102">
         <attribute name="uuid" type="string">7C096513-DAA0-479B-959D-ACB9654B69B7</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/links</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/links"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -120,7 +120,7 @@
     </object>
     <object type="LMREQUEST" id="z107">
         <attribute name="uuid" type="string">3D97E838-CC48-4F40-ADD2-B15C4F0F609B</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/links</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/links"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -180,7 +180,7 @@
     </object>
     <object type="LMREQUEST" id="z113">
         <attribute name="uuid" type="string">C81F2044-9A61-4269-8687-86872475AD83</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/users/info</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/users\\/info"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -259,7 +259,7 @@
     </object>
     <object type="LMREQUEST" id="z121">
         <attribute name="uuid" type="string">D081A20D-15AE-4E01-8E49-3DD975F41F49</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/links</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/links"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -414,7 +414,7 @@
     </object>
     <object type="LMREQUEST" id="z138">
         <attribute name="uuid" type="string">BED230AE-0A5C-472F-B785-5D8DB5D871A8</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/links/vote</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/links\\/vote"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -524,7 +524,7 @@
     </object>
     <object type="LMREQUEST" id="z146">
         <attribute name="uuid" type="string">65C0BB7D-E119-4B4F-961A-DD4334CE413F</attribute>
-        <attribute name="url" type="string">http://localhost:8080/api/users/info</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/users\\/info"]</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
