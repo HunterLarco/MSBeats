@@ -7,6 +7,10 @@ class VoteCounter(polymodel.PolyModel):
   userkey = ndb.KeyProperty (indexed=True, required=True)
   
   @classmethod
+  def countKarma(cls, user):
+    return cls.query(cls.userkey == user.key).count()
+  
+  @classmethod
   def countVotes(cls, link):
     return cls.query(cls.linkkey == link.key).count()
   
@@ -16,7 +20,18 @@ class VoteCounter(polymodel.PolyModel):
   
   @classmethod
   def hasVoted(cls, user, link):
-    return cls.query(ancestor=self._formAncestor(user, link)).count() != 0
+    return cls.query(ancestor=cls._formAncestor(user, link)).count() != 0
+  
+  @classmethod
+  def get(cls, user, link):
+    return cls.query(ancestor=cls._formAncestor(user, link)).get()
+  
+  @classmethod
+  def delete(cls, user, link):
+    counter = cls.get(user, link)
+    if not counter: return False
+    counter.key.delete()
+    return True
   
   @classmethod
   def create(cls, user, link):
@@ -64,12 +79,30 @@ class Link(ndb.Model):
     return UpVoteCounter.countVotes(self) - DownVoteCounter.countVotes(self)
   
   def vote(self, user, upvoted):
+    oldkarma = UpVoteCounter.countKarma(user) - DownVoteCounter.countKarma(user)
+    oldvotes = self.countVotes()
+    
+    if UpVoteCounter.hasVoted(user, self):
+      if upvoted: return
+      oldvotes -= 1
+      oldkarma -= 1
+      UpVoteCounter.delete(user, self)
+    elif DownVoteCounter.hasVoted(user, self):
+      if not upvoted: return
+      oldvotes += 1
+      oldkarma += 1
+      DownVoteCounter.delete(user, self)
+    
+    user.karma = oldkarma
+    user.karma += 1 if upvoted else -1
+    user.put()
+    
+    self.votes = oldvotes
+    self.votes += 1 if upvoted else -1
+    self.put()
+    
     if upvoted: UpVoteCounter.create(user, self)
     else: DownVoteCounter.create(user, self)
-    user.karma += 1
-    user.put()
-    self.votes = self.countVotes()
-    self.put()
   
   def getUser(self):
     return self.userkey.get()
