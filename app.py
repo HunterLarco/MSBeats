@@ -5,6 +5,7 @@ import os
 
 from JsonHelpers import *
 from UserHelpers import *
+from ModelHelpers import *
 from models.User import *
 from models.Link import *
 
@@ -54,11 +55,12 @@ class LinksHandler(webapp2.RequestHandler):
 class VoteHandler(webapp2.RequestHandler):
   @JSONRequest
   @RequireAuthByID(User, 'userid')
-  @BodyParameters('linkid')
+  @UnpackModelByID(Link, 'linkid', 'link')
+  @BodyParameters('upvoted')
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
-  def post(self, linkid=None, user=None):
-    pass
+  def post(self, link=None, user=None, upvoted=None):
+    link.vote(user, upvoted)
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -72,5 +74,6 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', LinksHandler),
+  ('/api/vote/?', VoteHandler),
   ('/.*', MainHandler)
 ], debug=True)
