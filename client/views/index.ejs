@@ -6,7 +6,9 @@
         <title>MSBeats</title>
         <meta name="description" content="Share music with your Make School buddies">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/dist/main.css">
+        <%- stylesheets.map(function (stylesheet) {
+          return '<link rel="stylesheet" href="' + stylesheet + '">';
+        }) %>
     </head>
     <body>
       <div class="PageHeader">
@@ -18,5 +20,9 @@
       <main role="main">
 
       </main>
+
+      <%- scripts.map(function (script) {
+        return '<script src="' + script + '"></script>';
+      }) %>
     </body>
 </html>
