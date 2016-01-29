@@ -64,7 +64,7 @@ class Link(ndb.Model):
       'url'     : self.url,
       'user'    : self.getUser().toPublicDict(),
       'created' : str(self.created),
-      'votes'   : self.countVotes(),
+      'votes'   : self.votes,
       'linkid'  : self.key.id()
     }
   
