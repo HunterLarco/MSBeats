@@ -1,5 +1,5 @@
 "use strict";
 
-var a = function a(x) {
-  return x;
-};
+function main() {}
+
+main();

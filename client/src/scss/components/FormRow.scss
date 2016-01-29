@@ -1,0 +1,19 @@
+.FormRow {
+	display: flex;
+	margin: 12px 0;
+}
+
+.FormRow-subBox {
+	// Hackish alignment
+	padding-top: 4px;
+	list-style: $font-size-100;
+	flex-basis: 30px;
+}
+
+.FormRow-mainBox {
+	flex: 1;
+}
+
+.FormRow-mainBox--align {
+	padding-left: 30px;
+}

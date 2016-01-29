@@ -19,3 +19,7 @@
 .Pane--tint {
 	background-color: $color-tint;
 }
+
+.Pane--primary-tint {
+	background-color: lighten($color-primary, 50%);
+}

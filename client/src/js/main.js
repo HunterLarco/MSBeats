@@ -1,3 +1,6 @@
 
+function main () {
 
-const a = (y) => y
+}
+
+main();

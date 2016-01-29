@@ -1,18 +1,26 @@
-"use strict";
+'use strict';
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+exports.parseJSON = parseJSON;
+exports.get = get;
+exports.post = post;
+var apiEndpoint = function apiEndpoint(endpoint) {
+	return 'http://localhost:8080/${endpoint}';
+};
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function parseJSON(response) {
+	return response.json();
+}
 
-var LinksApiEndpoint = function () {
-	function LinksApiEndpoint() {
-		_classCallCheck(this, LinksApiEndpoint);
-	}
+function get(endpoint) {
+	return fetch(apiEndpoint(endpoint)).then(parseJSON);
+}
 
-	_createClass(LinksApiEndpoint, null, [{
-		key: "get",
-		value: function get() {}
-	}]);
-
-	return LinksApiEndpoint;
-}();
+function post(endpoint, body) {
+	return fetch(apiEndpoint(endpoint), {
+		type: 'post',
+		body: body
+	}).then(parseJSON);
+}
