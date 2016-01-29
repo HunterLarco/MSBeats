@@ -127,7 +127,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"title\\":\\"Title\\",\\"artist\\":\\"Artist\\",\\"url\\":\\"google.com\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"loginid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"loginid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"title\\":\\"Title\\",\\"artist\\":\\"Artist\\",\\"url\\":\\"google.com\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">9</attribute>
         <attribute name="name" type="string">User 1 Post Link</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -187,7 +187,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"targetid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"loginid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"loginid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">13</attribute>
         <attribute name="name" type="string">User 1 Info</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -421,7 +421,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"A5D8595E-E51D-4A61-B344-5474DF48D25A\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"upvoted\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"loginid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"A5D8595E-E51D-4A61-B344-5474DF48D25A\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"loginid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"upvoted\\":true}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">11</attribute>
         <attribute name="name" type="string">User 2 Upvote Link</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -531,7 +531,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"targetid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"A5D8595E-E51D-4A61-B344-5474DF48D25A\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"loginid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"F9D9F474-F89C-4316-8491-7280DFF64D12\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"loginid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"userid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"A5D8595E-E51D-4A61-B344-5474DF48D25A\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"userid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">14</attribute>
         <attribute name="name" type="string">User 2 Info</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>

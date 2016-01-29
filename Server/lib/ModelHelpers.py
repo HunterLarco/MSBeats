@@ -7,7 +7,7 @@ def UnpackModelByID(model, field, newfield):
       modelid = kwargs['json'][field]
       try:
         entity = model.get_by_id(int(modelid))
-      except:
+      except Exception:
         return self.error(406)
       if not entity:
         return self.error(406)

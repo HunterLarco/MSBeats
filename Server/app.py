@@ -3,18 +3,19 @@ import webapp2
 import os
 
 
-from JsonHelpers import *
-from UserHelpers import *
-from ModelHelpers import *
-from models.User import *
-from models.Link import *
+from lib.JsonHelpers import *
+from lib.UserHelpers import *
+from lib.ModelHelpers import *
+from lib.models.User import *
+from lib.models.Link import *
 
 
 ERROR_MAP = {
   UserDoesntExistException       : ErrorTuple(100, 'User doesn\'t exist'),
   UserIncorrectPasswordException : ErrorTuple(101, 'Incorrect password'),
   UserEmailInUseException        : ErrorTuple(102, 'Email already in use'),
-  UsernameInUseException         : ErrorTuple(103, 'Username already in use')
+  UsernameInUseException         : ErrorTuple(103, 'Username already in use'),
+  UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID')
 }
 
 
@@ -24,7 +25,7 @@ class SignupHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   def post(self, email=None, password=None, username=None):
-    return User.create(email, password, username).toDict()
+    return User.create(email, password, username).toPrivateDict()
 
 
 class LoginHandler(webapp2.RequestHandler):
@@ -33,7 +34,7 @@ class LoginHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   def post(self, emailusername=None, password=None):
-    return User.login(emailusername, password).toDict()
+    return User.login(emailusername, password).toPrivateDict()
 
 
 class LinksHandler(webapp2.RequestHandler):
@@ -44,7 +45,7 @@ class LinksHandler(webapp2.RequestHandler):
     }
   
   @JSONRequest
-  @RequireAuthByID(User, 'userid')
+  @RequireAuthByLoginID('loginid', 'user')
   @BodyParameters('title', 'artist', 'url')
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
@@ -54,7 +55,7 @@ class LinksHandler(webapp2.RequestHandler):
 
 class VoteHandler(webapp2.RequestHandler):
   @JSONRequest
-  @RequireAuthByID(User, 'userid')
+  @RequireAuthByLoginID('loginid', 'user')
   @UnpackModelByID(Link, 'linkid', 'link')
   @BodyParameters('upvoted')
   @JSONResponse
@@ -65,12 +66,12 @@ class VoteHandler(webapp2.RequestHandler):
 
 class UserInfoHandler(webapp2.RequestHandler):
   @JSONRequest
-  @RequireAuthByID(User, 'userid')
-  @UnpackModelByID(User, 'targetid', 'target')
+  @RequireAuthByLoginID('loginid', 'user')
+  @UnpackModelByID(User, 'userid', 'target')
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   def post(self, target=None, user=None, json=None):
-    return target.toDict()
+    return target.toPublicDict()
 
 
 class MainHandler(webapp2.RequestHandler):

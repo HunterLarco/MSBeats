@@ -1,4 +1,8 @@
 from google.appengine.ext import ndb
+from ..blowfish import Cipher
+
+
+cipher = Cipher('*&@NFPF)J0f94z')
 
 
 def sha256(string):
@@ -18,6 +22,9 @@ class UserEmailInUseException(Exception):
 class UsernameInUseException(Exception):
   pass
 
+class UserBadLoginIDException(Exception):
+  pass
+
 
 class User(ndb.Model):
   email    = ndb.StringProperty  (indexed=True , required=True)
@@ -26,7 +33,17 @@ class User(ndb.Model):
   created  = ndb.DateTimeProperty(indexed=True , auto_now_add=True)
   karma    = ndb.IntegerProperty (indexed=True , default=0)
   
-  def toDict(self):
+  def toPrivateDict(self):
+    return {
+      'email'    : self.email,
+      'username' : self.username,
+      'created'  : str(self.created),
+      'karma'    : self.karma,
+      'userid'   : self.key.id(),
+      'loginid'  : self.getLoginId()
+    }
+  
+  def toPublicDict(self):
     return {
       'email'    : self.email,
       'username' : self.username,
@@ -34,6 +51,18 @@ class User(ndb.Model):
       'karma'    : self.karma,
       'userid'   : self.key.id()
     }
+  
+  @classmethod
+  def getByLoginId(cls, loginid):
+    identifier = cipher.decrypt(loginid)
+    print(identifier)
+    try:
+      return cls.get_by_id(int(identifier))
+    except:
+      raise UserBadLoginIDException()
+  
+  def getLoginId(self):
+    return cipher.encrypt(self.key.id())
   
   def setPassword(self, password, oldpassword=None):
     if oldpassword != None:
