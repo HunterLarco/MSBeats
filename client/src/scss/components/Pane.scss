@@ -1,0 +1,8 @@
+.Pane {
+	@include clearfix;
+	position: relative;
+
+	&.is-hidden {
+		display: none;
+	}
+}
