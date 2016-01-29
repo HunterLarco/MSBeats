@@ -54,9 +54,9 @@ class LinksHandler(webapp2.RequestHandler):
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
   @RequireAuthByLoginID('loginid', 'user')
-  @BodyParameters('title', 'artist', 'url')
-  def post(self, title=None, artist=None, url=None, user=None):
-    return Link.create(title, artist, url, user).toDict()
+  @BodyParameters('title', 'url')
+  def post(self, title=None, url=None, user=None):
+    return Link.create(title, url, user).toDict()
 
 
 class VoteHandler(webapp2.RequestHandler):

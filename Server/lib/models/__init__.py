@@ -1,3 +1,4 @@
-__all__ = ['User']
+__all__ = ['User', 'Link']
 
 import User
+import Link
