@@ -266,7 +266,6 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string"></attribute>
         <attribute name="order" type="int64">10</attribute>
         <attribute name="name" type="string">Get Links</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>

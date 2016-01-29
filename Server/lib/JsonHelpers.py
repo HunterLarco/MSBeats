@@ -2,6 +2,13 @@ import json
 from collections import namedtuple
 
 
+class InvalidJsonException(Exception):
+  pass
+
+class MissingParameterException(Exception):
+  pass
+
+
 def JSONRequest(funct):
   def helper(self, *args, **kwargs):
     body = self.request.body
@@ -10,7 +17,7 @@ def JSONRequest(funct):
       kwargs['json'] = parsedBody
       return funct(self, *args, **kwargs)
     except ValueError:
-      self.error(400)
+      raise InvalidJsonException()
   return helper
 
 
@@ -21,7 +28,7 @@ def BodyParameters(*params):
       del kwargs['json']
       for param in params:
         if not param in json:
-          return self.error(406)
+          raise MissingParameterException()
         kwargs[param] = json[param]
       return funct(self, *args, **kwargs)
     return helper
