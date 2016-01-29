@@ -1,0 +1,15 @@
+.Navigation {
+}
+
+.Navigation-item {
+	color: rgba(white, 0.7);
+
+	&:active,
+	&.is-active {
+		color: white;
+	}
+}
+
+.Navigation-middot {
+	color: rgba(white, 0.2);
+}

@@ -48,10 +48,9 @@ gulp.task('watchScss', function () {
 
 		// Don't comb the utils
 		if (event.path.indexOf('utils') === -1) {
-
-
 			// Only comb the current file if it matches to the settings
-			gulp.src(event.path, { base: getBase(event.path) })
+			const base = getBase(event.path);
+			gulp.src(event.path, { base: base })
 				.pipe(plumber())
 				.pipe(csscomb())
 				.pipe(gulp.dest( base ));

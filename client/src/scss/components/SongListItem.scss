@@ -1,12 +1,80 @@
 .SongListItem {
+	display: flex;
 	margin: 5px 0;
+	padding: 5px 0;
+	border-bottom: 1px solid lighten(black, 90%);
+
+	@include media(0, $bp-hand-l) {
+		padding: 3px 0;
+	}
+}
+
+.SongListItem-buttons {
+	flex-basis: 30px;
+
+	@include media(0, $bp-hand-l) {
+		// Correct the positioning
+		margin-top: -1px;
+		flex-basis: 25px;
+	}
+}
+
+.SongListItem-upvote,
+.SongListItem-downvote {
+	display: block;
+	margin: 7px 0;
+	width: 16px;
+	height: 10px;
+	background-size: 100%;
+	background-repeat: no-repeat;
+	opacity: 0.2;
+	cursor: pointer;
+	transition: opacity 0.1s ease-out;
+
+	&:hover {
+		opacity: 0.5;
+	}
+
+	&:active {
+		opacity: 1.0;
+	}
+
+	@include media(0, $bp-hand-l) {
+		margin: 8px 0;
+		width: 14px;
+	}
+}
+
+.SongListItem-upvote {
+	background-image: url('/images/chevron-up.svg');
+}
+
+.SongListItem-downvote {
+	background-image: url('/images/chevron-down.svg');
+}
+
+.SongListItem-content {
+	flex: 1;
 }
 
 .SongListItem-linkTitle {
 	@include link($color: $color-primary, $border-width: 0);
-	display: block;
+	display: inline-block;
+	margin-top: 2px;
+	font-weight: 500;
+
+	@include media(0, $bp-hand-s) {
+		font-size: $font-size-80;
+	}
 }
 
 .SongListItem-subTitle {
+	display: block;
+	margin-bottom: 5px;
 	color: $color-text-meta;
+	font-size: $font-size-80;
+
+	@include media(0, $bp-hand-l) {
+		font-size: $font-size-70;
+	}
 }

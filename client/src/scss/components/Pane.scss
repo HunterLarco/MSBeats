@@ -6,3 +6,16 @@
 		display: none;
 	}
 }
+
+.Pane--white {
+	background-color: white;
+}
+
+.Pane--dark {
+	background-color: $color-dark;
+	color: white;
+}
+
+.Pane--tint {
+	background-color: $color-tint;
+}

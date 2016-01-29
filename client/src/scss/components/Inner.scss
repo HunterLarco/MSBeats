@@ -1,10 +1,10 @@
 .Inner {
 	margin: 0 auto;
 	padding: 0 20px;
-	max-width: $bp-lap-l;
+	max-width: $bp-hand-l;
 
 	@include media(0, $bp-palm-l) {
-		padding: 0;
+		padding: 0 4%;
 	}
 
 	@include media($bp-hand-s, $bp-hand-l) {

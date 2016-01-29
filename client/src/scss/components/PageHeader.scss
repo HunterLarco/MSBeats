@@ -1,7 +1,18 @@
 .PageHeader {
 	@include font-smoothing();
 	position: relative;
-	padding: 12px 0;
-	background-color: $color-dark;
-	color: white;
+	font-weight: 500;
+}
+
+.PageHeader-content {
+	margin: 12px 0;
+}
+
+.PageHeader-navigation,
+.PageHeader-title {
+	display: inline-block;
+}
+
+.PageHeader-title {
+	margin-right: 10px;
 }
