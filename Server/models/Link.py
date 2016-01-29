@@ -79,7 +79,8 @@ class Link(ndb.Model):
     return UpVoteCounter.countVotes(self) - DownVoteCounter.countVotes(self)
   
   def vote(self, user, upvoted):
-    oldkarma = UpVoteCounter.countKarma(user) - DownVoteCounter.countKarma(user)
+    author = self.getUser()
+    oldkarma = UpVoteCounter.countKarma(author) - DownVoteCounter.countKarma(author)
     oldvotes = self.countVotes()
     
     if UpVoteCounter.hasVoted(user, self):
@@ -93,9 +94,9 @@ class Link(ndb.Model):
       oldkarma += 1
       DownVoteCounter.delete(user, self)
     
-    user.karma = oldkarma
-    user.karma += 1 if upvoted else -1
-    user.put()
+    author.karma = oldkarma
+    author.karma += 1 if upvoted else -1
+    author.put()
     
     self.votes = oldvotes
     self.votes += 1 if upvoted else -1
