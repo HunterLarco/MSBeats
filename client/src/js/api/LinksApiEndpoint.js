@@ -1,0 +1,5 @@
+class LinksApiEndpoint {}
+	static get() {
+
+	}
+}
