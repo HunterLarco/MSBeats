@@ -1,20 +1,25 @@
-// settings
+// settings - use hyphens for variables
 @import 'settings/breakpoints';
 @import 'settings/font-families';
+@import 'settings/font-sizes';
 @import 'settings/colors';
+@import 'settings/line-heights';
 
-// Utils
+// Utils - only contains mixins
 @import 'utils/clearfix';
 @import 'utils/media';
 @import 'utils/font-smoothing';
 
-// Reset
+// Reset - resets the default browser styles
 @import 'reset/box-sizing';
 @import 'reset/reset';
+@import 'reset/links';
 
-// Components
+// Components - use UpperCamelCase for component and lowerCamelCase for children
 @import 'components/body';
+@import 'components/Link';
 @import 'components/Pane';
 @import 'components/Inner';
 @import 'components/PageHeader';
 @import 'components/Navigation';
+@import 'components/SongListItem';

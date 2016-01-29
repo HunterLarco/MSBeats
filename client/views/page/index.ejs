@@ -6,7 +6,18 @@
 	<body>
 		<%- include ../components/PageHeader %>
 		<main role="main">
-			
+			<div class="Inner">
+				<% for (var i = 0; i < 20; i++) { %>
+					<div class="Pane SongListItem">
+						<a class="SongListItem-linkTitle" href="https://www.youtube.com/watch?v=ANR5wQDy1QU">Drake Ft Joe Trufant - Caught Up ( NEW SONG 2016 )</a>
+						<span class="SongListItem-subTitle">
+							<span class="SongListItem-points">87 points</span>
+							by <span class="SongListItem-author">Abe</span>
+							<span class="SongListItem-time">2 hours ago</span>
+						</span>
+					</div>
+				<% } %>
+			</div>
 		</main>
 		<%- include ../partials/scripts %>
 	</body>

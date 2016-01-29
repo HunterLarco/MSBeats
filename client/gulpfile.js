@@ -13,7 +13,7 @@ const devScripts = require('./config/development.json').scripts;
 const settings = {
 	srcMainScssFile: 'src/scss/main.scss',
 	watchScssPattern: 'src/scss/**/*.scss',
-	watchJsPattern: 'src/js/**/*.js',
+	watchJsPattern: ['src/js/*.js', 'src/js/**/*.js'],
 	dist: 'public/dist/'
 };
 
@@ -55,7 +55,7 @@ gulp.task('watchScss', function () {
 });
 
 gulp.task('watchJs', function () {
-	return gulp.src(settings.watchJsPattern)
+	return gulp.watch(settings.watchJsPattern)
 		.pipe(babel({
 			presets: ['es2015']
 		}))
@@ -80,5 +80,5 @@ gulp.task('buildJs', function () {
 		.pipe(gulp.dest(settings.dist));
 });
 
-gulp.task('default', ['serve', 'scss', 'watchScss', 'watchJs']);
+gulp.task('default', ['serve', 'scss', 'watchJs', 'watchScss']);
 gulp.task('build', ['buildJs', 'scss']);

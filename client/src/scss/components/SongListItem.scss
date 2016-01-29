@@ -1,0 +1,8 @@
+.SongListItem {
+	margin: 5px 0;
+}
+
+.SongListItem-linkTitle {
+	@include link($color: $color-primary, $border-width: 0);
+	display: block;
+}

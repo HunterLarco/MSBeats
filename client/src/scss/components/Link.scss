@@ -1,0 +1,32 @@
+@mixin link ($color: $color-bodytext, $border-width: 1px) {
+	border-bottom-width: $border-width;
+	border-bottom-style: solid;
+	border-bottom-color: rgba($color, 0.5);
+	color: $color;
+	transition: border-bottom 0.1s ease;
+
+	&:hover {
+		border-bottom-color: rgba($color, 1.0);
+	}
+
+	&:active,
+	&.is-active {
+		$color-active: darken($color, 10%);
+		border-bottom-color: $color-active;
+		color: $color-active;
+	}
+}
+
+.Link {
+	@include link;
+}
+
+.Link--no-border, {
+
+	&,
+	&:hover,
+	&:active,
+	&.is-active {
+		border-bottom: none;
+	}
+}

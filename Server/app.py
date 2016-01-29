@@ -17,14 +17,13 @@ ERROR_MAP = {
   UnpackedModelFailedException   : ErrorTuple(002, 'Model unpacking failed'),
   AuthorizationFailed            : ErrorTuple(003, 'Authorization failed'),
   BadEncryptionException         : ErrorTuple(004, 'Bad Encryption Exception'),
-  
+
   UserDoesntExistException       : ErrorTuple(100, 'User doesn\'t exist'),
   UserIncorrectPasswordException : ErrorTuple(101, 'Incorrect password'),
   UserEmailInUseException        : ErrorTuple(102, 'Email already in use'),
   UsernameInUseException         : ErrorTuple(103, 'Username already in use'),
   UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID')
 }
-
 
 class SignupHandler(webapp2.RequestHandler):
   @JSONResponse
@@ -50,7 +49,7 @@ class LinksHandler(webapp2.RequestHandler):
     return {
       'links': map(lambda x: x.toDict(), Link.queryTop())
     }
-  
+
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
