@@ -81,18 +81,10 @@ class UserInfoHandler(webapp2.RequestHandler):
     return target.toPublicDict()
 
 
-class MainHandler(webapp2.RequestHandler):
-  def get(self):
-    template_values = {}
-    path = os.path.join(os.path.dirname(__file__), 'templates/main.html')
-    self.response.out.write(template.render(path, template_values))
-
-
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', LinksHandler),
   ('/api/links/vote/?', VoteHandler),
-  ('/api/users/info/?', UserInfoHandler),
-  ('/.*', MainHandler)
+  ('/api/users/info/?', UserInfoHandler)
 ], debug=True)
