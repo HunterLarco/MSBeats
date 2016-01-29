@@ -66,7 +66,7 @@ def ErrorHandler(error_map):
         else:
           return {
             'success': False,
-            'code': '-1',
+            'code': -1,
             'message': 'Unknown error'
           }
     return helper
