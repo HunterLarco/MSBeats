@@ -1,10 +1,12 @@
 from google.appengine.ext import ndb
 from google.appengine.ext.ndb import polymodel
+import datetime
 
 
 class VoteCounter(polymodel.PolyModel):
-  linkkey = ndb.KeyProperty (indexed=True, required=True)
-  userkey = ndb.KeyProperty (indexed=True, required=True)
+  linkkey = ndb.KeyProperty      (indexed=True, required=True)
+  userkey = ndb.KeyProperty      (indexed=True, required=True)
+  created = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
   
   @classmethod
   def countKarma(cls, user):
@@ -52,11 +54,11 @@ class UpVoteCounter(VoteCounter):
 
 
 class Link(ndb.Model):
-  title   = ndb.StringProperty   (indexed=True, required=True)
-  url     = ndb.StringProperty   (indexed=True, required=True)
-  userkey = ndb.KeyProperty      (indexed=True, required=True)
-  created = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
-  votes   = ndb.IntegerProperty  (indexed=True, default=0)
+  title    = ndb.StringProperty   (indexed=True, required=True)
+  url      = ndb.StringProperty   (indexed=True, required=True)
+  userkey  = ndb.KeyProperty      (indexed=True, required=True)
+  created  = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
+  votes    = ndb.IntegerProperty  (indexed=True, default=0)
   
   def toDict(self):
     return {
@@ -119,4 +121,50 @@ class Link(ndb.Model):
     link.userkey = user.key
     
     link.put()
+    TrendingCounter.create(link)
     return link
+
+
+class TrendingCounter(ndb.Model):
+  link    = ndb.KeyProperty      (              required=True)
+  score   = ndb.FloatProperty    (indexed=True, required=True, default=0)
+  created = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
+  
+  def getLink(self):
+    return self.link.get()
+  
+  def getTrendingValue(self, now=None, save=True):
+    if now == None: now = datetime.datetime.now()
+    diff = now - self.created
+    seconds = diff.total_seconds()
+    hours = seconds / (60.0*60)
+    score = self._hackerNewsAlgorithm(self.getLink().votes, hours)
+    if save:
+      self.score = score
+      self.put()
+    return score
+  
+  @staticmethod
+  def _hackerNewsAlgorithm(votes, item_hour_age, gravity=1.8):
+    # https://news.ycombinator.com/item?id=1781013
+    return (votes - 1) / pow((item_hour_age+2), gravity)
+  
+  @classmethod
+  def updateTrendingCounters(cls):
+    now = datetime.datetime.now()
+    entities = cls.query()
+    for entity in entities:
+      entity.score = entity.getTrendingValue(now=now, save=False)
+    ndb.put_multi(entities)
+  
+  @classmethod
+  def queryTrending(cls, count=30):
+    return map(lambda x: x.getLink(), cls.query().order(-cls.score).fetch(count))
+  
+  @classmethod
+  def create(cls, link):
+    counter = cls()
+    counter.link = link.key
+    counter.score = cls._hackerNewsAlgorithm(link.votes, 0)
+    counter.put()
+    return counter
