@@ -16,6 +16,11 @@ handlers:
 - url: /resources
   static_dir: resources
 
+# CRON SCRIPT
+- url: /cron/.*
+  script: cron.app
+  login: admin
+
 # MAIN SCRIPT
 - url: .*
   script: app.app

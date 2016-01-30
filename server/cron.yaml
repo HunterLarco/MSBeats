@@ -1,0 +1,4 @@
+cron:
+- description: Update Trending Counters
+  url: /cron/updatetrending
+  schedule: every 1 mins
