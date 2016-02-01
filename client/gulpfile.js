@@ -62,6 +62,8 @@ gulp.task('watchScss', function () {
 
 gulp.task('watchJs', function () {
 	return gulp.watch(settings.watchJsPattern, function (event) {
+		console.log('event.paths', event.path)
+		// if (event.path.indexOf('__tests__') > -1) return;
 		gulp.src(event.path, { base: getBase(event.path) })
 			.pipe(babel({
 				presets: ['es2015']

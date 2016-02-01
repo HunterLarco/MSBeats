@@ -6,7 +6,7 @@
 
 # Populate Server
 
-1. Goto localhost:8000/console
+1. Open up [http://localhost:8000/console](http://localhost:8000/console) in your browser if your server is running
 
 2. Execute the following code
 
