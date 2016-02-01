@@ -11,27 +11,37 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 /**
  * Class representing an events interface similar to EventEmitter/Backbone.Events
  * @author Jeroen Ransijn [@Jeroen_Ransijn]
+ * @example
+ * const events = new Events();
+ *
+ * events.on('change', (...args) => { console.log(args); });
+ * events.trigger('change', 'firstArg', 'secondArg');
+ * // Returns ['firstArg', 'secondArg']
+ *
+ * events.onAll((key, ...args) => { console.log(key, args); });
+ * events.trigger('randomKey');
+ * // Returns 'randomKey', ['firstArg', 'secondArg']
  */
 
-var Events = exports.Events = function () {
+var Events = function () {
 	/**
   * Create an events interface.
   * Sets two properties on this instance
-  * - listeners
-  * - globalListeners
+  * @property {Map.<Function>} listeners
+  * @property {Array.<Function>} globalListeners
   */
 
 	function Events() {
 		_classCallCheck(this, Events);
 
 		this.listeners = new Map();
-		this.globalListeners = new Map();
+		this.globalListeners = [];
 	}
 
 	/**
   * Adds listener(s) to an event by key
   * @param {*} key - name of the event
-  * @param {...function} listeners - callbacks to call when the event is triggered
+  * @param {...Function} listeners - callbacks (...args) to call when the event is triggered
   * @return this
   */
 
@@ -43,9 +53,9 @@ var Events = exports.Events = function () {
 			}
 
 			if (this.listeners.has(key)) {
-				var _listeners$get;
-
-				this.listeners.set(key, (_listeners$get = this.listeners.get(key)).push.apply(_listeners$get, listeners));
+				var newListeners = this.listeners.get(key);
+				newListeners.push.apply(newListeners, listeners);
+				this.listeners.set(key, newListeners);
 			} else {
 				this.listeners.set(key, [].concat(listeners));
 			}
@@ -54,7 +64,7 @@ var Events = exports.Events = function () {
 
 		/**
    * Adds listener(s) to all events that will ever by triggered
-   * @param {...function} listeners - callbacks to call on all events triggered
+   * @param {...Function} listeners - callbacks (key, ...args) to call on all events triggered
    * @return this
    */
 
@@ -69,8 +79,9 @@ var Events = exports.Events = function () {
 
 		/**
    * Remove listener(s) from an event by key
+   * Remove all listeners from an event if no listeners are passed
    * @param {*} key - name of the events
-   * @param {...function} listeners - callbacks to remove from the event
+   * @param {...Function} listeners - callbacks to remove from the event
    * @return this
    */
 
@@ -82,11 +93,21 @@ var Events = exports.Events = function () {
 			}
 
 			if (!this.listeners.has(key)) return this;
-			this.listeners.set(key, this.listeners.get(key).filter(function (listener) {
-				return listeners.find(function (x) {
-					return x === listener;
-				});
-			}));
+			if (listeners) {
+				// Only remove the listeners passed if any are passed
+				this.listeners.set(key, this.listeners.get(key).filter(function (listener) {
+					return listeners.find(function (x) {
+						return x !== listener;
+					});
+				}));
+
+				if (this.listeners.get(key).length === 0) {
+					// Remove the key if there are no more listeners
+					this.listeners.delete(key);
+				}
+			} else {
+				this.listeners.delete(key);
+			}
 			return this;
 		}
 
@@ -105,7 +126,7 @@ var Events = exports.Events = function () {
 			}
 
 			this.globalListeners.forEach(function (listener) {
-				return listener.apply(undefined, args);
+				return listener.apply(undefined, [key].concat(args));
 			});
 			if (!this.listeners.has(key)) return this;
 			this.listeners.get(key).forEach(function (listener) {
@@ -117,3 +138,5 @@ var Events = exports.Events = function () {
 
 	return Events;
 }();
+
+exports.default = Events;

@@ -34,13 +34,29 @@ function scss () {
 		.pipe(gulp.dest(settings.dist));
 }
 
+/**
+ * @param {String} path
+ * @return {String} a new path
+ */
+function getDestination (path) {
+	// [Using event.path for source and destination](https://github.com/gulpjs/gulp/issues/212)
+	// Split the filename from the path.
+	const splitPath = path.split('/');
+	const newPath = path.replace('src/', settings.dist).replace(splitPath[splitPath.length - 1], '');
+	console.log(newPath);
+	return newPath;
+}
+
+/**
+ * @param {String} path
+ * @return {String} a new path
+ */
 function getBase (path) {
 	// [Using event.path for source and destination](https://github.com/gulpjs/gulp/issues/212)
 	// Split the filename from the path.
-	var filename = path.split('/');
-	filename = filename[filename.length - 1];
-	// For some reason it does need a base to work
-	return path.replace(filename, '');
+	const splitPath = path.split('/');
+	const newPath = path.replace(splitPath[splitPath.length - 1], '');
+	return newPath;
 }
 
 gulp.task('watchScss', function () {
@@ -62,14 +78,22 @@ gulp.task('watchScss', function () {
 
 gulp.task('watchJs', function () {
 	return gulp.watch(settings.watchJsPattern, function (event) {
-		console.log('event.paths', event.path)
+		console.log('event.paths', event);
 		// if (event.path.indexOf('__tests__') > -1) return;
-		gulp.src(event.path, { base: getBase(event.path) })
+		gulp.src(event.path)
 			.pipe(babel({
 				presets: ['es2015']
 			}))
-			.pipe(gulp.dest(settings.dist + 'js'));
+			.pipe(gulp.dest(getDestination(event.path)));
 	});
+});
+
+gulp.task('createDistFilesForAllJs', function () {
+	return gulp.src(settings.watchJsPattern)
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest(settings.dist + 'js'));
 });
 
 gulp.task('serve', function () {
@@ -92,5 +116,5 @@ gulp.task('buildJs', function () {
 });
 
 gulp.task('watch', ['watchJs', 'watchScss'])
-gulp.task('default', ['serve', 'scss', 'watch']);
+gulp.task('default', ['serve', 'createDistFilesForAllJs', 'scss', 'watch']);
 gulp.task('build', ['buildJs', 'scss']);

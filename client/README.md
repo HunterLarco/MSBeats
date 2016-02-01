@@ -13,18 +13,23 @@
 
 2. Open up [http://localhost:3000](http://localhost:3000)
 
+## Test your project
+
+1. Run `$ npm text` to run all tests in the `/test` folder with mocha
+
 ## Build your project
+
+1. Run `$ npm run build`
+
+### Moving the build step to the server in a production environment
 
 Normally you wouldn't want to have the `dist` (distribution) folder in your git repo.
 The server should run `$ npm run build` on every push to the server to compile the right assets.
-
-1. Run `$ npm run build`
 
 ## Writing JS
 
 In this project there is support for writing ES6. All your JS will be transpiled
 to work on the browser. Put your files in `src/js`, the result will be in `public/dist/js`.
-
 
 ## SCSS variable city blocks naming
 
