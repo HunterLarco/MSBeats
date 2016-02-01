@@ -6,30 +6,36 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _api = require('./api');
+var _Link = require('./Link');
+
+var _Link2 = _interopRequireDefault(_Link);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var endpoint = 'links';
+var LinkCollection = function () {
+	function LinkCollection() {
+		var props = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
-var LinksApiEndpoint = function () {
-	function LinksApiEndpoint() {
-		_classCallCheck(this, LinksApiEndpoint);
+		_classCallCheck(this, LinkCollection);
+
+		this.props = props;
+		this.children = this.props.map(function (link) {
+			return new _Link2.default(link);
+		});
 	}
 
-	_createClass(LinksApiEndpoint, null, [{
-		key: 'get',
-		value: function get() {
-			return (0, _api.get)(endpoint);
-		}
-	}, {
-		key: 'post',
-		value: function post(formData) {
-			return (0, _api.post)(endpoint, formData);
+	_createClass(LinkCollection, [{
+		key: 'render',
+		value: function render() {
+			return this.children.map(function (child) {
+				return child.render();
+			}).join('');
 		}
 	}]);
 
-	return LinksApiEndpoint;
+	return LinkCollection;
 }();
 
-exports.default = LinksApiEndpoint;
+exports.default = LinkCollection;

@@ -1,5 +1,5 @@
 {
   "scripts": [
-    "js/main.js"
+    "dist/main.min.js"
   ]
 }

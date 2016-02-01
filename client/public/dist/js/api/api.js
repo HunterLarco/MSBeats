@@ -7,8 +7,8 @@ exports.parseJSON = parseJSON;
 exports.get = get;
 exports.post = post;
 var apiEndpoint = function apiEndpoint(endpoint) {
-	return 'http://localhost:8080/${endpoint}';
-};
+	return 'http://localhost:8080/api/' + endpoint;
+}; // eslint-disable-line
 
 function parseJSON(response) {
 	return response.json();

@@ -1,7 +1,8 @@
-import { get, post } from 'api'
+import { get, post } from './api'
 
-export class LinksApiEndpoint {
-	static get endpoint () { return 'links' }
-	static get () { return get(this.endpoint) }
-	static post (formData) { return post(this.endpoint, formData) }
+const endpoint = 'links';
+
+export default class LinksApiEndpoint {
+	static get () { return get(endpoint) }
+	static post (formData) { return post(endpoint, formData) }
 }

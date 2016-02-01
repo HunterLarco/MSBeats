@@ -42,6 +42,8 @@ def JSONResponse(funct):
     if not 'success' in response: response['success'] = True
     flattened = json.dumps(response, indent=2)
     self.response.headers['Content-Type'] = 'application/json'
+    # TODO: make sure this doesn't end up on a server
+    self.response.headers['Access-Control-Allow-Origin'] = '*'
     self.response.out.write(flattened)
   return helper
 
@@ -55,7 +57,7 @@ def ErrorHandler(error_map):
       except Exception as error:
         import logging
         logging.error(error)
-        
+
         errorClass = error.__class__
         if errorClass in error_map:
           return {

@@ -9,9 +9,14 @@ const csscomb = require('gulp-csscomb');
 const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
-const devScripts = require('./config/development.json').scripts.map(function (script) {
+const gutil = require('gulp-util');
+const devScripts = require('./config/default.json').scripts.map(function (script) {
 	return './src/' + script;
 });
+
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.babel');
+const WebpackDevServer = require('webpack-dev-server');
 
 const settings = {
 	srcMainScssFile: 'src/scss/main.scss',
@@ -76,17 +81,17 @@ gulp.task('watchScss', function () {
 	});
 });
 
-gulp.task('watchJs', function () {
-	return gulp.watch(settings.watchJsPattern, function (event) {
-		console.log('event.paths', event);
-		// if (event.path.indexOf('__tests__') > -1) return;
-		gulp.src(event.path)
-			.pipe(babel({
-				presets: ['es2015']
-			}))
-			.pipe(gulp.dest(getDestination(event.path)));
-	});
-});
+// gulp.task('watchJs', function () {
+// 	return gulp.watch(settings.watchJsPattern, function (event) {
+// 		console.log('event.paths', event);
+// 		// if (event.path.indexOf('__tests__') > -1) return;
+// 		gulp.src(event.path)
+// 			.pipe(babel({
+// 				presets: ['es2015']
+// 			}))
+// 			.pipe(gulp.dest(getDestination(event.path)));
+// 	});
+// });
 
 gulp.task('createDistFilesForAllJs', function () {
 	return gulp.src(settings.watchJsPattern)
@@ -96,7 +101,7 @@ gulp.task('createDistFilesForAllJs', function () {
 		.pipe(gulp.dest(settings.dist + 'js'));
 });
 
-gulp.task('serve', function () {
+gulp.task('serve', ['webpack'], function () {
 	nodemon({
 		script: 'index.js',
 		env: { 'NODE_ENV': 'development' }
@@ -115,6 +120,43 @@ gulp.task('buildJs', function () {
 		.pipe(gulp.dest(settings.dist));
 });
 
-gulp.task('watch', ['watchJs', 'watchScss'])
-gulp.task('default', ['serve', 'createDistFilesForAllJs', 'scss', 'watch']);
+gulp.task('webpack', function (callback) {
+	var myConfig = Object.create(webpackConfig);
+	myConfig.plugins = [
+		new webpack.optimize.DedupePlugin(),
+		// new webpack.optimize.UglifyJsPlugin()
+	];
+
+	// run webpack
+	webpack(myConfig, function (err, stats) {
+		if (err) throw new gutil.PluginError('webpack', err);
+		gutil.log('[webpack]', stats.toString({
+			colors: true,
+			progress: true
+		}));
+		callback();
+	});
+});
+
+gulp.task('webpackDevServer', function () {
+	// modify some webpack config options
+	var myConfig = Object.create(webpackConfig);
+	myConfig.devtool = 'eval';
+	myConfig.debug = true;
+
+	// Start a webpack-dev-server
+	new WebpackDevServer(webpack(myConfig), {
+		publicPath: '/' + myConfig.output.publicPath,
+		stats: {
+			colors: true
+		},
+		hot: true
+	}).listen(8081, 'localhost', function(err) {
+		if (err) throw new gutil.PluginError('webpack-dev-server', err);
+		gutil.log('[webpack-dev-server]', 'http://localhost:8081/webpack-dev-server/index.html');
+	});
+});
+
+gulp.task('watch', ['watchScss'])
+gulp.task('default', ['serve', 'webpackDevServer', 'createDistFilesForAllJs', 'scss', 'watch']);
 gulp.task('build', ['buildJs', 'scss']);
