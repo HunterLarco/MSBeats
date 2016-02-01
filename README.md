@@ -12,5 +12,5 @@
 
 ```
 from lib import scripts
-scripts.popualteDB()
+scripts.populateDB()
 ```
