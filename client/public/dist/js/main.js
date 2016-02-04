@@ -18,7 +18,6 @@ function main() {
 	_LinksApiEndpoint2.default.get().then(function (_ref) {
 		var links = _ref.links;
 
-		console.log(links, new _LinkCollection2.default(links).render());
 		$links.innerHTML = new _LinkCollection2.default(links).render();
 	});
 }

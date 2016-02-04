@@ -16,7 +16,7 @@ export default class Events {
 	/**
 	 * Create an events interface.
 	 * Sets two properties on this instance
-	 * @property {Map.<Function>} listeners
+	 * @property {Map.<Array[Function]>} listeners
 	 * @property {Array.<Function>} globalListeners
 	 */
 	constructor () {
