@@ -43,22 +43,11 @@ class LoginHandler(RequestHandler):
     return User.login(emailusername, password).toPrivateDict()
 
 
-class LinksHandler(webapp2.RequestHandler):
-  @JSONResponse
-  def options(self):
-    return
-
-  @JSONResponse
-  @RequireAuth
-  def get(self):
-    return {
-      'links': map(lambda x: x.toDict(), Link.queryTop())
-    }
-
+class PostLinksHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuth
+  @RequireAuth('user')
   @BodyParameters('title', 'url')
   def post(self, title=None, url=None, user=None):
     return Link.create(title, url, user).toDict()
@@ -68,7 +57,7 @@ class VoteHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuth
+  @RequireAuth('user')
   @UnpackModelByID(Link, 'linkid', 'link')
   @BodyParameters('upvoted')
   def post(self, link=None, user=None, upvoted=None):
@@ -79,17 +68,37 @@ class UserInfoHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuth
+  @RequireAuth('user')
   @UnpackModelByID(User, 'userid', 'target')
   def post(self, target=None, user=None, json=None):
     return target.toPublicDict()
+
+
+class TopLinksHandler(webapp2.RequestHandler):
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, user=None):
+    return {
+      'links': map(lambda x: x.toDict(), Link.queryTop())
+    }
+
+
+class TrendingLinksHandler(webapp2.RequestHandler):
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, user=None):
+    return {
+      'links': map(lambda x: x.toDict(), TrendingCounter.queryTrending())
+    }
 
 
 # This part here maps the routes to a RequestHandler
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
-  ('/api/links/?', LinksHandler),
+  ('/api/links/?', PostLinksHandler),
+  ('/api/links/top/?', TopLinksHandler),
+  ('/api/links/trending/?', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
   ('/api/users/info/?', UserInfoHandler)
 ], debug=True)
