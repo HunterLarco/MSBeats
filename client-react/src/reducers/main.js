@@ -66,6 +66,8 @@ function getUserFromStorage() {
   return user ? JSON.parse(user) : null
 }
 
+console.log(reactCookie.load('loginid'));
+
 function auth (state = {
   isFetching: false,
   isAuthenticated: !!reactCookie.load('loginid'),

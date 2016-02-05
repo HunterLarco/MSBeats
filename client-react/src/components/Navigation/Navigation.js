@@ -18,6 +18,7 @@ import { logoutUser } from '../../actions';
 class Navigation extends Component {
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     className: PropTypes.string,
     auth: PropTypes.object.isRequired
   };

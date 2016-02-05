@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { IndexRoute, Route } from 'react-router';
+import { IndexRedirect, Route } from 'react-router';
 import fetch from './core/fetch';
 import App from './components/App';
 import ContentPage from './components/ContentPage';
@@ -32,7 +32,7 @@ export default function routes (store) {
   return (
     <Route>
       <Route path="/" component={App}>
-        <IndexRoute component={HomePage} />
+        <IndexRedirect to='top' />
         <Route path="top" component={HomePage} onEnter={setFilter.bind(null, 'top')} />
         <Route path="trending" component={HomePage} onEnter={setFilter.bind(null, 'trending')} />
         <Route path="new" component={HomePage} onEnter={setFilter.bind(null, 'new')} />

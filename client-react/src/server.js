@@ -40,6 +40,8 @@ server.use('/api/content', require('./api/content').default);
 // Register server-side rendering middleware
 // -----------------------------------------------------------------------------
 server.get('*', async (req, res, next) => {
+  console.log('req.cookies', req.cookies);
+  reactCookie.plugToRequest(req, res);
   try {
     const store = configureStore();
     match({ routes: routes(store), location: req.url }, (error, redirectLocation, renderProps) => {
@@ -60,7 +62,6 @@ server.get('*', async (req, res, next) => {
         onSetMeta: (key, value) => data[key] = value,
         onPageNotFound: () => statusCode = 404
       };
-      reactCookie.plugToRequest(req, res);
       data.body = ReactDOMServer.renderToString(
         <Provider store={store}>
           <ContextHolder context={context}>

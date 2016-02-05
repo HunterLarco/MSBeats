@@ -14,22 +14,33 @@ class LinkListItem extends Component {
 		dispatch: PropTypes.func.isRequired
 	};
 
+	constructor() {
+		super();
+		this.state = {
+			isUpvoted: false
+		};
+	}
+
+	componentWillMount() {
+		this.setState({ isUpvoted: this.props.item.voteStatus === 1 });
+	}
+
 	onClick(e) {
 		e.preventDefault();
-		console.log();
 		const { dispatch } = this.props;
 		const { linkid } = this.props.item;
+		this.setState({ isUpvoted: true });
 		dispatch(upvoteLink(linkid));
 	}
 
 	render() {
 		console.log(this.props.item);
-		const { url, votes, title, user, created, voteStatus } = this.props.item;
-		const isVoteActive = (voteStatus == 1 ? 'is-active' : '')
+		const { url, votes, title, user, created, voteStatus, rank } = this.props.item;
+		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created*1000).fromNow();
 		return (
 			<div className={s.root}>
-				<div className={s.index}>1.</div>
+				<div className={s.index}>{rank}.</div>
 				<div className={s.upvoteContainer}>
 					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)}></span>
 				</div>

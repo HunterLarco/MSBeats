@@ -14,13 +14,15 @@ import cx from 'classnames';
 import { IndexLink } from 'react-router';
 import Navigation from '../Navigation';
 
+
 class Header extends Component {
 
   render() {
     return (
       <div className={cx(s.root, 'Pane Inner')}>
         <div className={s.content}>
-          <IndexLink className={s.title} to="/">
+          <IndexLink className={s.title} to="top">
+            <img className={s.logo} src={require('./logo.svg')}></img>
             <span>Make School News</span>
           </IndexLink>
           <Navigation />

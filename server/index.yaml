@@ -27,3 +27,10 @@ indexes:
   - name: userkey
   - name: created
     direction: desc
+
+- kind: Link
+  properties:
+  - name: votes
+    direction: desc
+  - name: created
+    direction: desc
