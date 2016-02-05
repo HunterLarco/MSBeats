@@ -109,6 +109,10 @@ class Link(ndb.Model):
     return self.userkey.get()
   
   @classmethod
+  def queryNew(cls, count=30):
+    return cls.query().order(-cls.created).fetch(count)
+  
+  @classmethod
   def queryTop(cls, count=30):
     return cls.query().order(-cls.votes).fetch(count)
   

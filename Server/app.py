@@ -96,6 +96,16 @@ class TopLinksHandler(RequestHandler):
     }
 
 
+class NewLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, user=None):
+    return {
+      'links': map(lambda x: x.toDict(), Link.queryNew())
+    }
+
+
 class TrendingLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
@@ -112,6 +122,7 @@ app = webapp2.WSGIApplication([
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
   ('/api/links/top/?', TopLinksHandler),
+  ('/api/links/new/?', NewLinksHandler),
   ('/api/links/trending/?', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
   ('/api/users/info/?', UserInfoHandler)
