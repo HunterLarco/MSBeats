@@ -1,0 +1,9 @@
+input {
+  font-family: $font-family-sans-serif;
+  font-size: $font-size-80;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}

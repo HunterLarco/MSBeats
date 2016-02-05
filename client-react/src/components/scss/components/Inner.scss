@@ -1,0 +1,17 @@
+:global .Inner {
+	margin: 0 auto;
+	padding: 0 120px;
+	max-width: $bp-lap-s;
+}
+
+@media screen and (max-width: $bp-palm-l) {
+  :global .Inner {
+    padding: 0 4%;
+  }
+}
+
+@media screen and (min-width: $bp-hand-s) and (max-width: $bp-hand-l) {
+  :global .Inner {
+    padding: 0 4%;
+  }
+}

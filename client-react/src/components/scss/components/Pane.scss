@@ -1,0 +1,45 @@
+:global .Pane {
+	position: relative;
+
+  &:before,
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+:global .Pane--tint {
+	background-color: $color-tint;
+}
+
+:global .Pane--dark {
+	background-color: $color-dark;
+	color: white;
+}
+
+:global .Pane--white {
+	background-color: white;
+}
+
+:global .Pane--well {
+	background-color: $color-well;
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+	border-radius: 5px;
+}
+
+:global .Pane--full-height {
+	min-height: 100vh;
+	box-shadow: 0 1px 4px -2px black;
+}
+
+
+:global .Form {
+  margin-left: -25px;
+  margin-right: -25px;
+  margin-top: 20px;
+}
+
+:global .Form-inner {
+  margin: 25px;
+}

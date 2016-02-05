@@ -1,0 +1,34 @@
+/**
+ * Media
+ * ------------------------------------------------------
+ * Everything between small and medium:
+ * @include media($break-small, $break-medium) { ... }
+ *
+ * Everything up to large:
+ * @include media(0, $break-large) { ... }
+ *
+ * Everything beyond large:
+ * @include media($break-large) { ...}
+ * ------------------------------------------------------
+ * @param {integer} $min-width, can be 0
+ * @param {integer} $max-width, can be 0 to ignore
+ */
+@define-mixin media $min-width, $max-width: 0 {
+  @if $min-width == 0 {
+    @media screen and (max-width: calc($max-width - 1px)) {
+      @mixin-content;
+    }
+  }
+  @else {
+    @if $max-width == 0 {
+      @media screen and (min-width: $min-width) {
+        @mixin-content;
+      }
+    }
+    @else {
+      @media screen and (min-width: $min-width) and (max-width: calc($max-width - 1px)) {
+        @mixin-content;
+      }
+    }
+  }
+}

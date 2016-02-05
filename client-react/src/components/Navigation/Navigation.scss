@@ -1,0 +1,22 @@
+@import '../variables.scss';
+
+.root {
+  display: inline-block;
+}
+
+.link {
+  color: $color-text-body;
+  &:global(.is-active) {
+    font-weight: bold;
+  }
+}
+
+.isDisabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.middot {
+  display: inline-block;
+  margin: 0 4px;
+}

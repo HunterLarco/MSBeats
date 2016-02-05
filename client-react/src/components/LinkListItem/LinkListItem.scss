@@ -1,0 +1,90 @@
+@import '../variables.scss';
+
+.root {
+  display: flex;
+  margin: 5px 0;
+  margin-left: -70px;
+  padding: 5px 0;
+
+  @mixin media $bp-hand-s, $bp-hand-l-max {
+    background-color: red;
+  }
+}
+
+.index {
+  position: relative;
+  margin-top: 9px;
+  padding-right: 8px;
+  text-align: right;
+  opacity: .3;
+  flex-basis: 25px;
+}
+
+.upvoteContainer {
+  flex-basis: 46px;
+}
+
+.upvote {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: 2px 0;
+  cursor: pointer;
+  transition: opacity .05s ease-out;
+  opacity: .3;
+  /* Weird cutoff bugfix Chrome */
+  border: 1px solid transparent;
+  border-radius: 50px;
+  background-image: url('./chevron-up.svg');
+  background-repeat: no-repeat;
+  background-position: 50% 46%;
+  background-size: 12px;
+  box-shadow: inset 0 0 0 1px;
+
+  &:active, &.is-active {
+    opacity: .8;
+  }
+
+  @mixin media 0, $bp-hand-l-max {
+    width: 14px;
+    margin: 8px 0;
+  }
+}
+
+.content {
+  overflow: hidden;
+  flex: 1;
+}
+
+.linkTitle {
+  font-weight: 500;
+  color: $color-link;
+  margin-right: 4px;
+
+  @mixin media 0, $bp-hand-s-mx {
+    font-size: $font-size-80;
+  }
+}
+.small, .linkSource {
+  font-size: $font-size-70;
+  color: $color-text-meta;
+}
+
+.linkSource {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.subTitle {
+  font-size: $font-size-70;
+  display: block;
+  margin-bottom: 5px;
+  color: $color-text-meta;
+
+  @mixin media 0, $bp-hand-l-max {
+    font-size: $font-size-70;
+  }
+}

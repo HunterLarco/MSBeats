@@ -44,9 +44,9 @@ def JSONResponse(funct):
     self.response.headers['Content-Type'] = 'application/json'
     # TODO: make sure this doesn't end up on a server
     self.response.headers['Access-Control-Allow-Origin'] = '*'
-    # self.response.headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-    # self.response.headers['Access-Control-Request-Method'] = '*'
-    # self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+    self.response.headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
+    self.response.headers['Access-Control-Request-Method'] = '*'
+    self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     self.response.out.write(flattened)
   return helper
 

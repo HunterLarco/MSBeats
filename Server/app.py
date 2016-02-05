@@ -36,6 +36,10 @@ class SignupHandler(webapp2.RequestHandler):
 
 class LoginHandler(webapp2.RequestHandler):
   @JSONResponse
+  def options(self):
+    return
+
+  @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
   @BodyParameters('emailusername', 'password')
@@ -45,6 +49,11 @@ class LoginHandler(webapp2.RequestHandler):
 
 class LinksHandler(webapp2.RequestHandler):
   @JSONResponse
+  def options(self):
+    return
+
+  @JSONResponse
+  @RequireAuth
   def get(self):
     return {
       'links': map(lambda x: x.toDict(), Link.queryTop())
@@ -53,7 +62,7 @@ class LinksHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
+  @RequireAuth
   @BodyParameters('title', 'url')
   def post(self, title=None, url=None, user=None):
     return Link.create(title, url, user).toDict()
@@ -63,7 +72,7 @@ class VoteHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
+  @RequireAuth
   @UnpackModelByID(Link, 'linkid', 'link')
   @BodyParameters('upvoted')
   def post(self, link=None, user=None, upvoted=None):
@@ -74,7 +83,7 @@ class UserInfoHandler(webapp2.RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
+  @RequireAuth
   @UnpackModelByID(User, 'userid', 'target')
   def post(self, target=None, user=None, json=None):
     return target.toPublicDict()
