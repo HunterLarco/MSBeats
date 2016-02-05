@@ -41,6 +41,9 @@ export default function routes (store) {
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />
       </Route>
+      <Route path="/comments/:" component={CommentsPage}>
+
+      </Route>
       <Route path="*" component={NotFoundPage} />
     </Route>
   );

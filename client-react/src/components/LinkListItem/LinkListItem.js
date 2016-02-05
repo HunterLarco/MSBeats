@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { upvoteLink } from '../../actions'
 import moment from 'moment';
 import cx from 'classnames';
+import { Link } from 'react-router';
 
 class LinkListItem extends Component {
 
@@ -35,7 +36,8 @@ class LinkListItem extends Component {
 
 	render() {
 		console.log(this.props.item);
-		const { url, votes, title, user, created, voteStatus, rank } = this.props.item;
+		const { url, votes, title, user, created, voteStatus, rank, commentrootid } = this.props.item;
+		const commentLink = `comments/${commentrootid}`
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created*1000).fromNow();
 		return (
@@ -46,15 +48,17 @@ class LinkListItem extends Component {
 				</div>
 				<div className={s.content}>
 					<a className={s.linkTitle} href={url}>{title}</a>
-					<small className={s.small}>(<a className={s.linkSource} href="/">wikipedia.com</a>)</small>
 					<span className={s.subTitle}>
 						<span className={s.points}>{votes} points</span>
 						&nbsp;by <span className={s.author}>{user.username}</span>
 						&nbsp;<span className={s.time}>{fromNow}</span>
+						&nbsp;<Link to={commentLink}>comments</Link>
 					</span>
 				</div>
 			</div>
 		);
+
+		// <small className={s.small}>(<a className={s.linkSource} href="/">wikipedia.com</a>)</small>
 	}
 
 }
