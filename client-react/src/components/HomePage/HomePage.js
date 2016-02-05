@@ -16,6 +16,7 @@ import { fetchLinksIfNeeded, selectLinksFilter } from '../../actions';
 import LoginPage from '../LoginPage';
 import Content from '../Content';
 import { Link } from 'react-router';
+import cx from 'classnames';
 
 const title = 'News'
 
@@ -59,27 +60,35 @@ class HomePage extends Component {
     if (!auth.isAuthenticated) {
       return (
         <div>
-          <Content>
-            <p>You have to be logged in to see the news</p>
-          </Content>
+          <div className="Inner">
+            <Content>
+              <p>You have to be logged in to see the news</p>
+            </Content>
+          </div>
           <LoginPage />
         </div>
       )
     }
 
     return (
-      <div className={s.root}>
-        <div className={s.filter}>
-          <Link className={s.filterLink} to="top">top</Link>
-          <Link className={s.filterLink} to="trending">trending</Link>
-          <Link className={s.filterLink} to="new">new</Link>
+      <div>
+        <div className={cx(s.filterPane, 'Pane')}>
+          <div className="Inner">
+            <div className={s.filter}>
+              <Link className={s.filterLink} to="top">top</Link>
+              <Link className={s.filterLink} to="trending">trending</Link>
+              <Link className={s.filterLink} to="new">new</Link>
+            </div>
+          </div>
         </div>
-        {isFetching && items.length === 0 &&
-          <Content>
-            <p>Loading...</p>
-          </Content>
-        }
-        {items.map((item) => <LinkListItem key={item.linkid} item={item} />)}
+        <div className={cx(s.root, 'Inner')}>
+          {isFetching && items.length === 0 &&
+            <Content>
+              <p>Loading...</p>
+            </Content>
+          }
+          {items.map((item) => <LinkListItem key={item.linkid} item={item} />)}
+        </div>
       </div>
     );
   }

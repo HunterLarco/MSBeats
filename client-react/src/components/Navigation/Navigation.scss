@@ -2,10 +2,11 @@
 
 .root {
   display: inline-block;
+  color: white;
 }
 
 .link {
-  color: $color-text-body;
+  color: white;
   &:global(.is-active) {
     font-weight: bold;
   }

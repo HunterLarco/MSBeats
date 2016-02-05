@@ -14,6 +14,7 @@ import { loginUser } from '../../actions'
 import { connect } from 'react-redux'
 import FormRow from '../FormRow'
 import Content from '../Content'
+import cx from 'classnames';
 
 const title = 'Log In';
 
@@ -56,7 +57,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div className={s.root}>
+      <div className={cx(s.root, 'Inner')}>
         <form onSubmit={this.handleSubmit.bind(this)} className="Pane Pane--well Form">
           <div className="Form-inner">
             <FormRow label="username/email" name="title" onChange={this.handleUsernameChange.bind(this)} />

@@ -18,6 +18,11 @@
   max-width: $max-content-width;
 }
 
+.filterPane {
+  border-bottom: 1px solid $color-tint;
+  padding: 10px 0;
+  margin-bottom: 15px;
+}
 
 .filters {
 
@@ -26,5 +31,7 @@
 .filterLink {
   display: inline-block;
   text-transform: uppercase;
-  color: $color-bodytext;
+  color: $color-text-body;
+  font-size: $font-size-80;
+  margin-right: 15px;
 }

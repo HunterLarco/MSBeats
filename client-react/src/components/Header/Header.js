@@ -10,6 +10,7 @@
 import React, { Component } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Header.scss';
+import cx from 'classnames';
 import { IndexLink } from 'react-router';
 import Navigation from '../Navigation';
 
@@ -17,7 +18,7 @@ class Header extends Component {
 
   render() {
     return (
-      <div className={s.root}>
+      <div className={cx(s.root, 'Pane Inner')}>
         <div className={s.content}>
           <IndexLink className={s.title} to="/">
             <span>Make School News</span>

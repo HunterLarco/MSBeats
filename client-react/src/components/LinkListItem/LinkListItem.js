@@ -3,6 +3,7 @@ import s from './LinkListItem.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux'
 import { upvoteLink } from '../../actions'
+import moment from 'moment';
 
 class LinkListItem extends Component {
 
@@ -20,7 +21,9 @@ class LinkListItem extends Component {
 	}
 
 	render() {
-		const { url, votes, title, user } = this.props.item;
+		console.log(this.props.item);
+		const { url, votes, title, user, created } = this.props.item;
+		const fromNow = moment(created).fromNow();
 		return (
 			<div className={s.root}>
 				<div className={s.index}>1.</div>
@@ -28,12 +31,12 @@ class LinkListItem extends Component {
 					<a className={s.upvote} onClick={this.onClick.bind(this)}></a>
 				</div>
 				<div className={s.content}>
-					<a className={s.linkTitle} href={url}>Tor: The second generation onion router – annotated version</a>
+					<a className={s.linkTitle} href={url}>{title}</a>
 					<small className={s.small}>(<a className={s.linkSource} href="/">wikipedia.com</a>)</small>
 					<span className={s.subTitle}>
 						<span className={s.points}>{votes} points</span>
 						&nbsp;by <span className={s.author}>{user.username}</span>
-					 	&nbsp;<span className={s.time}>2 hours ago</span>
+						&nbsp;<span className={s.time}>{fromNow}</span>
 					</span>
 				</div>
 			</div>

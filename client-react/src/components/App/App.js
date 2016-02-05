@@ -32,7 +32,7 @@ class App extends Component {
 
   render() {
     return !this.props.error ? (
-      <div className="Pane Pane--white Pane--full-height Inner">
+      <div className="Pane Pane--white Pane--full-height Container">
         <Header />
         {this.props.children}
       </div>

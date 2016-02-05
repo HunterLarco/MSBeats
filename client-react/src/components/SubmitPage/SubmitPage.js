@@ -62,25 +62,29 @@ class SubmitPage extends Component {
     if (!this.props.auth.isAuthenticated) {
       return (
         <div>
-          <Content>
-            <p>You have to be Logged in to submit</p>
-          </Content>
+          <div className="Inner">
+            <Content>
+              <p>You have to be logged in to submit</p>
+            </Content>
+          </div>
           <LoginPage />
         </div>
       )
     }
     return (
-      <div className={s.root}>
-        <form onSubmit={this.handleSubmit.bind(this)} ref="form" className="Pane Pane--well Form">
-          <div className="Form-inner">
-            <FormRow label="title" name="title" onChange={this.handleTitleChange.bind(this)} />
-            <FormRow label="url" name="url" onChange={this.handleUrlChange.bind(this)} />
-            <Content>
-              <p>Only people who are part of this organization can see your post.</p>
-            </Content>
-            <button className="Button Button--neutral" type="submit">Submit</button>
-          </div>
-        </form>
+      <div className="Inner">
+        <div className={s.root}>
+          <form onSubmit={this.handleSubmit.bind(this)} ref="form" className="Pane Pane--well Form">
+            <div className="Form-inner">
+              <FormRow label="title" name="title" onChange={this.handleTitleChange.bind(this)} />
+              <FormRow label="url" name="url" onChange={this.handleUrlChange.bind(this)} />
+              <Content>
+                <p>Only people who are part of this organization can see your post.</p>
+              </Content>
+              <button className="Button Button--neutral" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

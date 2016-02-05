@@ -12,16 +12,18 @@
 .root {
 	position: relative;
 	font-weight: 500;
+	background-color: $color-dark;
+	-webkit-font-smoothing: antialiased;
 }
 
 .content {
-	margin: 20px 0 10px;
+	margin: 15px 0;
 }
 
 .navigation,
 .title {
 	display: inline-block;
-	color: $color-text-body;
+	color: white;
 	font-weight: bold;
 }
 
