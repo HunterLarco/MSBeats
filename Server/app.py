@@ -141,7 +141,7 @@ class PostLinkCommentsHandler(RequestHandler):
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
   @RequireAuth('user')
-  @UnpackModelByID(Comment, 'commentrootid', 'root')
+  @UnpackModelByID(Comment, 'commentid', 'root')
   @BodyParameters('text')
   def post(self, user=None, text=None, root=None):
     return root.comment(text, user).toDict(user=user)
@@ -153,12 +153,11 @@ class GetLinkCommentsHandler(RequestHandler):
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
   @RequireAuth('user')
-  @UnpackModelByID(Comment, 'commentrootid', 'root')
-  def post(self, user=None, root=None, json=None):
-    return {
-      'comments': root.toDict()['children'],
-      'commentrootid': root.key.id()
-    }
+  @UnpackModelByID(Link, 'linkid', 'link')
+  def post(self, user=None, link=None, json=None):
+    linkDict = link.toDict()
+    linkDict['comments'] = link.comments.get().toDict()['children']
+    return linkDict
 
 
 # This part here maps the routes to a RequestHandler
