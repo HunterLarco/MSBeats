@@ -91,9 +91,9 @@ class SubmitPage extends Component {
 
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ auth,  }) {
   return {
-    auth: state.auth
+    auth
   }
 }
 

@@ -36,6 +36,7 @@ export default function routes (store) {
         <Route path="top" component={HomePage} onEnter={setFilter.bind(null, 'top')} />
         <Route path="trending" component={HomePage} onEnter={setFilter.bind(null, 'trending')} />
         <Route path="new" component={HomePage} onEnter={setFilter.bind(null, 'new')} />
+        <Route path="mine" component={HomePage} onEnter={setFilter.bind(null, 'mine')} />
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />

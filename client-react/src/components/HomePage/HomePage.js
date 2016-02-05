@@ -78,6 +78,7 @@ class HomePage extends Component {
               <Link className={s.filterLink} to="top">top</Link>
               <Link className={s.filterLink} to="trending">trending</Link>
               <Link className={s.filterLink} to="new">new</Link>
+              <Link className={s.filterLink} to="mine">mine</Link>
             </div>
           </div>
         </div>

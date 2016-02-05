@@ -1,6 +1,7 @@
 import LinksApiEndpoint from '../api-endpoints/LinksApiEndpoint';
 import UserApiEndpoint from '../api-endpoints/UserApiEndpoint';
 import reactCookie from 'react-cookie';
+import { browserHistory } from 'react-router';
 // Make sure to export everything in this file that needs exporting
 
 export const SET_HEADER_SEARCH_FOCUS = 'SET_HEADER_SEARCH_FOCUS'
@@ -83,9 +84,13 @@ function requestUpvoteLink() {
 }
 
 function receiveUpvoteLink(success) {
-  return {
-    type: RECEIVE_UPVOTE_LINK,
-    success
+  console.log('receiveUpvoteLink', success);
+  return dispatch => {
+    dispatch(invalidateLinks());
+    return {
+      type: RECEIVE_UPVOTE_LINK,
+      success
+    };
   }
 }
 
@@ -93,7 +98,7 @@ export function upvoteLink(linkid) {
   return dispatch => {
     dispatch(requestUpvoteLink())
     return LinksApiEndpoint.upvote(linkid)
-      .then(json => dispatch(receiveUpvoteLink(json.success)))
+      .then(response => dispatch(receiveUpvoteLink(response.success)))
   }
 }
 
@@ -212,6 +217,9 @@ export function submitLink(title, url) {
       .then(response => {
         if (response.success) {
           dispatch(receiveSubmitLink());
+          dispatch(invalidateLinks());
+          dispatch(fetchLinks('new'));
+          browserHistory.push('/new');
         } else {
           dispatch(submitLinkError(response.message));
         }

@@ -43,8 +43,9 @@
   background-size: 12px;
   box-shadow: inset 0 0 0 1px;
 
-  &:active, &.is-active {
+  &:active, &:global(.is-active) {
     opacity: .8;
+    cursor: default;
   }
 
   @mixin media 0, $bp-hand-l-max {
