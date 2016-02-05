@@ -26,6 +26,15 @@ ERROR_MAP = {
 }
 
 
+def rankLinkList(links, perpage=30, page=0, user=None):
+  json = []
+  for i, link in enumerate(links):
+    dic = link.toDict(user=user)
+    dic['rank'] = i+1 + perpage*page
+    json.append(dic)
+  return json
+
+
 class RequestHandler(webapp2.RequestHandler):
   @AccessControlAllowOrigin()
   def options(self):
@@ -92,7 +101,7 @@ class UserLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(user=user), Link.queryByUser(user))
+      'links': rankLinkList(Link.queryByUser(user), user=user)
     }
 
 
@@ -102,7 +111,7 @@ class TopLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(user=user), Link.queryTop())
+      'links': rankLinkList(Link.queryTop(), user=user)
     }
 
 
@@ -112,7 +121,7 @@ class NewLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(user=user), Link.queryNew())
+      'links': rankLinkList(Link.queryNew(), user=user)
     }
 
 
@@ -122,7 +131,7 @@ class TrendingLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(user=user), TrendingCounter.queryTrending())
+      'links': rankLinkList(TrendingCounter.queryTrending(), user=user)
     }
 
 
