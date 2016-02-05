@@ -15,6 +15,14 @@ export function setHeaderSearchFocus(isFocused) {
 export const INVALIDATE_LINKS = 'INVALIDATE_LINKS'
 export const REQUEST_LINKS = 'REQUEST_LINKS'
 export const RECEIVE_LINKS = 'RECEIVE_LINKS'
+export const SELECT_LINKS_FILTER = 'SELECT_LINKS_FILTER'
+
+export function selectLinksFilter(filter) {
+  return {
+    type: SELECT_LINKS_FILTER,
+    filter
+  }
+}
 
 export function invalidateLinks() {
   return {
@@ -22,30 +30,33 @@ export function invalidateLinks() {
   }
 }
 
-function requestLinks() {
+function requestLinks(filter) {
   return {
-    type: REQUEST_LINKS
+    type: REQUEST_LINKS,
+    filter
   }
 }
 
-function receiveLinks(response) {
+function receiveLinks(filter, response) {
   return {
     type: RECEIVE_LINKS,
     items: response.links,
-    receivedAt: Date.now()
+    receivedAt: Date.now(),
+    filter
   }
 }
 
-function fetchLinks() {
+function fetchLinks(filter) {
   return dispatch => {
-    dispatch(requestLinks())
-    return LinksApiEndpoint.get().then(response => dispatch(receiveLinks(response)))
+    dispatch(requestLinks(filter))
+    return LinksApiEndpoint.get(filter)
+      .then(response => dispatch(receiveLinks(filter, response)))
   }
 }
 
-function shouldFetchLinks(state) {
-  const links = state.links.items
-  if (!links.length) {
+function shouldFetchLinks(state, filter) {
+  const links = state.linksByFilter[filter];
+  if (!links) {
     return true
   }
   if (links.isFetching) {
@@ -54,10 +65,10 @@ function shouldFetchLinks(state) {
   return links.didInvalidate
 }
 
-export function fetchLinksIfNeeded() {
+export function fetchLinksIfNeeded(filter) {
   return (dispatch, getState) => {
-    if (shouldFetchLinks(getState())) {
-      return dispatch(fetchLinks())
+    if (shouldFetchLinks(getState(), filter)) {
+      return dispatch(fetchLinks(filter))
     }
   }
 }
@@ -78,10 +89,10 @@ function receiveUpvoteLink(success) {
   }
 }
 
-export function upvoteLink(linkid, loginid) {
+export function upvoteLink(linkid) {
   return dispatch => {
     dispatch(requestUpvoteLink())
-    return LinksApiEndpoint.upvote(linkid, loginid)
+    return LinksApiEndpoint.upvote(linkid)
       .then(json => dispatch(receiveUpvoteLink(json.success)))
   }
 }
@@ -167,4 +178,43 @@ export function logoutUser() {
   return {
     type: LOGOUT
   };
+}
+
+export const SUBMIT_LINK_REQUEST = 'SUBMIT_LINK_REQUEST'
+export const SUBMIT_LINK_SUCCESS = 'SUBMIT_LINK_SUCCESS'
+export const SUBMIT_LINK_FAILURE = 'SUBMIT_LINK_FAILURE'
+
+function requestSubmitLink() {
+  return {
+    type: SUBMIT_LINK_REQUEST,
+    isFetching: true
+  }
+}
+
+function receiveSubmitLink() {
+  return {
+    type: SUBMIT_LINK_SUCCESS,
+    isFetching: false
+  }
+}
+
+function submitLinkError(message) {
+  return {
+    type: SUBMIT_LINK_FAILURE,
+    message
+  }
+}
+
+export function submitLink(title, url) {
+  return dispatch => {
+    dispatch(requestSubmitLink());
+    return LinksApiEndpoint.post({ title, url })
+      .then(response => {
+        if (response.success) {
+          dispatch(receiveSubmitLink());
+        } else {
+          dispatch(submitLinkError(response.message));
+        }
+      });
+  }
 }

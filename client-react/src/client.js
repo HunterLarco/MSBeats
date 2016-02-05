@@ -65,11 +65,12 @@ function run() {
   const location = `${pathname}${search}${hash}`;
   const initialState = window.__INITIAL_STATE__;
   const store = configureStore(initialState);
-  match({ routes, location }, (error, redirectLocation, renderProps) => {
+  const actualRoutes = routes(store);
+  match({ routes: actualRoutes, location }, (error, redirectLocation, renderProps) => {
     render(
       <Provider store={store}>
         <ContextHolder context={context}>
-          <Router {...renderProps} children={routes} history={Location} />
+          <Router {...renderProps} children={actualRoutes} history={Location} />
         </ContextHolder>
       </Provider>,
       appContainer

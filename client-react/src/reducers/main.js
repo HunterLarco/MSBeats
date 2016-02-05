@@ -13,6 +13,15 @@ function isHeaderSearchFocused (state = false, action) {
   }
 }
 
+function selectedLinksFilter (state = 'top', action) {
+  switch (action.type) {
+    case ActionTypes.SELECT_LINKS_FILTER:
+      return action.filter;
+    default:
+      return state;
+  }
+}
+
 function links (state = {
   isFetching: false,
   didInvalidate: false,
@@ -39,6 +48,19 @@ function links (state = {
   }
 }
 
+function linksByFilter(state = {}, action) {
+  switch (action.type) {
+    case ActionTypes.INVALIDATE_LINKS:
+    case ActionTypes.RECEIVE_LINKS:
+    case ActionTypes.REQUEST_LINKS:
+      return Object.assign({}, state, {
+        [action.filter]: links(state[action.filter], action)
+      })
+    default:
+      return state
+  }
+}
+
 function getUserFromStorage() {
   const user = localStorage.getItem('user')
   return user ? JSON.parse(user) : null
@@ -49,7 +71,6 @@ function auth (state = {
   isAuthenticated: !!reactCookie.load('loginid'),
   user: canUseDOM ? getUserFromStorage() : null
 }, action) {
-  console.log('login', state, action);
   switch (action.type) {
     case ActionTypes.LOGIN_REQUEST:
       return Object.assign({}, state, {
@@ -81,7 +102,8 @@ function auth (state = {
 }
 
 export const rootReducer = combineReducers({
-  links,
+  selectedLinksFilter,
+  linksByFilter,
   isHeaderSearchFocused,
   auth
 })

@@ -8,17 +8,15 @@ class LinkListItem extends Component {
 
 	static propTypes = {
 		className: PropTypes.string,
-		item: PropTypes.object.isRequried
+		item: PropTypes.object.isRequired,
+		dispatch: PropTypes.func.isRequired
 	};
 
 	onClick(e) {
 		e.preventDefault();
 		const { dispatch } = this.props;
 		const { linkid } = this.props.item;
-		const { userid } = this.props.item.user;
 		dispatch(upvoteLink(linkid));
-		// username: testaccount
-		// password
 	}
 
 	render() {

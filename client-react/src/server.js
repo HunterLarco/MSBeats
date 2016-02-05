@@ -41,7 +41,8 @@ server.use('/api/content', require('./api/content').default);
 // -----------------------------------------------------------------------------
 server.get('*', async (req, res, next) => {
   try {
-    match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
+    const store = configureStore();
+    match({ routes: routes(store), location: req.url }, (error, redirectLocation, renderProps) => {
       if (error) {
         throw error;
       }
@@ -60,7 +61,6 @@ server.get('*', async (req, res, next) => {
         onPageNotFound: () => statusCode = 404
       };
       reactCookie.plugToRequest(req, res);
-      const store = configureStore();
       data.body = ReactDOMServer.renderToString(
         <Provider store={store}>
           <ContextHolder context={context}>

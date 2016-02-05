@@ -11,10 +11,11 @@ import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './HomePage.scss';
 import LinkListItem from '../LinkListItem';
-import { connect } from 'react-redux'
-import { fetchLinksIfNeeded } from '../../actions'
-import LoginPage from '../LoginPage'
-import Content from '../Content'
+import { connect } from 'react-redux';
+import { fetchLinksIfNeeded, selectLinksFilter } from '../../actions';
+import LoginPage from '../LoginPage';
+import Content from '../Content';
+import { Link } from 'react-router';
 
 const title = 'News'
 
@@ -23,11 +24,15 @@ class HomePage extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
-    auth: PropTypes.object.isRequired
+    selectedLinksFilter: PropTypes.string.isRequired,
+    auth: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    isFetching: PropTypes.bool.isRequired
   };
 
   static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired
+    onSetTitle: PropTypes.func.isRequired,
+    router: PropTypes.object
   };
 
   componentWillMount() {
@@ -35,12 +40,22 @@ class HomePage extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props
-    dispatch(fetchLinksIfNeeded())
+    const { dispatch, selectedLinksFilter, auth } = this.props
+    if (auth.isAuthenticated) {
+        dispatch(fetchLinksIfNeeded(selectedLinksFilter));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedLinksFilter !== this.props.selectedLinksFilter) {
+      const { dispatch, selectedLinksFilter } = nextProps;
+      dispatch(fetchLinksIfNeeded(selectedLinksFilter));
+    }
   }
 
   render() {
-    const { items, auth } = this.props;
+    const { items, auth, isFetching } = this.props;
+
     if (!auth.isAuthenticated) {
       return (
         <div>
@@ -54,17 +69,37 @@ class HomePage extends Component {
 
     return (
       <div className={s.root}>
-        {items.map((item) => <LinkListItem item={item} />)}
+        <div className={s.filter}>
+          <Link className={s.filterLink} to="top">top</Link>
+          <Link className={s.filterLink} to="trending">trending</Link>
+          <Link className={s.filterLink} to="new">new</Link>
+        </div>
+        {isFetching && items.length === 0 &&
+          <Content>
+            <p>Loading...</p>
+          </Content>
+        }
+        {items.map((item) => <LinkListItem key={item.linkid} item={item} />)}
       </div>
     );
   }
 
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ linksByFilter, selectedLinksFilter, auth }) {
+  const {
+    isFetching,
+    items
+  } = linksByFilter[selectedLinksFilter] || {
+    isFetching: true,
+    items: []
+  }
+
   return {
-    items: state.links.items,
-    auth: state.auth
+    isFetching,
+    items,
+    selectedLinksFilter,
+    auth
   }
 }
 

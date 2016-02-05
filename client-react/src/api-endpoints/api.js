@@ -23,7 +23,6 @@ export function get (endpoint) {
 }
 
 export function post (endpoint, body) {
-	console.log( Object.assign(getAuthorizationHeader(), headers));
 	return fetch(apiEndpoint(endpoint), {
 		method: 'POST',
 		headers: Object.assign(getAuthorizationHeader(), headers),

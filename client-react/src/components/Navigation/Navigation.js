@@ -38,10 +38,7 @@ class Navigation extends Component {
       <div className={cx(s.root, this.props.className)} role="navigation">
         <Link className={s.link} to="submit">submit</Link>
         {!auth.isAuthenticated ? (
-          <span>
-            <span className={s.middot}>&middot;</span>
-            <Link className={s.link} to="login">login</Link>
-          </span>
+          <span></span>
         ) : (
           <span>
             <span className={s.middot}>&middot;</span>
