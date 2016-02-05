@@ -60,14 +60,15 @@ class Link(ndb.Model):
   created  = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
   votes    = ndb.IntegerProperty  (indexed=True, default=0)
   
-  def toDict(self):
+  def toDict(self, user=None):
     return {
-      'title'   : self.title,
-      'url'     : self.url,
-      'user'    : self.getUser().toPublicDict(),
-      'created' : str(self.created),
-      'votes'   : self.votes,
-      'linkid'  : self.key.id()
+      'title'      : self.title,
+      'url'        : self.url,
+      'user'       : self.getUser().toPublicDict(),
+      'created'    : str(self.created),
+      'votes'      : self.votes,
+      'linkid'     : self.key.id(),
+      'voteStatus' : self.getVotedStatus(user) if user else None
     }
   
   def getVotedStatus(self, user):

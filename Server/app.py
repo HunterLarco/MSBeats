@@ -92,7 +92,7 @@ class TopLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(), Link.queryTop())
+      'links': map(lambda x: x.toDict(user=user), Link.queryTop())
     }
 
 
@@ -102,7 +102,7 @@ class NewLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(), Link.queryNew())
+      'links': map(lambda x: x.toDict(user=user), Link.queryNew())
     }
 
 
@@ -112,7 +112,7 @@ class TrendingLinksHandler(RequestHandler):
   @RequireAuth('user')
   def get(self, user=None):
     return {
-      'links': map(lambda x: x.toDict(), TrendingCounter.queryTrending())
+      'links': map(lambda x: x.toDict(user=user), TrendingCounter.queryTrending())
     }
 
 
