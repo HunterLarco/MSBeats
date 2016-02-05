@@ -13,6 +13,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Navigation.scss';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { logoutUser } from '../../actions';
 
 class Navigation extends Component {
 
@@ -20,6 +21,16 @@ class Navigation extends Component {
     className: PropTypes.string,
     auth: PropTypes.object.isRequired
   };
+
+  constructor() {
+    super();
+  }
+
+  handleLogout(e) {
+    e.preventDefault();
+    const { dispatch } = this.props;
+    dispatch(logoutUser());
+  }
 
   render() {
     const { auth } = this.props;
@@ -31,7 +42,12 @@ class Navigation extends Component {
             <span className={s.middot}>&middot;</span>
             <Link className={s.link} to="login">login</Link>
           </span>
-        ) : null }
+        ) : (
+          <span>
+            <span className={s.middot}>&middot;</span>
+            <Link className={s.link} to="" onClick={this.handleLogout.bind(this)}>logout</Link>
+          </span>
+        )}
       </div>
     );
   }

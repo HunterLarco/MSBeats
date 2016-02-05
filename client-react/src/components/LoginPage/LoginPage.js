@@ -28,10 +28,6 @@ class LoginPage extends Component {
     auth: PropTypes.object.isRequired
   };
 
-  componentWillMount() {
-    this.context.onSetTitle(title);
-  }
-
   constructor() {
     super()
     this.state = {
@@ -40,10 +36,14 @@ class LoginPage extends Component {
     }
   }
 
+  componentWillMount() {
+    this.context.onSetTitle(title);
+  }
+
   handleSubmit(e) {
     e.preventDefault()
-    const { dispatch } = this.props
-    dispatch(loginUser(this.state.username, this.state.password))
+    const { dispatch } = this.props;
+    dispatch(loginUser(this.state.username, this.state.password));
   }
 
   handleUsernameChange(e) {
@@ -57,11 +57,11 @@ class LoginPage extends Component {
   render() {
     return (
       <div className={s.root}>
-        <form onSubmit={this.handleSubmit.bind(this)} className='Pane Pane--well Form'>
-          <div className='Form-inner'>
-            <FormRow label='username/email' name='title' onChange={this.handleUsernameChange.bind(this)} />
-            <FormRow label='password' name='url' type='password' onChange={this.handlePasswordChange.bind(this)} />
-            <button className='Button Button--neutral' type='submit'>Login</button>
+        <form onSubmit={this.handleSubmit.bind(this)} className="Pane Pane--well Form">
+          <div className="Form-inner">
+            <FormRow label="username/email" name="title" onChange={this.handleUsernameChange.bind(this)} />
+            <FormRow label="password" name="url" type="password" onChange={this.handlePasswordChange.bind(this)} />
+            <button className="Button Button--neutral" type="submit">Login</button>
           </div>
         </form>
       </div>
@@ -70,10 +70,9 @@ class LoginPage extends Component {
 
 }
 
-function mapStateToProps(state) {
-  console.log(state)
+function mapStateToProps({ auth }) {
   return {
-    auth: state.auth
+    auth
   }
 }
 

@@ -42,11 +42,6 @@ def JSONResponse(funct):
     if not 'success' in response: response['success'] = True
     flattened = json.dumps(response, indent=2)
     self.response.headers['Content-Type'] = 'application/json'
-    # TODO: make sure this doesn't end up on a server
-    self.response.headers['Access-Control-Allow-Origin'] = '*'
-    self.response.headers['Access-Control-Allow-Methods'] = 'POST, PUT, DELETE, GET, OPTIONS'
-    self.response.headers['Access-Control-Request-Method'] = '*'
-    self.response.headers['Access-Control-Allow-Headers'] = 'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     self.response.out.write(flattened)
   return helper
 

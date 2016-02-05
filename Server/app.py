@@ -2,7 +2,7 @@ from google.appengine.ext.webapp import template
 import webapp2
 import os
 
-
+from lib.classes.RequestHandler import *
 from lib.JsonHelpers import *
 from lib.UserHelpers import *
 from lib.ModelHelpers import *
@@ -34,11 +34,7 @@ class SignupHandler(webapp2.RequestHandler):
     return User.create(email, password, username).toPrivateDict()
 
 
-class LoginHandler(webapp2.RequestHandler):
-  @JSONResponse
-  def options(self):
-    return
-
+class LoginHandler(RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -89,6 +85,7 @@ class UserInfoHandler(webapp2.RequestHandler):
     return target.toPublicDict()
 
 
+# This part here maps the routes to a RequestHandler
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),

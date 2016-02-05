@@ -1,6 +1,5 @@
-import fetch from '../core/fetch'
-import LinksApiEndpoint from '../api-endpoints/LinksApiEndpoint'
-import UserApiEndpoint from '../api-endpoints/UserApiEndpoint'
+import LinksApiEndpoint from '../api-endpoints/LinksApiEndpoint';
+import UserApiEndpoint from '../api-endpoints/UserApiEndpoint';
 import reactCookie from 'react-cookie';
 // Make sure to export everything in this file that needs exporting
 
@@ -119,8 +118,9 @@ export function upvoteLink(linkid, loginid) {
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+export const LOGOUT = 'LOGOUT'
 
-function requestLogin(username, password) {
+function requestLogin() {
   return {
     type: LOGIN_REQUEST,
     isFetching: true,
@@ -160,4 +160,11 @@ export function loginUser(emailusername, password) {
         }
       })
   }
+}
+
+export function logoutUser() {
+  reactCookie.remove('loginid');
+  return {
+    type: LOGOUT
+  };
 }

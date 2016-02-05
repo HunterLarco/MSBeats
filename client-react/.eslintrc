@@ -9,6 +9,7 @@
     "space-before-function-paren": 0,
     "semi": 0,
     "indent": 0,
+    "max-len": 0,
     "quote-props": 0,
     comma-dangle: [2, "never"],
     "jsx-quotes": [2, "prefer-double"]

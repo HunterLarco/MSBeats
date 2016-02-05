@@ -32,7 +32,7 @@ function links (state = {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.items,
+        items: action.items
       });
     default:
       return state
@@ -69,10 +69,11 @@ function auth (state = {
         isAuthenticated: false,
         errorMessage: action.message
       })
-    case ActionTypes.LOGOUT_SUCCESS:
+    case ActionTypes.LOGOUT:
       return Object.assign({}, state, {
-        isFetching: true,
-        isAuthenticated: false
+        isFetching: false,
+        isAuthenticated: false,
+        user: null
       })
     default:
       return state
