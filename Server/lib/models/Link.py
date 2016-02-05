@@ -129,7 +129,7 @@ class Link(ndb.Model):
   
   @classmethod
   def queryTop(cls, count=30):
-    return cls.query().order(-cls.votes).fetch(count)
+    return cls.query().order(-cls.votes).order(-cls.created).fetch(count)
   
   @classmethod
   def create(cls, title, url, user):
@@ -168,7 +168,7 @@ class TrendingCounter(ndb.Model):
   @staticmethod
   def _hackerNewsAlgorithm(votes, item_hour_age, gravity=1.8):
     # https://news.ycombinator.com/item?id=1781013
-    return (votes - 1) / pow((item_hour_age+2), gravity)
+    return votes / pow((item_hour_age+2), gravity)
   
   @classmethod
   def updateTrendingCounters(cls):
