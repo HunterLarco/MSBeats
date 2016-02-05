@@ -1,5 +1,8 @@
 from google.appengine.ext import ndb
 
+from ..util import timeutil
+
+
 class Comment(ndb.Model):
   text      = ndb.TextProperty     (indexed=False)
   userkey   = ndb.KeyProperty      (indexed=True )
@@ -13,7 +16,7 @@ class Comment(ndb.Model):
     return {
       'text'      : self.text,
       'user'      : author.toPublicDict() if author else None,
-      'created'   : str(self.created),
+      'created'   : timeutil.toTimestamp(self.created),
       'votes'     : self.votes,
       'children'  : map(lambda x: x.toDict(user=user), self.loadChildren()),
       'commentid' : self.key.id()

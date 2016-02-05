@@ -3,6 +3,7 @@ from google.appengine.ext.ndb import polymodel
 import datetime
 
 from Comment import Comment
+from ..util import timeutil
 
 
 class VoteCounter(polymodel.PolyModel):
@@ -68,7 +69,7 @@ class Link(ndb.Model):
       'title'         : self.title,
       'url'           : self.url,
       'user'          : self.getUser().toPublicDict(),
-      'created'       : str(self.created),
+      'created'       : timeutil.toTimestamp(self.created),
       'votes'         : self.votes,
       'linkid'        : self.key.id(),
       'voteStatus'    : self.getVotedStatus(user) if user else None,
