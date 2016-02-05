@@ -8,7 +8,7 @@ export default class LinksApiEndpoint {
 	static comments (linkid) {
 		return post(`${endpoint}/comments/get`, { linkid })
 	}
-	static createComments (commentid, text) {
+	static createComment (commentid, text) {
 		return post(`${endpoint}/comments`, { commentid, text })
 	}
 	static upvote (linkid) {

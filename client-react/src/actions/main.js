@@ -226,3 +226,83 @@ export function submitLink(title, url) {
       });
   }
 }
+
+export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
+export const COMMENTS_SUCCESS = 'COMMENTS_SUCCESS';
+export const COMMENTS_FAILURE = 'COMMENTS_FAILURE';
+
+function requestComments(linkid) {
+  return {
+    type: COMMENTS_REQUEST,
+    linkid
+  };
+}
+
+function receiveComments(response) {
+  return {
+    type: COMMENTS_SUCCESS,
+    response
+  };
+}
+
+function commentsError(message) {
+  return {
+    type: COMMENTS_FAILURE,
+    message
+  };
+}
+
+export function fetchComments(linkid) {
+  return dispatch => {
+    dispatch(requestComments(linkid));
+    return LinksApiEndpoint.comments(linkid)
+      .then(response => {
+        if (response.success) {
+          dispatch(receiveComments(response));
+        } else {
+          dispatch(commentsError(response.message));
+        }
+      });
+  };
+}
+
+
+export const CREATE_COMMENT_REQUEST = 'CREATE_COMMENT_REQUEST';
+export const CREATE_COMMENT_SUCCESS = 'CREATE_COMMENT_SUCCESS';
+export const CREATE_COMMENT_FAILURE = 'CREATE_COMMENT_FAILURE';
+
+function requestCreateComment(commentid, text) {
+  return {
+    type: CREATE_COMMENT_REQUEST,
+    commentid,
+    text
+  };
+}
+
+function receiveCreateComment(response) {
+  return {
+    type: CREATE_COMMENT_SUCCESS,
+    response
+  };
+}
+
+function createCommentError(message) {
+  return {
+    type: CREATE_COMMENT_FAILURE,
+    message
+  };
+}
+
+export function createComment(commentid, text) {
+  return dispatch => {
+    dispatch(requestComments(commentid, text));
+    return LinksApiEndpoint.createComment(commentid, text)
+      .then(response => {
+        if (response.success) {
+          dispatch(receiveCreateComment(response));
+        } else {
+          dispatch(createCommentError(response.message));
+        }
+      });
+  };
+}
