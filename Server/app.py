@@ -2,10 +2,10 @@ from google.appengine.ext.webapp import template
 import webapp2
 import os
 
-from lib.classes.RequestHandler import *
 from lib.JsonHelpers import *
 from lib.UserHelpers import *
 from lib.ModelHelpers import *
+from lib.AccessibilityHelpers import *
 from lib.models.User import *
 from lib.models.Link import *
 from lib.blowfish import BadEncryptionException
@@ -25,7 +25,15 @@ ERROR_MAP = {
   UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID')
 }
 
-class SignupHandler(webapp2.RequestHandler):
+
+class RequestHandler(webapp2.RequestHandler):
+  @AccessControlAllowOrigin()
+  def options(self):
+    pass
+
+
+class SignupHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -35,6 +43,7 @@ class SignupHandler(webapp2.RequestHandler):
 
 
 class LoginHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -43,7 +52,8 @@ class LoginHandler(RequestHandler):
     return User.login(emailusername, password).toPrivateDict()
 
 
-class PostLinksHandler(webapp2.RequestHandler):
+class PostLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -53,7 +63,8 @@ class PostLinksHandler(webapp2.RequestHandler):
     return Link.create(title, url, user).toDict()
 
 
-class VoteHandler(webapp2.RequestHandler):
+class VoteHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -64,7 +75,8 @@ class VoteHandler(webapp2.RequestHandler):
     link.vote(user, upvoted)
 
 
-class UserInfoHandler(webapp2.RequestHandler):
+class UserInfoHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -74,7 +86,8 @@ class UserInfoHandler(webapp2.RequestHandler):
     return target.toPublicDict()
 
 
-class TopLinksHandler(webapp2.RequestHandler):
+class TopLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
   def get(self, user=None):
@@ -83,7 +96,8 @@ class TopLinksHandler(webapp2.RequestHandler):
     }
 
 
-class TrendingLinksHandler(webapp2.RequestHandler):
+class TrendingLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
   def get(self, user=None):
