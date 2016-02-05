@@ -116,6 +116,32 @@ class TrendingLinksHandler(RequestHandler):
     }
 
 
+class PostLinkCommentsHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @ErrorHandler(ERROR_MAP)
+  @JSONRequest
+  @RequireAuth('user')
+  @UnpackModelByID(Comment, 'commentrootid', 'root')
+  @BodyParameters('text')
+  def post(self, user=None, text=None, root=None):
+    return root.comment(text, user).toDict(user=user)
+
+
+class GetLinkCommentsHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @ErrorHandler(ERROR_MAP)
+  @JSONRequest
+  @RequireAuth('user')
+  @UnpackModelByID(Comment, 'commentrootid', 'root')
+  def post(self, user=None, root=None, json=None):
+    return {
+      'comments': root.toDict()['children'],
+      'commentrootid': root.key.id()
+    }
+
+
 # This part here maps the routes to a RequestHandler
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
@@ -125,5 +151,7 @@ app = webapp2.WSGIApplication([
   ('/api/links/new/?', NewLinksHandler),
   ('/api/links/trending/?', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
-  ('/api/users/info/?', UserInfoHandler)
+  ('/api/users/info/?', UserInfoHandler),
+  ('/api/links/comments/?', PostLinkCommentsHandler),
+  ('/api/links/comments/get/?', GetLinkCommentsHandler)
 ], debug=True)

@@ -2,6 +2,8 @@ from google.appengine.ext import ndb
 from google.appengine.ext.ndb import polymodel
 import datetime
 
+from Comment import Comment
+
 
 class VoteCounter(polymodel.PolyModel):
   linkkey = ndb.KeyProperty      (indexed=True, required=True)
@@ -59,16 +61,18 @@ class Link(ndb.Model):
   userkey  = ndb.KeyProperty      (indexed=True, required=True)
   created  = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
   votes    = ndb.IntegerProperty  (indexed=True, default=0)
+  comments = ndb.KeyProperty      (indexed=True, required=True)
   
   def toDict(self, user=None):
     return {
-      'title'      : self.title,
-      'url'        : self.url,
-      'user'       : self.getUser().toPublicDict(),
-      'created'    : str(self.created),
-      'votes'      : self.votes,
-      'linkid'     : self.key.id(),
-      'voteStatus' : self.getVotedStatus(user) if user else None
+      'title'         : self.title,
+      'url'           : self.url,
+      'user'          : self.getUser().toPublicDict(),
+      'created'       : str(self.created),
+      'votes'         : self.votes,
+      'linkid'        : self.key.id(),
+      'voteStatus'    : self.getVotedStatus(user) if user else None,
+      'commentrootid' : self.comments.id()
     }
   
   def getVotedStatus(self, user):
@@ -106,6 +110,11 @@ class Link(ndb.Model):
     if upvoted: UpVoteCounter.create(user, self)
     else: DownVoteCounter.create(user, self)
   
+  def getComments(self):
+    rootComment = self.comments.get()
+    rootComment.loadChildren()
+    return rootComment
+  
   def getUser(self):
     return self.userkey.get()
   
@@ -124,9 +133,11 @@ class Link(ndb.Model):
     link.title = title
     link.url = url
     link.userkey = user.key
+    link.comments = Comment.create(None, None, None).key
     
     link.put()
     TrendingCounter.create(link)
+    
     return link
 
 

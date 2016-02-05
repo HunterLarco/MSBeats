@@ -55,7 +55,6 @@ class User(ndb.Model):
   @classmethod
   def getByLoginId(cls, loginid):
     identifier = cipher.decrypt(loginid)
-    print(identifier)
     try:
       return cls.get_by_id(int(identifier))
     except:

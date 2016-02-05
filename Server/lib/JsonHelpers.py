@@ -54,7 +54,9 @@ def ErrorHandler(error_map):
         return funct(*args, **kwargs)
       except Exception as error:
         import logging
+        import traceback
         logging.error(error)
+        traceback.print_exc()
 
         errorClass = error.__class__
         if errorClass in error_map:
