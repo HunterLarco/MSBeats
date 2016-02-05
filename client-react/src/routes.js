@@ -16,6 +16,7 @@ import HomePage from './components/HomePage';
 // import LoginPage from './components/LoginPage';
 import SubmitPage from './components/SubmitPage';
 import NotFoundPage from './components/NotFoundPage';
+import CommentsPage from './components/CommentsPage';
 import * as ActionTypes from './actions';
 
 async function getContextComponent(location, callback) {
@@ -40,9 +41,7 @@ export default function routes (store) {
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />
-      </Route>
-      <Route path="/comments/:" component={CommentsPage}>
-
+        <Route path="comments/:linkid" component={CommentsPage} />
       </Route>
       <Route path="*" component={NotFoundPage} />
     </Route>
