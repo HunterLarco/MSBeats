@@ -95,7 +95,7 @@ class UserInfoHandler(RequestHandler):
     return target.toPublicDict()
 
 
-class UserLinksHandler(RequestHandler):
+class MyLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
@@ -166,7 +166,7 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
-  ('/api/links/user/?', UserLinksHandler),
+  ('/api/links/mine/?', MyLinksHandler),
   ('/api/links/top/?', TopLinksHandler),
   ('/api/links/new/?', NewLinksHandler),
   ('/api/links/trending/?', TrendingLinksHandler),
