@@ -21,3 +21,9 @@ indexes:
   - name: parentkey
   - name: votes
     direction: desc
+
+- kind: Link
+  properties:
+  - name: userkey
+  - name: created
+    direction: desc

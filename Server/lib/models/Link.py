@@ -120,6 +120,10 @@ class Link(ndb.Model):
     return self.userkey.get()
   
   @classmethod
+  def queryByUser(cls, user, count=30):
+    return cls.query(cls.userkey == user.key).order(-cls.created).fetch(count)
+  
+  @classmethod
   def queryNew(cls, count=30):
     return cls.query().order(-cls.created).fetch(count)
   

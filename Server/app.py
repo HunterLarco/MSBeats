@@ -86,6 +86,16 @@ class UserInfoHandler(RequestHandler):
     return target.toPublicDict()
 
 
+class UserLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, user=None):
+    return {
+      'links': map(lambda x: x.toDict(user=user), Link.queryByUser(user))
+    }
+
+
 class TopLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
@@ -147,6 +157,7 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
+  ('/api/links/user/?', UserLinksHandler),
   ('/api/links/top/?', TopLinksHandler),
   ('/api/links/new/?', NewLinksHandler),
   ('/api/links/trending/?', TrendingLinksHandler),
