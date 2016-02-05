@@ -131,8 +131,24 @@ on('/name-of-route', async () => <NameOfRoutePage />);
 import React, { Component, PropTypes } from 'react';
 import s from './ComponentName.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { connect } from 'react-redux';
+// import cx from 'classnames';
 
 class ComponentName extends Component {
+
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  };
+
+  constructor() {
+    super();
+    // this.state = {};
+  }
+
+  componentDidMount() {
+    const { dispatch, params } = this.props;
+    // dispatch to get initial state
+  }
 
   render() {
     return (
@@ -142,7 +158,11 @@ class ComponentName extends Component {
 
 }
 
-export default withStyles(ComponentName, s);
+function mapStateToProps(state) {
+  return state;
+}
+
+export default connect(mapStateToProps)(withStyles(ComponentName, s));
 
 ```
 

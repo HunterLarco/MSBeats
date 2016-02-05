@@ -37,7 +37,7 @@ class Navigation extends Component {
     const { auth } = this.props;
     return (
       <div className={cx(s.root, this.props.className)} role="navigation">
-        <Link className={s.link} to="submit">submit</Link>
+        <Link className={s.link} to="/submit">submit</Link>
         {!auth.isAuthenticated ? (
           <span></span>
         ) : (

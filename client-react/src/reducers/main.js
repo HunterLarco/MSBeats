@@ -66,8 +66,6 @@ function getUserFromStorage() {
   return user ? JSON.parse(user) : null
 }
 
-console.log(reactCookie.load('loginid'));
-
 function auth (state = {
   isFetching: false,
   isAuthenticated: !!reactCookie.load('loginid'),
@@ -103,9 +101,34 @@ function auth (state = {
   }
 }
 
+function linkWithComments (state = {
+  isFetching: false,
+  data: {}
+}, action) {
+  switch (action.type) {
+    case ActionTypes.COMMENTS_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true
+      });
+    case ActionTypes.COMMENTS_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        data: action.response
+      });
+    case ActionTypes.COMMENTS_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        message: action.message
+      });
+    default:
+      return state;
+  }
+}
+
 export const rootReducer = combineReducers({
   selectedLinksFilter,
   linksByFilter,
   isHeaderSearchFocused,
-  auth
+  auth,
+  linkWithComments
 })

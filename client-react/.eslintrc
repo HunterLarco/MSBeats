@@ -11,6 +11,7 @@
     "indent": 0,
     "max-len": 0,
     "quote-props": 0,
+    "react/jsx-no-bind": 0,
     comma-dangle: [2, "never"],
     "jsx-quotes": [2, "prefer-double"]
   }

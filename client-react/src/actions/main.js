@@ -295,7 +295,7 @@ function createCommentError(message) {
 
 export function createComment(commentid, text) {
   return dispatch => {
-    dispatch(requestComments(commentid, text));
+    dispatch(requestCreateComment(commentid, text));
     return LinksApiEndpoint.createComment(commentid, text)
       .then(response => {
         if (response.success) {

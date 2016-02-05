@@ -75,10 +75,10 @@ class HomePage extends Component {
         <div className={cx(s.filterPane, 'Pane')}>
           <div className="Inner">
             <div className={s.filter}>
-              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="top">top</Link>
-              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="trending">trending</Link>
-              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="new">new</Link>
-              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="mine">mine</Link>
+              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="/top">top</Link>
+              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="/trending">trending</Link>
+              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="/new">new</Link>
+              <Link className={s.filterLink} activeClassName={s.filterLinkActive} to="/mine">mine</Link>
             </div>
           </div>
         </div>

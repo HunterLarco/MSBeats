@@ -1,0 +1,43 @@
+@import '../variables.scss';
+
+.root {
+  margin: 1em 0;
+  padding-bottom: 0.5em;
+}
+
+.header {
+  color: $color-text-meta;
+  font-size: $font-size-80;
+}
+
+.content {
+  border-bottom: 1px solid $color-border;
+  padding-bottom: 0.5em;
+}
+
+.body {
+  padding: 0.5em 0 0.5em;
+}
+
+.reply {
+  display: inline-block;
+  font-size: $font-size-80;
+  color: $color-text-meta;
+  cursor: pointer;
+
+  &:hover {
+    color: $color-text-body;
+  }
+}
+
+
+.cancelReply {
+  margin-top: 0.5em;
+}
+
+
+.children {
+  .content {
+    margin-left: 15px;
+  }
+}

@@ -36,10 +36,11 @@ class LinkListItem extends Component {
 
 	render() {
 		console.log(this.props.item);
-		const { url, votes, title, user, created, voteStatus, rank, commentrootid } = this.props.item;
-		const commentLink = `comments/${commentrootid}`
+		const { url, votes, title, user, created, voteStatus, rank, linkid } = this.props.item;
+		const commentLink = `/comments/${linkid}`
+		console.log('commentLink', commentLink);
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
-		const fromNow = moment(created*1000).fromNow();
+		const fromNow = moment(created * 1000).fromNow();
 		return (
 			<div className={s.root}>
 				<div className={s.index}>{rank}.</div>
