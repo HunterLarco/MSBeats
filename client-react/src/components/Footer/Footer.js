@@ -18,7 +18,7 @@ class Footer extends Component {
     return (
       <div className={s.root}>
         <div className={cx(s.inner, 'Inner')}>
-          <span className={s.text}>&copy; Make Mansion</span>
+          <span className={s.text}>Powered by the Make Mansion</span>
         </div>
       </div>
     );

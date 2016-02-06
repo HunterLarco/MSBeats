@@ -12,6 +12,8 @@
 .root {
   font-size: $font-size-80;
   color: $color-text-meta;
+  position: absolute;
+  bottom: 0;
 }
 
 .inner {
