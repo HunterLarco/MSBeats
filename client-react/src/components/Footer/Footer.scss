@@ -10,43 +10,11 @@
 @import '../variables.scss';
 
 .root {
-  background: #333;
-  color: #fff;
+  font-size: $font-size-80;
+  color: $color-text-meta;
 }
 
-.container {
-  margin: 0 auto;
-  padding: 20px 15px;
-  max-width: $max-content-width;
-  text-align: center;
-}
-
-.text {
-  color: rgba(255, 255, 255, .5);
-}
-
-.textMuted {
-  composes: text;
-  color: rgba(255, 255, 255, .3);
-}
-
-.spacer {
-  color: rgba(255, 255, 255, .3);
-}
-
-.text,
-.link {
-  padding: 2px 5px;
-  font-size: 1em;
-}
-
-.link,
-.link:active,
-.link:visited {
-  color: rgba(255, 255, 255, .6);
-  text-decoration: none;
-}
-
-.link:hover {
-  color: rgba(255, 255, 255, 1);
+.inner {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }

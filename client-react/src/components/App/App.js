@@ -10,6 +10,7 @@
 import React, { Component, PropTypes } from 'react';
 import s from './App.scss';
 import Header from '../Header';
+import Footer from '../Footer';
 
 class App extends Component {
 
@@ -35,6 +36,7 @@ class App extends Component {
       <div className="Pane Pane--white Pane--full-height Container">
         <Header />
         {this.props.children}
+        <Footer />
       </div>
     ) : this.props.children;
   }

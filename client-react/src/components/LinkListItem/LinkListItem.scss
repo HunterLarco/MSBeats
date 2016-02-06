@@ -41,7 +41,7 @@
   background-repeat: no-repeat;
   background-position: 50% 46%;
   background-size: 12px;
-  box-shadow: inset 0 0 0 1px;
+  box-shadow: inset 0 0 0 1px $color-dark;
 
   &:active, &:global(.is-active) {
     opacity: .8;
@@ -87,5 +87,13 @@
 
   @mixin media 0, $bp-hand-l-max {
     font-size: $font-size-70;
+  }
+}
+
+.commentLink {
+  color: $color-text-meta;
+
+  &:hover {
+    text-decoration: underline;
   }
 }
