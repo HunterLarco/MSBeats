@@ -37,7 +37,7 @@ def rankLinkList(links, perpage=30, page=1, user=None):
 
 class RequestHandler(webapp2.RequestHandler):
   @AccessControlAllowOrigin()
-  def options(self, page):
+  def options(self, page=1):
     pass
 
 

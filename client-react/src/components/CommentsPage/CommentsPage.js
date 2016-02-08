@@ -18,11 +18,20 @@ class CommentsPage extends Component {
     linkWithComments: PropTypes.object.isRequired
   };
 
+  static contextTypes = {
+    onSetTitle: PropTypes.func.isRequired,
+    router: PropTypes.object
+  };
+
   constructor() {
     super();
     this.state = {
       commentText: ''
     };
+  }
+
+  componentWillMount() {
+    this.context.onSetTitle('Comments');
   }
 
   componentDidMount() {
@@ -70,6 +79,7 @@ class CommentsPage extends Component {
 }
 
 function mapStateToProps({ auth, linkWithComments }) {
+  console.log('linkWithComments', linkWithComments);
   return {
     auth,
     linkWithComments

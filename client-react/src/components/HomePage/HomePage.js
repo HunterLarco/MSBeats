@@ -25,7 +25,7 @@ class HomePage extends Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     items: PropTypes.array.isRequired,
-    selectedLinksFilter: PropTypes.string.isRequired,
+    selectedLinksFilter: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
@@ -91,7 +91,15 @@ class HomePage extends Component {
           {isFetching && items.length === 0 &&
             <div></div>
           }
-          {items.map((item) => <LinkListItem key={item.linkid} item={item} />)}
+          {!(!isFetching && !items.length) ?
+            items.map((item) => <LinkListItem key={item.linkid} item={item} />)
+          : (
+            <Content>
+              <p>There are no items on this page.</p>
+              <Link to="/top" className="Button Button--neutral">Back to frontpage</Link>
+            </Content>
+          )}
+
           {!isFetching && items.length === 30 &&
             <Link to={moreLink} className={cx(s.moreButton, 'Button Button--neutral')}>More</Link>
           }

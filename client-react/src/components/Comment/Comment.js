@@ -9,7 +9,6 @@ import cx from 'classnames';
 class Comment extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     item: PropTypes.object.isRequired
   };
 
@@ -19,12 +18,6 @@ class Comment extends Component {
       isFormShown: false
     };
   }
-
-  componentDidMount() {
-    const { dispatch, params } = this.props;
-    // dispatch to get initial state
-  }
-
   toggleReply(e) {
     e.preventDefault();
     this.setState({ isFormShown: !this.state.isFormShown });
@@ -60,7 +53,7 @@ class Comment extends Component {
         </div>
 
         <div className={s.children}>
-          {children.map(comment => <Comment item={comment} />)}
+          {children.map(comment => <Comment key={comment.commentid} item={comment} />)}
         </div>
       </div>
     );

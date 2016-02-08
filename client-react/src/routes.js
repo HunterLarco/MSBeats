@@ -30,7 +30,8 @@ export default function routes (store) {
   var filters = {};
 
   ['top', 'trending', 'new', 'min'].forEach((key) => filters[key] = (nextState) => {
-    store.dispatch(actions.selectLinksFilter(key, nextState.params.page));
+    console.log('filter routes.js call', nextState.params.page);
+    store.dispatch(actions.selectLinksFilter(key, nextState.params.page || 1));
   });
 
   return (
@@ -38,18 +39,20 @@ export default function routes (store) {
       <Route path="/" component={App}>
         <IndexRedirect to="top" />
         <Route path="top" component={HomePage} onEnter={filters.top}>
-          <Route path=":page" component={HomePage} onEnter={filters.top} />
+          <IndexRoute  onEnter={filters.top} />
+          <Route path=":page" />
         </Route>
         <Route path="trending" component={HomePage} onEnter={filters.trending}>
-          <Route path=":page" component={HomePage} onEnter={filters.tending} />
+          <IndexRoute onEnter={filters.trending} />
+          <Route path=":page" />
         </Route>
         <Route path="new" component={HomePage} onEnter={filters.new}>
-          <IndexRoute component={HomePage} onEnter={filters.new} />
-          <Route path=":page" component={HomePage} onEnter={filters.new} />
+          <IndexRoute onEnter={filters.new} />
+          <Route path=":page" />
         </Route>
         <Route path="mine" component={HomePage} onEnter={filters.mine}>
-          <IndexRoute component={HomePage} onEnter={filters.mine} />
-          <Route path=":page" component={HomePage} onEnter={filters.mine} />
+          <IndexRoute onEnter={filters.mine} />
+          <Route path=":page" />
         </Route>
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
