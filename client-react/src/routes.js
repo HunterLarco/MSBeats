@@ -8,7 +8,7 @@
  */
 
 import React from 'react';
-import { IndexRedirect, Route } from 'react-router';
+import { IndexRedirect, IndexRoute, Route } from 'react-router';
 import fetch from './core/fetch';
 import App from './components/App';
 import ContentPage from './components/ContentPage';
@@ -17,7 +17,7 @@ import HomePage from './components/HomePage';
 import SubmitPage from './components/SubmitPage';
 import NotFoundPage from './components/NotFoundPage';
 import CommentsPage from './components/CommentsPage';
-import * as ActionTypes from './actions';
+import * as actions from './actions';
 
 async function getContextComponent(location, callback) {
   const response = await fetch(`/api/content?path=${location.pathname}`);
@@ -27,17 +27,30 @@ async function getContextComponent(location, callback) {
 }
 
 export default function routes (store) {
-  function setFilter(filter) {
-    store.dispatch(ActionTypes.selectLinksFilter(filter));
-  }
+  var filters = {};
+
+  ['top', 'trending', 'new', 'min'].forEach((key) => filters[key] = (nextState) => {
+    store.dispatch(actions.selectLinksFilter(key, nextState.params.page));
+  });
+
   return (
     <Route>
       <Route path="/" component={App}>
-        <IndexRedirect to='top' />
-        <Route path="top" component={HomePage} onEnter={setFilter.bind(null, 'top')} />
-        <Route path="trending" component={HomePage} onEnter={setFilter.bind(null, 'trending')} />
-        <Route path="new" component={HomePage} onEnter={setFilter.bind(null, 'new')} />
-        <Route path="mine" component={HomePage} onEnter={setFilter.bind(null, 'mine')} />
+        <IndexRedirect to="top" />
+        <Route path="top" component={HomePage} onEnter={filters.top}>
+          <Route path=":page" component={HomePage} onEnter={filters.top} />
+        </Route>
+        <Route path="trending" component={HomePage} onEnter={filters.trending}>
+          <Route path=":page" component={HomePage} onEnter={filters.tending} />
+        </Route>
+        <Route path="new" component={HomePage} onEnter={filters.new}>
+          <IndexRoute component={HomePage} onEnter={filters.new} />
+          <Route path=":page" component={HomePage} onEnter={filters.new} />
+        </Route>
+        <Route path="mine" component={HomePage} onEnter={filters.mine}>
+          <IndexRoute component={HomePage} onEnter={filters.mine} />
+          <Route path=":page" component={HomePage} onEnter={filters.mine} />
+        </Route>
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />

@@ -28,7 +28,8 @@ class HomePage extends Component {
     selectedLinksFilter: PropTypes.string.isRequired,
     auth: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
-    isFetching: PropTypes.bool.isRequired
+    isFetching: PropTypes.bool.isRequired,
+    page: PropTypes.number.isRequired
   };
 
   static contextTypes = {
@@ -55,7 +56,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { items, auth, isFetching } = this.props;
+    const { items, auth, isFetching, selectedLinksFilter, page } = this.props;
 
     if (!auth.isAuthenticated) {
       return (
@@ -69,6 +70,10 @@ class HomePage extends Component {
         </div>
       )
     }
+
+    console.log(this.props);
+
+    const moreLink = page ? `/${selectedLinksFilter.name}/${Number(page) + 1}` : `/${selectedLinksFilter.name}/2`;
 
     return (
       <div>
@@ -87,6 +92,9 @@ class HomePage extends Component {
             <div></div>
           }
           {items.map((item) => <LinkListItem key={item.linkid} item={item} />)}
+          {!isFetching && items.length === 30 &&
+            <Link to={moreLink} className={cx(s.moreButton, 'Button Button--neutral')}>More</Link>
+          }
         </div>
       </div>
     );
@@ -97,17 +105,20 @@ class HomePage extends Component {
 function mapStateToProps({ linksByFilter, selectedLinksFilter, auth }) {
   const {
     isFetching,
-    items
-  } = linksByFilter[selectedLinksFilter] || {
+    items,
+    page
+  } = linksByFilter[selectedLinksFilter.name] || {
     isFetching: true,
-    items: []
+    items: [],
+    page: selectedLinksFilter.page
   }
 
   return {
     isFetching,
     items,
     selectedLinksFilter,
-    auth
+    auth,
+    page
   }
 }
 

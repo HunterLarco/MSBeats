@@ -3,7 +3,7 @@
 .root {
   display: flex;
   margin: 5px 0;
-  margin-left: -70px;
+  margin-left: -78px;
   padding: 5px 0;
 
   @mixin media $bp-hand-s, $bp-hand-l-max {
@@ -14,10 +14,9 @@
 .index {
   position: relative;
   margin-top: 9px;
-  padding-right: 8px;
-  text-align: right;
+  text-align: center;
   opacity: .3;
-  flex-basis: 25px;
+  flex-basis: 33px;
 }
 
 .upvoteContainer {

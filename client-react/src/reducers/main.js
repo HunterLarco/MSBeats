@@ -13,10 +13,16 @@ function isHeaderSearchFocused (state = false, action) {
   }
 }
 
-function selectedLinksFilter (state = 'top', action) {
+function selectedLinksFilter (state = {
+  name: 'top',
+  page: 1
+}, action) {
   switch (action.type) {
     case ActionTypes.SELECT_LINKS_FILTER:
-      return action.filter;
+      return {
+        name: action.filter,
+        page: action.page || 1
+      }
     default:
       return state;
   }
@@ -25,23 +31,27 @@ function selectedLinksFilter (state = 'top', action) {
 function links (state = {
   isFetching: false,
   didInvalidate: false,
-  items: []
+  items: [],
+  page: 1
 }, action) {
   switch (action.type) {
     case ActionTypes.INVALIDATE_LINKS:
       return Object.assign({}, state, {
-        didInvalidate: true
+        didInvalidate: true,
+        page: action.page
       })
     case ActionTypes.REQUEST_LINKS:
       return Object.assign({}, state, {
         isFetching: true,
-        didInvalidate: false
+        didInvalidate: false,
+        page: action.page
       })
     case ActionTypes.RECEIVE_LINKS:
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.items
+        items: action.items,
+        page: action.page
       });
     default:
       return state
@@ -55,7 +65,7 @@ function linksByFilter(state = {}, action) {
     case ActionTypes.REQUEST_LINKS:
       return Object.assign({}, state, {
         [action.filter]: links(state[action.filter], action)
-      })
+      });
     default:
       return state
   }

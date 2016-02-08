@@ -4,8 +4,8 @@ const endpoint = 'links';
 
 export default class LinksApiEndpoint {
 
-	static get (filter) {
-		return get(`${endpoint}/${filter}`);
+	static get (filter, page) {
+		return get(`${endpoint}/${filter}/${page}`);
 	}
 
 	static post (body) {

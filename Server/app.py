@@ -26,18 +26,18 @@ ERROR_MAP = {
 }
 
 
-def rankLinkList(links, perpage=30, page=0, user=None):
+def rankLinkList(links, perpage=30, page=1, user=None):
   json = []
   for i, link in enumerate(links):
     dic = link.toDict(user=user)
-    dic['rank'] = i+1 + perpage*page
+    dic['rank'] = i+1 + perpage*(page-1)
     json.append(dic)
   return json
 
 
 class RequestHandler(webapp2.RequestHandler):
   @AccessControlAllowOrigin()
-  def options(self):
+  def options(self, page):
     pass
 
 
@@ -109,9 +109,10 @@ class TopLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, user=None):
+  def get(self, page=1, user=None):
+    page = int(page)
     return {
-      'links': rankLinkList(Link.queryTop(), user=user)
+      'links': rankLinkList(Link.queryTop(page=page), user=user, page=page)
     }
 
 
@@ -119,9 +120,10 @@ class NewLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, user=None):
+  def get(self, page=1, user=None):
+    page = int(page)
     return {
-      'links': rankLinkList(Link.queryNew(), user=user)
+      'links': rankLinkList(Link.queryNew(page=page), user=user, page=page)
     }
 
 
@@ -129,9 +131,10 @@ class TrendingLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, user=None):
+  def get(self, page=1, user=None):
+    page = int(page)
     return {
-      'links': rankLinkList(TrendingCounter.queryTrending(), user=user)
+      'links': rankLinkList(TrendingCounter.queryTrending(page=page), user=user, page=page)
     }
 
 
@@ -166,9 +169,9 @@ app = webapp2.WSGIApplication([
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
   ('/api/links/mine/?', MyLinksHandler),
-  ('/api/links/top/?', TopLinksHandler),
-  ('/api/links/new/?', NewLinksHandler),
-  ('/api/links/trending/?', TrendingLinksHandler),
+  ('/api/links/top/(\d+)', TopLinksHandler),
+  ('/api/links/new/(\d+)', NewLinksHandler),
+  ('/api/links/trending/(\d+)', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
   ('/api/users/info/?', UserInfoHandler),
   ('/api/links/comments/?', PostLinkCommentsHandler),

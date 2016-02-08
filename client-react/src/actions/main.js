@@ -18,10 +18,11 @@ export const REQUEST_LINKS = 'REQUEST_LINKS'
 export const RECEIVE_LINKS = 'RECEIVE_LINKS'
 export const SELECT_LINKS_FILTER = 'SELECT_LINKS_FILTER'
 
-export function selectLinksFilter(filter) {
+export function selectLinksFilter(filter, page) {
   return {
     type: SELECT_LINKS_FILTER,
-    filter
+    filter,
+    page
   }
 }
 
@@ -47,17 +48,16 @@ function receiveLinks(filter, response) {
   }
 }
 
-function fetchLinks(filter) {
+function fetchLinks(filter, page) {
   return dispatch => {
     dispatch(requestLinks(filter))
-    return LinksApiEndpoint.get(filter)
+    return LinksApiEndpoint.get(filter, page)
       .then(response => dispatch(receiveLinks(filter, response)))
   }
 }
 
-function shouldFetchLinks(state, filter) {
-  const links = state.linksByFilter[filter];
-  if (!links) {
+function shouldFetchLinks(links, page) {
+  if (!links || links.page !== page) {
     return true
   }
   if (links.isFetching) {
@@ -66,10 +66,12 @@ function shouldFetchLinks(state, filter) {
   return links.didInvalidate
 }
 
-export function fetchLinksIfNeeded(filter) {
+export function fetchLinksIfNeeded({ name, page }) {
   return (dispatch, getState) => {
-    if (shouldFetchLinks(getState(), filter)) {
-      return dispatch(fetchLinks(filter))
+    const links = getState().linksByFilter[name];
+    console.log(links);
+    if (shouldFetchLinks(links, page)) {
+      return dispatch(fetchLinks(name, page));
     }
   }
 }
