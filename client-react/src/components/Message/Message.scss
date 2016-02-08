@@ -1,0 +1,15 @@
+@import '../variables.scss';
+
+.root {
+  @mixin arrow-on-top-line 7px, 6px, $color-note-border, $color-note, 20px;
+  background-color: $color-note;
+  margin-top: 4px;
+  box-shadow: inset 0 0 0 1px $color-note-border, 0 1px 5px -2px rgba(0, 0, 0, .1);
+  display: inline-block;
+  border-radius: 3px;
+  font-size: $font-size-80;
+}
+
+.inner {
+  margin: 0.5em 0.7em;
+}

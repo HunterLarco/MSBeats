@@ -10,23 +10,24 @@
 import React, { Component, PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './LoginPage.scss';
-import { loginUser } from '../../actions'
-import { connect } from 'react-redux'
-import FormRow from '../FormRow'
-import Content from '../Content'
+import { loginUser } from '../../actions';
+import { connect } from 'react-redux';
+import Form from '../Form';
+import FormRow from '../FormRow';
+import Message from '../Message';
 import cx from 'classnames';
 
 const title = 'Log In';
 
 class LoginPage extends Component {
 
-  static contextTypes = {
-    onSetTitle: PropTypes.func.isRequired
-  };
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired
+  };
+
+  static contextTypes = {
+    onSetTitle: PropTypes.func.isRequired
   };
 
   constructor() {
@@ -35,40 +36,35 @@ class LoginPage extends Component {
       username: '',
       password: ''
     }
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
     this.context.onSetTitle(title);
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  handleSubmit(e, form, rows) {
+    debugger;
+    if (!form.isValid) return;
     const { dispatch } = this.props;
-    dispatch(loginUser(this.state.username, this.state.password));
-  }
-
-  handleUsernameChange(e) {
-    this.setState({ username: e.target.value })
-  }
-
-  handlePasswordChange(e) {
-    this.setState({ password: e.target.value })
+    dispatch(loginUser(rows.usernameoremail.value, rows.password.value));
   }
 
   render() {
     return (
       <div className={cx(s.root, 'Inner')}>
-        <form onSubmit={this.handleSubmit.bind(this)} className="Pane Pane--well Form">
-          <div className="Form-inner">
-            <FormRow label="username/email" name="title" onChange={this.handleUsernameChange.bind(this)} />
-            <FormRow label="password" name="url" type="password" onChange={this.handlePasswordChange.bind(this)} />
-            <button className="Button Button--neutral" type="submit">Login</button>
-          </div>
-        </form>
+        <Form onSubmit={this.handleSubmit}>
+          <FormRow attachToForm label="username/email" name="usernameoremail">
+            <Message attachToFormRow isFormSubmitted isEmpty>username/email is required</Message>
+          </FormRow>
+          <FormRow attachToForm label="password" name="password" type="password">
+            <Message attachToFormRow isFormSubmitted isEmpty>password is required</Message>
+          </FormRow>
+          <button className="Button Button--neutral" type="submit">Login</button>
+        </Form>
       </div>
     );
   }
-
 }
 
 function mapStateToProps({ auth }) {

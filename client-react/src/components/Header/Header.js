@@ -22,8 +22,8 @@ class Header extends Component {
       <div className={cx(s.root, 'Pane Inner')}>
         <div className={s.content}>
           <IndexLink className={s.title} to="/top">
-            <img className={s.logo} src={require('./logo.svg')}></img>
-            <span>Make School News</span>
+            <img className={s.logoWalkme} src={require('./walkme.png')}></img>
+            <span></span>
           </IndexLink>
           <Navigation />
         </div>

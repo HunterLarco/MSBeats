@@ -34,8 +34,7 @@ class CommentsPage extends Component {
 
   render() {
     const { auth, linkWithComments } = this.props;
-    const { commentrootid } = linkWithComments;
-
+    const { commentrootid } = linkWithComments.data;
     if (!auth.isAuthenticated) {
       return (
         <div>

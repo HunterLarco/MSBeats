@@ -16,6 +16,8 @@ import FormRow from '../FormRow';
 import Content from '../Content';
 import LoginPage from '../LoginPage';
 import { submitLink } from '../../actions';
+import Message from '../Message';
+import Form from '../Form';
 
 const pageTitle = 'Submit';
 
@@ -34,28 +36,20 @@ class SubmitPage extends Component {
     super();
     this.state = {
       title: '',
-      url: ''
+      url: '',
+      isFormSubmitted: false
     };
-    this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
     this.context.onSetTitle(pageTitle);
   }
 
-  handleSubmit(e) {
-    e.preventDefault()
+  handleSubmit(e, form, rows) {
+    if (!form.isValid) return;
     const { dispatch } = this.props;
-    const { title, url } = this.state;
-    dispatch(submitLink(title, url));
-  }
-
-  handleTitleChange(e) {
-    this.setState({ title: e.target.value });
-  }
-
-  handleUrlChange(e) {
-    this.setState({ url: e.target.value });
+    dispatch(submitLink(rows.title.value, rows.url.value));
   }
 
   render() {
@@ -71,19 +65,23 @@ class SubmitPage extends Component {
         </div>
       )
     }
+
     return (
       <div className="Inner">
         <div className={s.root}>
-          <form onSubmit={this.handleSubmit.bind(this)} ref="form" className="Pane Pane--well Form">
-            <div className="Form-inner">
-              <FormRow label="title" name="title" onChange={this.handleTitleChange.bind(this)} />
-              <FormRow label="url" name="url" onChange={this.handleUrlChange.bind(this)} />
-              <Content>
-                <p>Only people who are part of this organization can see your post.</p>
-              </Content>
-              <button className="Button Button--neutral" type="submit">Submit</button>
-            </div>
-          </form>
+          <Form onSubmit={this.handleSubmit}>
+            <FormRow attachToForm minLength="5" label="title" name="title">
+              <Message attachToFormRow isFormSubmitted isEmpty>title is required</Message>
+              <Message attachToFormRow isFormSubmitted isNotEmpty isNotValid>Title needs to be at least 5 characters long</Message>
+            </FormRow>
+            <FormRow attachToForm label="url" name="url">
+              <Message attachToFormRow isFormSubmitted isEmpty>url is required</Message>
+            </FormRow>
+            <Content>
+              <p>Only people who are part of this organization can see your post.</p>
+            </Content>
+            <button className="Button Button--neutral" type="submit">Submit</button>
+          </Form>
         </div>
       </div>
     );
@@ -91,7 +89,7 @@ class SubmitPage extends Component {
 
 }
 
-function mapStateToProps({ auth,  }) {
+function mapStateToProps({ auth }) {
   return {
     auth
   }
