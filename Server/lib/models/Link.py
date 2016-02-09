@@ -74,7 +74,7 @@ class Link(ndb.Model):
       'linkid'        : self.key.id(),
       'voteStatus'    : self.getVotedStatus(user) if user else None,
       'commentrootid' : self.comments.id(),
-      'comments'      : self.countComments()
+      'commentsCount' : self.countComments()
     }
 
   def getVotedStatus(self, user):
