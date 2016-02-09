@@ -36,7 +36,7 @@ class LinkListItem extends Component {
 
 	render() {
 		console.log(this.props.item);
-		const { url, votes, title, user, created, voteStatus, rank, linkid, comments } = this.props.item;
+		const { url, votes, title, user, created, voteStatus, rank, linkid, commentsCount } = this.props.item;
 		const commentLink = `/comments/${linkid}`
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created * 1000).fromNow();
@@ -52,7 +52,7 @@ class LinkListItem extends Component {
 						<span className={s.points}>{votes} points</span>
 						&nbsp;by <span className={s.author}>{user.username}</span>
 					&nbsp;<span className={s.time}>{fromNow}</span> &middot;&nbsp;
-						<Link className={s.commentLink} to={commentLink}>{comments} comments</Link>
+						<Link className={s.commentLink} to={commentLink}>{commentsCount} comments</Link>
 					</span>
 				</div>
 			</div>
