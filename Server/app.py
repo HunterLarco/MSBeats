@@ -99,9 +99,9 @@ class MyLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, user=None):
+  def get(self, user=None, perpage=30):
     return {
-      'links': rankLinkList(Link.queryByUser(user), user=user)
+      'links': rankLinkList(Link.queryByUser(user, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -109,10 +109,10 @@ class TopLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
     page = int(page)
     return {
-      'links': rankLinkList(Link.queryTop(page=page), user=user, page=page)
+      'links': rankLinkList(Link.queryTop(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -120,10 +120,10 @@ class NewLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
     page = int(page)
     return {
-      'links': rankLinkList(Link.queryNew(page=page), user=user, page=page)
+      'links': rankLinkList(Link.queryNew(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -131,10 +131,10 @@ class TrendingLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
     page = int(page)
     return {
-      'links': rankLinkList(TrendingCounter.queryTrending(page=page), user=user, page=page)
+      'links': rankLinkList(TrendingCounter.queryTrending(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
