@@ -17,6 +17,8 @@ class CommentFormPanel extends Component {
     this.state = {
       commentText: ''
     };
+
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   onChange(e) {
@@ -35,7 +37,7 @@ class CommentFormPanel extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit.bind(this)} ref="form" className="Pane Pane--well Form">
+      <form onSubmit={this.handleSubmit} ref="form" className="Pane Pane--well Form">
         <div className="Form-inner">
           <textarea className={s.textarea} onChange={this.onChange.bind(this)}></textarea>
           <button className="Button Button--neutral" type="submit">Reply</button>

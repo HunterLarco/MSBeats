@@ -39,3 +39,7 @@
     opacity: .5;
   }
 }
+
+:global .Button--vertical-spacing {
+  margin-top: 0.5em;
+}

@@ -37,7 +37,7 @@ def rankLinkList(links, perpage=30, page=1, user=None):
 
 class RequestHandler(webapp2.RequestHandler):
   @AccessControlAllowOrigin()
-  def options(self, page=1):
+  def options(self, *args, **kwargs):
     pass
 
 
@@ -99,9 +99,9 @@ class MyLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, user=None):
+  def get(self, page=1, user=None):
     return {
-      'links': rankLinkList(Link.queryByUser(user), user=user)
+      'links': rankLinkList(Link.queryByUser(user, page=page), user=user, page=page)
     }
 
 
@@ -168,7 +168,7 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
-  ('/api/links/mine/?', MyLinksHandler),
+  ('/api/links/mine/(\d+)', MyLinksHandler),
   ('/api/links/top/(\d+)', TopLinksHandler),
   ('/api/links/new/(\d+)', NewLinksHandler),
   ('/api/links/trending/(\d+)', TrendingLinksHandler),

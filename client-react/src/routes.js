@@ -17,6 +17,7 @@ import HomePage from './components/HomePage';
 import SubmitPage from './components/SubmitPage';
 import NotFoundPage from './components/NotFoundPage';
 import CommentsPage from './components/CommentsPage';
+import SignupPage from './components/SignupPage';
 import * as actions from './actions';
 
 async function getContextComponent(location, callback) {
@@ -39,7 +40,7 @@ export default function routes (store) {
       <Route path="/" component={App}>
         <IndexRedirect to="top" />
         <Route path="top" component={HomePage} onEnter={filters.top}>
-          <IndexRoute  onEnter={filters.top} />
+          <IndexRoute onEnter={filters.top} />
           <Route path=":page" />
         </Route>
         <Route path="trending" component={HomePage} onEnter={filters.trending}>
@@ -54,6 +55,7 @@ export default function routes (store) {
           <IndexRoute onEnter={filters.mine} />
           <Route path=":page" />
         </Route>
+        <Route path="signup" component={SignupPage} />
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />

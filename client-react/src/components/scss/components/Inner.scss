@@ -5,16 +5,12 @@
 
 :global .Inner {
 	padding: 0 120px;
-}
 
-@media screen and (max-width: $bp-palm-l) {
-  :global .Inner {
-    padding: 0 4%;
-  }
-}
+	@mixin media 0, $bp-hand-m-max {
+		padding: 0 4%;
+	}
 
-@media screen and (min-width: $bp-hand-s) and (max-width: $bp-hand-l) {
-  :global .Inner {
-    padding: 0 4%;
-  }
+	@mixin media $bp-hand-m, $bp-hand-l-max {
+		padding: 0 10%;
+	}
 }

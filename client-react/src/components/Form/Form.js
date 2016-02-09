@@ -1,30 +1,30 @@
 import React, { Component, PropTypes, Children, cloneElement } from 'react';
 import s from './Form.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import _ from 'lodash';
 // import cx from 'classnames';
 
 class Form extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
+    onSubmit: PropTypes.func,
+    onChange: PropTypes.func,
     children: PropTypes.node
   };
 
   constructor() {
     super();
     this.state = {
-      isFormSubmitted: false
+      isSubmitted: false
     };
+    this.formRows = {};
     this.attachHandler = this.attachHandler.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.formRows = {};
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(e) {
+  getState(options) {
     var rows = {};
-    e.preventDefault();
-    console.log('this.formRows', this, this.formRows);
 
     for (const key in this.formRows) {
       if (this.formRows.hasOwnProperty(key)) {
@@ -32,30 +32,54 @@ class Form extends Component {
       }
     }
 
-    this.setState(Object.assign({
-      isFormSubmitted: true
-    }, Object.keys(this.formRows).reduce((prevKey, currentKey) => {
-      const prev = this.formRows[prevKey].state;
-      const current = this.formRows[currentKey].state;
+    const validation = _.reduce(rows, (result, value) => {
       return {
-        isEmpty: !(prev.isEmpty && current.isEmpty),
-        isValid: (prev.isValid && current.isValid),
-        isPristine: !(!prev.isPristine || !current.isPristine)
-      };
-    })), () => {
-      this.props.onSubmit(e, this.state, rows);
+        isEmpty: !(result.isEmpty && value.isEmpty),
+        isValid: (result.isValid && value.isValid),
+        isPristine: !(!result.isPristine || !value.isPristine)
+      }
     });
+
+    const form = Object.assign({}, validation, options);
+
+    return {
+      form,
+      rows
+    };
   }
 
   attachHandler(component) {
     this.formRows[component.props.name] = component;
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+    const { form, rows } = this.getState({
+      isSubmitted: true,
+      isChangedAfterSubmission: false
+    });
+    console.log('handleSubmit', form);
+    this.setState(form, () => {
+      if (this.props.onSubmit) this.props.onSubmit(e, form, rows);
+    });
+  }
+
+  handleChange(e) {
+    const isSubmitted = !!this.state.isSubmitted;
+    const { form, rows } = this.getState({
+      isSubmitted,
+      isChangedAfterSubmission: isSubmitted
+    });
+    this.setState(form, () => {
+      if (this.props.onChange) this.props.onChange(e, form, rows);
+    });
+  }
+
   renderChildren(children) {
     return Children.map(children, (child) => {
-      if (child.props.attachToForm) {
+      if (child && child.props.attachToForm) {
         return cloneElement(child, {
-          isFormSubmitted: this.state.isFormSubmitted,
+          isFormSubmitted: this.state.isSubmitted,
           attachHandler: this.attachHandler
         });
       }
@@ -66,7 +90,7 @@ class Form extends Component {
   render() {
     console.log('(Form) render()');
     return (
-      <form onSubmit={this.handleSubmit} className="Pane Pane--well Form">
+      <form method="post" onSubmit={this.handleSubmit} onChange={this.handleChange} className="Pane Pane--well Form">
         <div className="Form-inner">
           {this.renderChildren(this.props.children)}
         </div>

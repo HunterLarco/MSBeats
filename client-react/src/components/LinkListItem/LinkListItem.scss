@@ -3,11 +3,10 @@
 .root {
   display: flex;
   margin: 5px 0;
-  margin-left: -78px;
   padding: 5px 0;
 
-  @mixin media $bp-hand-s, $bp-hand-l-max {
-    background-color: red;
+  @mixin media $bp-hand-l {
+    margin-left: -78px;
   }
 }
 
@@ -17,6 +16,16 @@
   text-align: center;
   opacity: .3;
   flex-basis: 33px;
+
+  @mixin media 0, $bp-hand-l-max {
+    display: none;
+  }
+}
+
+.titleIndex {
+  @mixin media $bp-hand-l {
+    display: none;
+  }
 }
 
 .upvoteContainer {
@@ -43,13 +52,8 @@
   box-shadow: inset 0 0 0 1px $color-dark;
 
   &:active, &:global(.is-active) {
-    opacity: .8;
     cursor: default;
-  }
-
-  @mixin media 0, $bp-hand-l-max {
-    width: 14px;
-    margin: 8px 0;
+    opacity: .8;
   }
 }
 
@@ -60,13 +64,14 @@
 
 .linkTitle {
   font-weight: 500;
-  color: $color-link;
   margin-right: 4px;
+  color: $color-link;
 
-  @mixin media 0, $bp-hand-s-mx {
+  @mixin media 0, $bp-hand-s-max {
     font-size: $font-size-80;
   }
 }
+
 .small, .linkSource {
   font-size: $font-size-70;
   color: $color-text-meta;

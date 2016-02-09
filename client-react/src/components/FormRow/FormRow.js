@@ -2,7 +2,6 @@ import React, { Component, PropTypes, Children, cloneElement } from 'react';
 import s from './FormRow.scss';
 import cx from 'classnames';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-import Message from '../Message';
 
 class FormRow extends Component {
   static propTypes = {

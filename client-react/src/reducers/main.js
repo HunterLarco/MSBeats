@@ -111,6 +111,33 @@ function auth (state = {
   }
 }
 
+function signup (state = {
+  isFetching: false
+}, action) {
+  switch (action.type) {
+    case ActionTypes.SIGNUP_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false
+      })
+    case ActionTypes.SIGNUP_SUCCESS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: true,
+        user: action.user,
+        errorMessage: ''
+      })
+    case ActionTypes.SIGNUP_FAILURE:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: false,
+        errorMessage: action.message
+      })
+    default:
+      return state
+  }
+}
+
 function linkWithComments (state = {
   isFetching: false,
   data: {}
@@ -140,5 +167,6 @@ export const rootReducer = combineReducers({
   linksByFilter,
   isHeaderSearchFocused,
   auth,
-  linkWithComments
+  linkWithComments,
+  signup
 })

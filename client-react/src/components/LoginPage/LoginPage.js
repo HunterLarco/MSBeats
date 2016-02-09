@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import Form from '../Form';
 import FormRow from '../FormRow';
 import Message from '../Message';
+import Content from '../Content';
 import cx from 'classnames';
 
 const title = 'Log In';
@@ -31,36 +32,44 @@ class LoginPage extends Component {
   };
 
   constructor() {
-    super()
-    this.state = {
-      username: '',
-      password: ''
-    }
+    super();
+    this.state = { form: {}, rows: {} };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
     this.context.onSetTitle(title);
   }
 
+  handleChange(e, form, rows) {
+    console.log(form);
+    this.setState({ form, rows });
+  }
+
   handleSubmit(e, form, rows) {
-    debugger;
+    this.setState({ form, rows });
     if (!form.isValid) return;
     const { dispatch } = this.props;
     dispatch(loginUser(rows.usernameoremail.value, rows.password.value));
   }
 
   render() {
+    const { auth } = this.props;
+    const { form, rows } = this.state;
     return (
       <div className={cx(s.root, 'Inner')}>
-        <Form onSubmit={this.handleSubmit}>
-          <FormRow attachToForm label="username/email" name="usernameoremail">
-            <Message attachToFormRow isFormSubmitted isEmpty>username/email is required</Message>
+        <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+          <FormRow attachToForm label="username or email" name="usernameoremail">
+            <Message attachToFormRow isFormSubmitted isEmpty>username or email is required</Message>
           </FormRow>
           <FormRow attachToForm label="password" name="password" type="password">
             <Message attachToFormRow isFormSubmitted isEmpty>password is required</Message>
           </FormRow>
-          <button className="Button Button--neutral" type="submit">Login</button>
+          {form && form.isSubmitted && !form.isChangedAfterSubmission && auth.errorMessage &&
+            <Content><p>{auth.errorMessage}</p></Content>
+          }
+          <button className="Button Button--neutral Button--vertical-spacing" type="submit">Login</button>
         </Form>
       </div>
     );

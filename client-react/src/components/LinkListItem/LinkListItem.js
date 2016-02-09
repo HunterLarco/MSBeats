@@ -44,10 +44,10 @@ class LinkListItem extends Component {
 			<div className={s.root}>
 				<div className={s.index}>{rank}.</div>
 				<div className={s.upvoteContainer}>
-					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)}></span>
+					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}></span>
 				</div>
 				<div className={s.content}>
-					<a className={s.linkTitle} href={url}>{title}</a>
+					<a className={s.linkTitle} href={url}><span className={s.titleIndex}>{rank}. </span>{title}</a>
 					<span className={s.subTitle}>
 						<span className={s.points}>{votes} points</span>
 						&nbsp;by <span className={s.author}>{user.username}</span>

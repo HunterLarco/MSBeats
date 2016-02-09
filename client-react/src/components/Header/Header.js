@@ -16,14 +16,15 @@ import Navigation from '../Navigation';
 
 
 class Header extends Component {
-
+  // WalkMe logo
+  // <img className={s.logoWalkme} src={require('./walkme.png')}></img>
   render() {
     return (
       <div className={cx(s.root, 'Pane Inner')}>
         <div className={s.content}>
           <IndexLink className={s.title} to="/top">
-            <img className={s.logoWalkme} src={require('./walkme.png')}></img>
-            <span></span>
+            <img className={s.logo} src={require('./logo.svg')}></img>
+            <span>Make School News</span>
           </IndexLink>
           <Navigation />
         </div>

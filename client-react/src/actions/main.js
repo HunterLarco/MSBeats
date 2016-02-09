@@ -131,8 +131,6 @@ export function upvoteLink(linkid) {
 //   }, response)
 // }
 
-// There are three possible states for our login
-// process and we need actions for each of them
 export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
@@ -185,6 +183,47 @@ export function logoutUser() {
   return {
     type: LOGOUT
   };
+}
+
+export const SIGNUP_REQUEST = 'SIGNUP_REQUEST'
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'
+export const SIGNUP_FAILURE = 'SIGNUP_FAILURE'
+
+function requestSignup() {
+  return {
+    type: SIGNUP_REQUEST,
+    isFetching: true
+  }
+}
+
+function receiveSignup(user) {
+  return {
+    type: SIGNUP_SUCCESS,
+    isFetching: false,
+    user
+  }
+}
+
+function signupError(message) {
+  return {
+    type: SIGNUP_FAILURE,
+    isFetching: false,
+    message
+  }
+}
+
+export function signupUser(email, username, password) {
+  return dispatch => {
+    dispatch(requestSignup())
+    return UserApiEndpoint.signup(email, username, password)
+      .then(response => {
+        if (response.success) {
+          dispatch(receiveSignup(response))
+        } else {
+          dispatch(signupError(response.message))
+        }
+      })
+  }
 }
 
 export const SUBMIT_LINK_REQUEST = 'SUBMIT_LINK_REQUEST'
@@ -295,13 +334,19 @@ function createCommentError(message) {
   };
 }
 
+function dispatchTimeout(fct) {
+  window.setTimeout(fct.bind, 250);
+}
+
 export function createComment(commentid, text) {
-  return dispatch => {
+  debugger;
+  return (dispatch, getState) => {
     dispatch(requestCreateComment(commentid, text));
     return LinksApiEndpoint.createComment(commentid, text)
       .then(response => {
         if (response.success) {
           dispatch(receiveCreateComment(response));
+          dispatchTimeout(dispatch(fetchComments(getState().linkWithComments.data.linkid)));
         } else {
           dispatch(createCommentError(response.message));
         }

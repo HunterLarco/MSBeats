@@ -74,7 +74,7 @@ class SubmitPage extends Component {
               <Message attachToFormRow isFormSubmitted isEmpty>title is required</Message>
               <Message attachToFormRow isFormSubmitted isNotEmpty isNotValid>Title needs to be at least 5 characters long</Message>
             </FormRow>
-            <FormRow attachToForm label="url" name="url">
+            <FormRow attachToForm label="url" name="url" type="url">
               <Message attachToFormRow isFormSubmitted isEmpty>url is required</Message>
             </FormRow>
             <Content>
