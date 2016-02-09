@@ -17,10 +17,16 @@ class Comment extends Component {
     this.state = {
       isFormShown: false
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   toggleReply(e) {
     e.preventDefault();
     this.setState({ isFormShown: !this.state.isFormShown });
+  }
+
+  handleSubmit() {
+    this.setState({ isFormShown: false });
   }
 
   render() {
@@ -44,7 +50,7 @@ class Comment extends Component {
           </div>
           {isFormShown ? (
             <div>
-              <CommentFormPanel commentid={commentid} />
+              <CommentFormPanel commentid={commentid} onSubmit={this.handleSubmit} />
               <small className={cx(s.reply, s.cancelReply)} onClick={this.toggleReply.bind(this)}>cancel reply</small>
             </div>
           ) : (

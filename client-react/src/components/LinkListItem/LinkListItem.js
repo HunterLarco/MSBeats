@@ -41,9 +41,11 @@ class LinkListItem extends Component {
 		const fromNow = moment(created * 1000).fromNow();
 		return (
 			<div className={s.root}>
-				{rank &&
-					<div className={s.index}>{rank}.</div>
-				}
+				<div className={s.index}>
+					{rank &&
+						`${rank}.`
+					}
+				</div>
 				<div className={s.upvoteContainer}>
 					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}></span>
 				</div>

@@ -258,7 +258,7 @@ export function submitLink(title, url) {
         if (response.success) {
           dispatch(receiveSubmitLink());
           dispatch(invalidateLinks());
-          dispatch(fetchLinks('new'));
+          dispatchTimeout(() => dispatch(fetchLinks('new', 1)));
           browserHistory.push('/new');
         } else {
           dispatch(submitLinkError(response.message));
@@ -334,7 +334,9 @@ function createCommentError(message) {
 }
 
 function dispatchTimeout(fct) {
-  window.setTimeout(fct.bind, 250);
+  window.setTimeout(fct, 10);
+  window.setTimeout(fct, 50);
+  window.setTimeout(fct, 250);
 }
 
 export function createComment(commentid, text) {

@@ -9,7 +9,8 @@ class CommentFormPanel extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    commentid: PropTypes.number.isRequired
+    commentid: PropTypes.number.isRequired,
+    onSubmit: PropTypes.func
   };
 
   constructor() {
@@ -18,28 +19,30 @@ class CommentFormPanel extends Component {
       commentText: ''
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  onChange(e) {
+  handleChange(e) {
     e.preventDefault();
     this.setState({ commentText: e.target.value });
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const { dispatch, commentid } = this.props;
+    const { dispatch, commentid, onSubmit } = this.props;
     const { commentText } = this.state;
     if (commentText) {
       dispatch(createComment(commentid, commentText))
     }
+    if (onSubmit) onSubmit();
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit} ref="form" className="Pane Pane--well Form">
         <div className="Form-inner">
-          <textarea className={s.textarea} onChange={this.onChange.bind(this)}></textarea>
+          <textarea className={s.textarea} onChange={this.handleChange}></textarea>
           <button className="Button Button--neutral" type="submit">Reply</button>
         </div>
       </form>
