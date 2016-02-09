@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>9BB819B2-6552-4F45-9E24-30BB1A6A6545</UUID>
-        <nextObjectID>183</nextObjectID>
+        <nextObjectID>186</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -265,7 +265,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">3</attribute>
         <attribute name="name" type="string">Get Comments</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -291,7 +291,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"commentid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">Post Comment</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -327,7 +327,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">5</attribute>
         <attribute name="name" type="string">Get Comments</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -363,7 +363,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"488FF17F-7328-4C28-8220-8EE2BF19A11E\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"comments.0.commentid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting Nested 1\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"commentid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"488FF17F-7328-4C28-8220-8EE2BF19A11E\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"comments.0.commentid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting Nested 1\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">8</attribute>
         <attribute name="name" type="string">Post Comment (nested)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -439,7 +439,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">7</attribute>
         <attribute name="name" type="string">Get Comments (check order)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -455,7 +455,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting 2\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"commentid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting 2\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">6</attribute>
         <attribute name="name" type="string">Post Comment</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -491,7 +491,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"488FF17F-7328-4C28-8220-8EE2BF19A11E\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"comments.0.commentid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting Nested 2\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"commentid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"488FF17F-7328-4C28-8220-8EE2BF19A11E\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"`\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\",\\"text\\":\\"Test root commenting Nested 2\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">9</attribute>
         <attribute name="name" type="string">Post Comment (nested)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -517,7 +517,7 @@
         <attribute name="redirectauthorization" type="bool">0</attribute>
         <attribute name="method" type="string">POST</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
-        <attribute name="body" type="string">[{"data":{"json":"{\\"commentrootid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"commentrootid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
         <attribute name="order" type="int64">10</attribute>
         <attribute name="name" type="string">Get Comments (check order)</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
@@ -533,5 +533,41 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z182"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z184">
+        <attribute name="value" type="string">[{"data":{"request":"F9D9F474-F89C-4316-8491-7280DFF64D12","keyPath":["loginid"],"format":0},"identifier":"com.luckymarmot.ResponseBodyPathDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">Authorization</attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z185"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z185">
+        <attribute name="uuid" type="string">7A94A93C-CE06-401D-85CC-C56E28B55C81</attribute>
+        <attribute name="url" type="string">[{"data":{"environmentVariable":"A071385D-3D23-42A1-BCAF-D9C308E3982C"},"identifier":"com.luckymarmot.EnvironmentVariableDynamicValue"},"\\/links\\/new"]</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="body" type="string">[{"data":{"json":"{\\"linkid\\":\\"[{\\\\\\"data\\\\\\":{\\\\\\"request\\\\\\":\\\\\\"3D97E838-CC48-4F40-ADD2-B15C4F0F609B\\\\\\",\\\\\\"keyPath\\\\\\":[\\\\\\"linkid\\\\\\"],\\\\\\"format\\\\\\":0},\\\\\\"identifier\\\\\\":\\\\\\"com.luckymarmot.ResponseBodyPathDynamicValue\\\\\\"}]\\"}"},"identifier":"com.luckymarmot.JSONDynamicValue"}]</attribute>
+        <attribute name="order" type="int64">11</attribute>
+        <attribute name="name" type="string">Get All Links</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z184 z186"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z186">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z185"></relationship>
     </object>
 </database>

@@ -99,9 +99,10 @@ class MyLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
     return {
-      'links': rankLinkList(Link.queryByUser(user, page=page), user=user, page=page)
+      'links': rankLinkList(Link.queryByUser(user, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -109,10 +110,11 @@ class TopLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
     page = int(page)
     return {
-      'links': rankLinkList(Link.queryTop(page=page), user=user, page=page)
+      'links': rankLinkList(Link.queryTop(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -120,10 +122,11 @@ class NewLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
     page = int(page)
     return {
-      'links': rankLinkList(Link.queryNew(page=page), user=user, page=page)
+      'links': rankLinkList(Link.queryNew(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -131,10 +134,11 @@ class TrendingLinksHandler(RequestHandler):
   @AccessControlAllowOrigin()
   @JSONResponse
   @RequireAuth('user')
-  def get(self, page=1, user=None):
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
     page = int(page)
     return {
-      'links': rankLinkList(TrendingCounter.queryTrending(page=page), user=user, page=page)
+      'links': rankLinkList(TrendingCounter.queryTrending(page=page, count=perpage), perpage=perpage, user=user, page=page)
     }
 
 
@@ -168,10 +172,10 @@ app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
   ('/api/links/?', PostLinksHandler),
-  ('/api/links/mine/(\d+)', MyLinksHandler),
-  ('/api/links/top/(\d+)', TopLinksHandler),
-  ('/api/links/new/(\d+)', NewLinksHandler),
-  ('/api/links/trending/(\d+)', TrendingLinksHandler),
+  ('/api/links/mine(?:/(\d+))?', MyLinksHandler),
+  ('/api/links/top(?:/(\d+))?', TopLinksHandler),
+  ('/api/links/new(?:/(\d+))?', NewLinksHandler),
+  ('/api/links/trending(?:/(\d+))?', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
   ('/api/users/info/?', UserInfoHandler),
   ('/api/links/comments/?', PostLinkCommentsHandler),

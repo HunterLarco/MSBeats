@@ -62,7 +62,7 @@ class Link(ndb.Model):
   userkey  = ndb.KeyProperty      (indexed=True, required=True)
   created  = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
   votes    = ndb.IntegerProperty  (indexed=True, default=0)
-  comments = ndb.KeyProperty      (indexed=True, required=True)
+  comments = ndb.KeyProperty      (indexed=True)
 
   def toDict(self, user=None):
     return {
@@ -73,7 +73,8 @@ class Link(ndb.Model):
       'votes'         : self.votes,
       'linkid'        : self.key.id(),
       'voteStatus'    : self.getVotedStatus(user) if user else None,
-      'commentrootid' : self.comments.id()
+      'commentrootid' : self.comments.id(),
+      'comments'      : self.countComments()
     }
 
   def getVotedStatus(self, user):
@@ -111,6 +112,9 @@ class Link(ndb.Model):
     if upvoted: UpVoteCounter.create(user, self)
     else: DownVoteCounter.create(user, self)
 
+  def countComments(self):
+    return Comment.countFromLink(self)
+
   def getComments(self):
     rootComment = self.comments.get()
     rootComment.loadChildren()
@@ -138,9 +142,13 @@ class Link(ndb.Model):
     link.title = title
     link.url = url
     link.userkey = user.key
-    link.comments = Comment.create(None, None, None).key
 
     link.put()
+    
+    # TODO fix this
+    link.comments = Comment.create(None, None, link.key, None).key
+    link.put()
+    
     TrendingCounter.create(link)
 
     return link
