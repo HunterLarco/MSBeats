@@ -16,7 +16,7 @@
 }
 
 .body {
-  padding: 0.5em 0 0.5em;
+  margin: 0.5em 0 0.5em;
 }
 
 .reply {
@@ -37,6 +37,10 @@
 
 
 .children {
+  .root {
+    padding-bottom: 0;
+  }
+  .children,
   .content {
     margin-left: 15px;
   }

@@ -86,7 +86,6 @@ function requestUpvoteLink() {
 }
 
 function receiveUpvoteLink(success) {
-  console.log('receiveUpvoteLink', success);
   return dispatch => {
     dispatch(invalidateLinks());
     return {
@@ -339,14 +338,15 @@ function dispatchTimeout(fct) {
 }
 
 export function createComment(commentid, text) {
-  debugger;
   return (dispatch, getState) => {
     dispatch(requestCreateComment(commentid, text));
     return LinksApiEndpoint.createComment(commentid, text)
       .then(response => {
         if (response.success) {
           dispatch(receiveCreateComment(response));
-          dispatchTimeout(dispatch(fetchComments(getState().linkWithComments.data.linkid)));
+          dispatchTimeout(() => {
+            dispatch(fetchComments(getState().linkWithComments.data.linkid))
+          });
         } else {
           dispatch(createCommentError(response.message));
         }

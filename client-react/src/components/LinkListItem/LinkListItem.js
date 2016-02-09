@@ -35,19 +35,25 @@ class LinkListItem extends Component {
 	}
 
 	render() {
-		console.log(this.props.item);
 		const { url, votes, title, user, created, voteStatus, rank, linkid, commentsCount } = this.props.item;
 		const commentLink = `/comments/${linkid}`
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created * 1000).fromNow();
 		return (
 			<div className={s.root}>
-				<div className={s.index}>{rank}.</div>
+				{rank &&
+					<div className={s.index}>{rank}.</div>
+				}
 				<div className={s.upvoteContainer}>
 					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}></span>
 				</div>
 				<div className={s.content}>
-					<a className={s.linkTitle} href={url}><span className={s.titleIndex}>{rank}. </span>{title}</a>
+					<a className={s.linkTitle} href={url}>
+						{rank &&
+							<span className={s.titleIndex}>{rank}. </span>
+						}
+						{title}
+					</a>
 					<span className={s.subTitle}>
 						<span className={s.points}>{votes} points</span>
 						&nbsp;by <span className={s.author}>{user.username}</span>

@@ -31,7 +31,6 @@ export default function routes (store) {
   var filters = {};
 
   ['top', 'trending', 'new', 'min'].forEach((key) => filters[key] = (nextState) => {
-    console.log('filter routes.js call', nextState.params.page);
     store.dispatch(actions.selectLinksFilter(key, nextState.params.page || 1));
   });
 
