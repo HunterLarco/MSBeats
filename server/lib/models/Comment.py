@@ -58,3 +58,4 @@ class Comment(ndb.Model):
     comment.linkkey = linkkey
     
     comment.put()
+    return comment
