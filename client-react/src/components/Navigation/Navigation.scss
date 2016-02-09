@@ -3,6 +3,7 @@
 .root {
   display: inline-block;
   color: white;
+  margin-bottom: 15px;
 }
 
 .link {
@@ -14,7 +15,7 @@
 }
 
 .linkActive {
-  @mixin arrow-on-bottom-reverse 6px, white, 50%, 17px;
+  @mixin arrow-on-bottom-reverse 10px, white, 50%, 20px;
 }
 
 .isDisabled {

@@ -10,7 +10,8 @@ $color-text-body: black;
 $color-text-meta: color(black whiteness(80%));
 $color-link: $color-dark;/* #1a0dab; */
 $color-border: color(white blackness(30%));
+$color-border-darker: color(white blackness(60%));
 
-$color-well: rgba(14, 155, 255, 0.06);
+$color-well: rgb(240, 249, 255);
 $color-note: #FFFBD1;
 $color-note-border: color($color-note blackness(20%));

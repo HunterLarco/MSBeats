@@ -49,7 +49,7 @@ class CommentsPage extends Component {
     if (!auth.isAuthenticated) {
       return (
         <div>
-          <div className="Inner">
+          <div className="Pane Inner">
             <Content>
               <p>You have to be logged in to see this</p>
             </Content>

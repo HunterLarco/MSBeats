@@ -14,7 +14,8 @@ class FormRow extends Component {
     minLength: PropTypes.string, // parsed to int
     attachToForm: PropTypes.bool,
     attachHandler: PropTypes.func,
-    isFormSubmitted: PropTypes.bool
+    isFormSubmitted: PropTypes.bool,
+    textarea: PropTypes.bool
   };
 
   constructor() {
@@ -26,6 +27,7 @@ class FormRow extends Component {
       isEmpty: true
     };
     this.messages = [];
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -40,10 +42,7 @@ class FormRow extends Component {
     });
   }
 
-  /**
-   * The event object is augmented to validation information
-   */
-  onChange(e) {
+  handleChange(e) {
     const { isFormSubmitted } = this.props;
     this.setState({
       value: e.target.value,
@@ -74,15 +73,21 @@ class FormRow extends Component {
 
   render() {
     // console.log('render FormRow');
-    const { className, label, name } = this.props
+    const { className, label, name, textarea } = this.props
     const type = this.props.type || 'text'
     return (
       <div className={cx(s.root, className)}>
-        <div className={s.side}>
-          <label htmlFor={name}>{label}</label>
-        </div>
+        {label &&
+          <div className={s.side}>
+            <label htmlFor={name}>{label}</label>
+          </div>
+        }
         <div className={s.main}>
-          <input ref="input" id={name} name={name} className={s.input} type={type} onChange={this.onChange.bind(this)} />
+          {textarea ?
+            <textarea ref="input" id={name} name={name} className={s.input} type={type} onChange={this.handleChange} />
+          :
+            <input ref="input" id={name} name={name} className={s.input} type={type} onChange={this.handleChange} />
+          }
         </div>
         <div className={s.messages}>
           {this.renderChildren(this.props.children)}

@@ -2,7 +2,7 @@
 
 .root {
   margin: 1em 0;
-  padding-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .header {
@@ -41,9 +41,9 @@
     padding-bottom: 0;
     border-left: 1px solid #eee;
   }
+
   .children,
   .content {
-    margin-left: 15px;
-    // box-shadow: -1px 0 #eee;
+    margin-left: 2.5%;
   }
 }
