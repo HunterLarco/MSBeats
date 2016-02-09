@@ -7,13 +7,14 @@
 
 .link {
   color: white;
+
   &:global(.is-active) {
     font-weight: bold;
   }
 }
 
 .linkActive {
-  font-weight: bold;
+  @mixin arrow-on-bottom-reverse 6px, white, 50%, 17px;
 }
 
 .isDisabled {

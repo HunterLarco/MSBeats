@@ -35,8 +35,11 @@
 	max-width: 28px;
 	// top: -2px;
 	margin-right: 10px;
-	position: absolute;
-	margin-left: -42px;
+
+	@mixin media $bp-hand-l, 0 {
+		position: absolute;
+		margin-left: -42px;
+	}
 }
 
 .logoWalkme {
@@ -44,5 +47,4 @@
 	position: relative;
 	// top: -2px;
 	margin-right: 4px;
-
 }

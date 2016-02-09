@@ -6,6 +6,7 @@ import { upvoteLink } from '../../actions'
 import moment from 'moment';
 import cx from 'classnames';
 import { Link } from 'react-router';
+import { isEmpty } from 'lodash';
 
 class LinkListItem extends Component {
 
@@ -35,6 +36,31 @@ class LinkListItem extends Component {
 	}
 
 	render() {
+		console.log('(LinkListItem) this.props.item', this.props.item);
+		// return (<div></div>);
+		if (isEmpty(this.props.item)) { // eslint-disable-line
+			console.log('(LinkListItem) skeleton loading');
+			return (
+				<div className={s.root}>
+					<div className={s.index}></div>
+					<div className={s.upvoteContainer}>
+						<span className={s.upvote}></span>
+					</div>
+					<div className={s.content}>
+						<a className={s.linkTitle}>
+							Loading...
+						</a>
+						<span className={s.subTitle}>
+							<span className={s.points}>0 points</span>
+							&nbsp;by <span className={s.author}>notarealaccount</span>
+						&nbsp;<span className={s.time}>loading</span> &middot;&nbsp;
+							<Link className={s.commentLink}>0&nbsp;comments</Link>
+						</span>
+					</div>
+				</div>
+			);
+		}
+
 		const { url, votes, title, user, created, voteStatus, rank, linkid, commentsCount } = this.props.item;
 		const commentLink = `/comments/${linkid}`
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
@@ -58,9 +84,9 @@ class LinkListItem extends Component {
 					</a>
 					<span className={s.subTitle}>
 						<span className={s.points}>{votes} points</span>
-						&nbsp;by <span className={s.author}>{user.username}</span>
+						&nbsp;by <span className={s.author}>{user && user.username}</span>
 					&nbsp;<span className={s.time}>{fromNow}</span> &middot;&nbsp;
-						<Link className={s.commentLink} to={commentLink}>{commentsCount} comments</Link>
+						<Link className={s.commentLink} to={commentLink}>{commentsCount}&nbsp;comments</Link>
 					</span>
 				</div>
 			</div>

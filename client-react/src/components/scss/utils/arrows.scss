@@ -52,7 +52,7 @@
 		left: $left;
 		content: "";
 		margin-left: -$size;
-		bottom: -($size + $offset + 1);
+		bottom: -$offset;
 	}
 }
 

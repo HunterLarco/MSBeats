@@ -13,7 +13,7 @@ import s from './Header.scss';
 import cx from 'classnames';
 import { IndexLink } from 'react-router';
 import Navigation from '../Navigation';
-
+import { connect } from 'react-redux';
 
 class Header extends Component {
   // WalkMe logo

@@ -4,6 +4,15 @@ import { combineReducers } from 'redux'
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
 import reactCookie from 'react-cookie';
 
+function currentRoute (state = {}, action) {
+  switch (action.type) {
+    case ActionTypes.CHANGE_ROUTE:
+      return action.nextState;
+    default:
+      return state;
+  }
+}
+
 function isHeaderSearchFocused (state = false, action) {
   switch (action.type) {
     case ActionTypes.SET_HEADER_SEARCH_FOCUS:
@@ -157,12 +166,17 @@ function linkWithComments (state = {
         isFetching: false,
         message: action.message
       });
+    case ActionTypes.COMMENTS_INVALIDATE:
+      return Object.assign({}, state, {
+        data: {}
+      });
     default:
       return state;
   }
 }
 
 export const rootReducer = combineReducers({
+  currentRoute,
   selectedLinksFilter,
   linksByFilter,
   isHeaderSearchFocused,

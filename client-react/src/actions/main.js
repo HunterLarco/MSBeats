@@ -4,6 +4,17 @@ import reactCookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 // Make sure to export everything in this file that needs exporting
 
+console.log('browserHistory', browserHistory);
+
+export const CHANGE_ROUTE = 'CHANGE_ROUTE';
+
+export function changeRoute(nextState) {
+  return {
+    type: CHANGE_ROUTE,
+    nextState
+  };
+}
+
 export const SET_HEADER_SEARCH_FOCUS = 'SET_HEADER_SEARCH_FOCUS'
 
 export function setHeaderSearchFocus(isFocused) {
@@ -270,6 +281,7 @@ export function submitLink(title, url) {
 export const COMMENTS_REQUEST = 'COMMENTS_REQUEST';
 export const COMMENTS_SUCCESS = 'COMMENTS_SUCCESS';
 export const COMMENTS_FAILURE = 'COMMENTS_FAILURE';
+export const COMMENTS_INVALIDATE = 'COMMENTS_INVALIDATE';
 
 function requestComments(linkid) {
   return {
@@ -290,6 +302,12 @@ function commentsError(message) {
     type: COMMENTS_FAILURE,
     message
   };
+}
+
+export function invalidateComments() {
+  return {
+    type: COMMENTS_INVALIDATE
+  }
 }
 
 export function fetchComments(linkid) {

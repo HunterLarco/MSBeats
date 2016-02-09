@@ -14,6 +14,7 @@ import s from './Navigation.scss';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions';
+import { browserHistory } from 'react-router';
 
 class Navigation extends Component {
 
@@ -25,6 +26,16 @@ class Navigation extends Component {
 
   constructor() {
     super();
+    this.handleLogout = this.handleLogout.bind(this);
+    if (browserHistory) {
+      browserHistory.listen(() => {
+        this.forceUpdate();
+      });
+    }
+  }
+
+  componentWillReceiveProps() {
+    this.setState({ random: new Date() });
   }
 
   handleLogout(e) {
@@ -35,15 +46,19 @@ class Navigation extends Component {
 
   render() {
     const { auth } = this.props;
+    // For some reason activeClassName doesn't work for this on the client
     return (
       <div className={cx(s.root, this.props.className)} role="navigation">
-        <Link className={s.link} to="/submit">submit</Link>
+        <Link className={s.link} to="/submit" activeClassName={s.linkActive}>submit</Link>
         {!auth.isAuthenticated ? (
-          <span></span>
+          <span>
+            <span className={s.middot}>&middot;</span>
+            <Link className={s.link} to="/signup" activeClassName={s.linkActive}>signup</Link>
+          </span>
         ) : (
           <span>
             <span className={s.middot}>&middot;</span>
-            <Link className={s.link} to="" onClick={this.handleLogout.bind(this)}>logout</Link>
+            <Link className={s.link} to="" onClick={this.handleLogout}>logout</Link>
           </span>
         )}
       </div>

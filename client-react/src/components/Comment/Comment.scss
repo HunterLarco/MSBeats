@@ -39,9 +39,11 @@
 .children {
   .root {
     padding-bottom: 0;
+    border-left: 1px solid #eee;
   }
   .children,
   .content {
     margin-left: 15px;
+    // box-shadow: -1px 0 #eee;
   }
 }

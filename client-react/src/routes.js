@@ -34,9 +34,14 @@ export default function routes (store) {
     store.dispatch(actions.selectLinksFilter(key, nextState.params.page || 1));
   });
 
+  function globalEnter (nextState) {
+    console.log(nextState);
+    store.dispatch(actions.changeRoute(nextState));
+  }
+
   return (
     <Route>
-      <Route path="/" component={App}>
+      <Route path="/" component={App} onEnter={globalEnter}>
         <IndexRedirect to="top" />
         <Route path="top" component={HomePage} onEnter={filters.top}>
           <IndexRoute onEnter={filters.top} />

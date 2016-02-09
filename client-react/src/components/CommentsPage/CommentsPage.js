@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import s from './CommentsPage.scss';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { connect } from 'react-redux';
-import { fetchComments } from '../../actions';
+import { fetchComments, invalidateComments } from '../../actions';
 import LinkListItem from '../LinkListItem';
 import Comment from '../Comment';
 import Content from '../Content';
@@ -31,6 +31,8 @@ class CommentsPage extends Component {
   }
 
   componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(invalidateComments());
     this.context.onSetTitle('Comments');
   }
 
@@ -59,14 +61,11 @@ class CommentsPage extends Component {
 
     console.log(linkWithComments.data);
     const comments = linkWithComments.data.comments || [];
-    console.log(comments);
     // return (<div></div>);
     return (
       <div className="Inner">
         <header className={s.header}>
-          {linkWithComments.data.linkid ? (
-            <LinkListItem item={linkWithComments.data} />
-          ) : null}
+          <LinkListItem item={linkWithComments.data} />
         </header>
         <CommentFormPanel commentid={commentrootid} />
         <div className={s.comments}>
