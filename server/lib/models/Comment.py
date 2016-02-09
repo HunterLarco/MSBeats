@@ -57,6 +57,4 @@ class Comment(ndb.Model):
     comment.userkey = user.key if user else None
     comment.linkkey = linkkey
     
-    print(comment)
     comment.put()
-    return comment
