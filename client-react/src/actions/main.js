@@ -19,15 +19,6 @@ export function changeRoute(nextState) {
   };
 }
 
-export const SET_HEADER_SEARCH_FOCUS = 'SET_HEADER_SEARCH_FOCUS'
-
-export function setHeaderSearchFocus(isFocused) {
-  return {
-    type: SET_HEADER_SEARCH_FOCUS,
-    isFocused
-  }
-}
-
 export const INVALIDATE_LINKS = 'INVALIDATE_LINKS'
 export const REQUEST_LINKS = 'REQUEST_LINKS'
 export const RECEIVE_LINKS = 'RECEIVE_LINKS'

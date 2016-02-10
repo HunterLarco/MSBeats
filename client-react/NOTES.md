@@ -172,3 +172,6 @@ export default connect(mapStateToProps)(withStyles(ComponentName, s));
 
 You should create a `package.json` for your component.
 See `Creating a new page/component`.
+
+
+## Deploying

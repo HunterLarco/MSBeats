@@ -74,7 +74,7 @@ class LinkListItem extends Component {
 
 		const { showText } = this.props;
 		const { url, votes, title, user, created, rank, linkid, commentsCount, text } = this.props.item;
-		const commentLink = `${linkid}/${this.safeTitle(title)}`;
+		const commentLink = `/${linkid}/${this.safeTitle(title)}`;
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created * 1000).fromNow();
 		return (
