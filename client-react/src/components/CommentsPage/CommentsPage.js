@@ -69,7 +69,7 @@ class CommentsPage extends Component {
     return (
       <div className="Inner">
         <header className={s.header}>
-          <LinkListItem item={linkWithComments.data} />
+          <LinkListItem showText="true" item={linkWithComments.data} />
         </header>
         <CommentFormPanel commentid={commentrootid} />
         <div className={s.comments}>
@@ -82,7 +82,6 @@ class CommentsPage extends Component {
 }
 
 function mapStateToProps({ auth, linkWithComments }) {
-  console.log('linkWithComments', linkWithComments);
   return {
     auth,
     linkWithComments

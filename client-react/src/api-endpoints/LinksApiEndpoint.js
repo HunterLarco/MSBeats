@@ -8,8 +8,8 @@ export default class LinksApiEndpoint {
 		return get(`${endpoint}/${filter}/${page}`);
 	}
 
-	static post (body) {
-		return post(endpoint, body);
+	static post (title, url = '', text = '') {
+		return post(endpoint, { title, url, text });
 	}
 
 	static comments (linkid) {

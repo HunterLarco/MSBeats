@@ -7,13 +7,15 @@ import moment from 'moment';
 import cx from 'classnames';
 import { Link } from 'react-router';
 import { isEmpty } from 'lodash';
+import Content from '../Content';
 
 class LinkListItem extends Component {
 
 	static propTypes = {
 		className: PropTypes.string,
 		item: PropTypes.object.isRequired,
-		dispatch: PropTypes.func.isRequired
+		dispatch: PropTypes.func.isRequired,
+		showText: PropTypes.bool
 	};
 
 	constructor() {
@@ -70,33 +72,53 @@ class LinkListItem extends Component {
 			);
 		}
 
-		const { url, votes, title, user, created, voteStatus, rank, linkid, commentsCount } = this.props.item;
+		const { showText } = this.props;
+		const { url, votes, title, user, created, rank, linkid, commentsCount, text } = this.props.item;
 		const commentLink = `${linkid}/${this.safeTitle(title)}`;
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created * 1000).fromNow();
 		return (
-			<div className={s.root}>
-				<div className={s.index}>
-					{rank &&
-						`${rank}.`
-					}
-				</div>
-				<div className={s.upvoteContainer}>
-					<span className={cx(s.upvote, isVoteActive)} onClick={this.handleUpvoteClick} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}>{this.state.isUpvotedButNotReloaded ? votes + 1 : votes}</span>
-				</div>
-				<div className={s.content}>
-					<a className={s.linkTitle} href={url}>
+			<div>
+				<div className={s.root}>
+					<div className={s.index}>
 						{rank &&
-							<span className={s.titleIndex}>{rank}. </span>
+							`${rank}.`
 						}
-						{title}
-					</a>
-					<span className={s.subTitle}>
-						by <span className={s.author}>{user && user.username}</span>
-					&nbsp;<span className={s.time}>{fromNow}</span> &middot;&nbsp;
-						<Link className={s.commentLink} to={commentLink}>{commentsCount}&nbsp;comments</Link>
-					</span>
+					</div>
+					<div className={s.upvoteContainer}>
+						<span className={cx(s.upvote, isVoteActive)} onClick={this.handleUpvoteClick} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}>{this.state.isUpvotedButNotReloaded ? votes + 1 : votes}</span>
+					</div>
+					<div className={s.content}>
+						{url ?
+							<a className={s.linkTitle} href={url}>
+								{rank &&
+									<span className={s.titleIndex}>{rank}. </span>
+								}
+								{title}
+							</a>
+							:
+							<Link className={s.linkTitle} to={commentLink}>
+								{rank &&
+									<span className={s.titleIndex}>{rank}. </span>
+								}
+								{title}
+							</Link>
+						}
+
+						<span className={s.subTitle}>
+							by <span className={s.author}>{user && user.username}</span>
+						&nbsp;<span className={s.time}>{fromNow}</span> &middot;&nbsp;
+							<Link className={s.commentLink} to={commentLink}>{commentsCount}&nbsp;comments</Link>
+						</span>
+					</div>
 				</div>
+				{showText &&
+					<div className="Pane">
+						<Content>
+							<p>{text}</p>
+						</Content>
+					</div>
+				}
 			</div>
 		);
 

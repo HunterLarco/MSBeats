@@ -11,6 +11,10 @@ from lib.models.Link import *
 from lib.blowfish import BadEncryptionException
 
 
+class CreateLinkValidationException(Exception):
+  pass
+
+
 ERROR_MAP = {
   InvalidJsonException           : ErrorTuple(000, 'Invalid json formatting'),
   MissingParameterException      : ErrorTuple(001, 'Parameter missing'),
@@ -22,7 +26,8 @@ ERROR_MAP = {
   UserIncorrectPasswordException : ErrorTuple(101, 'Incorrect password'),
   UserEmailInUseException        : ErrorTuple(102, 'Email already in use'),
   UsernameInUseException         : ErrorTuple(103, 'Username already in use'),
-  UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID')
+  UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID'),
+  CreateLinkValidationException  : ErrorTuple(105, 'Url and text are missing')
 }
 
 
@@ -67,9 +72,12 @@ class PostLinksHandler(RequestHandler):
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
   @RequireAuth('user')
-  @BodyParameters('title', 'url')
-  def post(self, title=None, url=None, user=None):
-    return Link.create(title, url, user).toDict()
+  @BodyParameters('title', 'text', 'url')
+  def post(self, title=None, text=None, url=None, user=None):
+    if text == "" and title == "":
+      raise CreateLinkValidationException()
+    else:
+      return Link.create(title, text, url, user).toDict()
 
 
 class VoteHandler(RequestHandler):

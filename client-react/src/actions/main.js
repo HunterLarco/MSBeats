@@ -4,6 +4,12 @@ import reactCookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 // Make sure to export everything in this file that needs exporting
 
+function dispatchTimeout(fct) {
+  window.setTimeout(fct, 10);
+  window.setTimeout(fct, 50);
+  window.setTimeout(fct, 250);
+}
+
 export const CHANGE_ROUTE = 'CHANGE_ROUTE';
 
 export function changeRoute(nextState) {
@@ -260,10 +266,10 @@ function submitLinkError(message) {
   }
 }
 
-export function submitLink(title, url) {
+export function submitLink(title, url, text) {
   return dispatch => {
     dispatch(requestSubmitLink());
-    return LinksApiEndpoint.post({ title, url })
+    return LinksApiEndpoint.post(title, url, text)
       .then(response => {
         if (response.success) {
           dispatch(receiveSubmitLink());
@@ -348,12 +354,6 @@ function createCommentError(message) {
     type: CREATE_COMMENT_FAILURE,
     message
   };
-}
-
-function dispatchTimeout(fct) {
-  window.setTimeout(fct, 10);
-  window.setTimeout(fct, 50);
-  window.setTimeout(fct, 250);
 }
 
 export function createComment(commentid, text) {

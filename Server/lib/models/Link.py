@@ -58,7 +58,8 @@ class UpVoteCounter(VoteCounter):
 
 class Link(ndb.Model):
   title    = ndb.StringProperty   (indexed=True, required=True)
-  url      = ndb.StringProperty   (indexed=True, required=True)
+  text     = ndb.StringProperty   (indexed=True, required=False)
+  url      = ndb.StringProperty   (indexed=True, required=False)
   userkey  = ndb.KeyProperty      (indexed=True, required=True)
   created  = ndb.DateTimeProperty (indexed=True, auto_now_add=True)
   votes    = ndb.IntegerProperty  (indexed=True, default=0)
@@ -67,6 +68,7 @@ class Link(ndb.Model):
   def toDict(self, user=None):
     return {
       'title'         : self.title,
+      'text'          : self.text,
       'url'           : self.url,
       'user'          : self.getUser().toPublicDict(),
       'created'       : timeutil.toTimestamp(self.created),
@@ -136,19 +138,20 @@ class Link(ndb.Model):
     return cls.query().order(-cls.votes).order(-cls.created).fetch(count, offset=(page-1)*count)
 
   @classmethod
-  def create(cls, title, url, user):
+  def create(cls, title, text, url, user):
     link = cls()
 
     link.title = title
+    link.text = text
     link.url = url
     link.userkey = user.key
 
     link.put()
-    
+
     # TODO fix this
     link.comments = Comment.create(None, None, link.key, None).key
     link.put()
-    
+
     TrendingCounter.create(link)
 
     return link

@@ -55,9 +55,10 @@ class SubmitPage extends Component {
 
   handleSubmit(e, form, rows) {
     this.setState({ form, rows });
-    if (!form.isValid) return;
+    console.log( !(rows.title.isValid && (rows.url.isValid || rows.text.isValid)));
+    if (! (rows.title.isValid && (rows.url.isValid || rows.text.isValid))) return;
     const { dispatch } = this.props;
-    dispatch(submitLink(rows.title.value, rows.url.value));
+    dispatch(submitLink(rows.title.value, rows.url.value, rows.text.value));
   }
 
   render() {
