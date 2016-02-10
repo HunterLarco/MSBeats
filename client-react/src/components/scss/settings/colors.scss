@@ -6,7 +6,7 @@ $color-tint: #edf0f2;
 
 /* Functional colors */
 
-$color-text-body: black;
+$color-text-body: $color-dark;
 $color-text-meta: color(black whiteness(80%));
 $color-link: $color-dark;/* #1a0dab; */
 $color-border: color(white blackness(30%));

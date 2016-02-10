@@ -8,6 +8,7 @@
   display: inline-block;
   border-radius: 3px;
   font-size: $font-size-80;
+  animation: appear 0.2s ease-out;
 }
 
 .inner {

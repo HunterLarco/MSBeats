@@ -2,8 +2,11 @@
 
 .root {
   display: inline-block;
-  color: white;
+  margin-top: 15px;
   margin-bottom: 15px;
+  color: white;
+  flex: 1;
+  display: flex;
 }
 
 .link {
@@ -14,13 +17,21 @@
   }
 }
 
+.left {
+  flex: 1;
+}
+
+.right {
+  text-align: right;
+}
+
 .linkActive {
   @mixin arrow-on-bottom-reverse 10px, white, 50%, 20px;
 }
 
 .isDisabled {
-  opacity: 0.5;
   cursor: default;
+  opacity: .5;
 }
 
 .middot {

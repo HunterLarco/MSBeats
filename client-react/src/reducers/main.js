@@ -81,7 +81,7 @@ function linksByFilter(state = {}, action) {
 }
 
 function getUserFromStorage() {
-  const user = localStorage.getItem('user')
+  const user = localStorage.getItem('user');
   return user ? JSON.parse(user) : null
 }
 

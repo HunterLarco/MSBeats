@@ -19,20 +19,30 @@ class LinkListItem extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isUpvoted: false
+			isUpvoted: false,
+			isUpvotedButNotReloaded: false
 		};
+		this.handleUpvoteClick = this.handleUpvoteClick.bind(this);
 	}
 
 	componentWillMount() {
 		this.setState({ isUpvoted: this.props.item.voteStatus === 1 });
 	}
 
-	onClick(e) {
+	handleUpvoteClick(e) {
 		e.preventDefault();
+		if (this.state.isUpvoted) return;
 		const { dispatch } = this.props;
 		const { linkid } = this.props.item;
 		this.setState({ isUpvoted: true });
+		this.setState({ isUpvotedButNotReloaded: true });
 		dispatch(upvoteLink(linkid));
+	}
+
+	safeTitle(title) {
+		return title.toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]+/g, '');
 	}
 
 	render() {
@@ -51,8 +61,7 @@ class LinkListItem extends Component {
 							Loading...
 						</a>
 						<span className={s.subTitle}>
-							<span className={s.points}>0 points</span>
-							&nbsp;by <span className={s.author}>notarealaccount</span>
+							by <span className={s.author}>notarealaccount</span>
 						&nbsp;<span className={s.time}>loading</span> &middot;&nbsp;
 							<Link className={s.commentLink}>0&nbsp;comments</Link>
 						</span>
@@ -62,7 +71,7 @@ class LinkListItem extends Component {
 		}
 
 		const { url, votes, title, user, created, voteStatus, rank, linkid, commentsCount } = this.props.item;
-		const commentLink = `/comments/${linkid}`
+		const commentLink = `${linkid}/${this.safeTitle(title)}`;
 		const isVoteActive = this.state.isUpvoted ? 'is-active' : '';
 		const fromNow = moment(created * 1000).fromNow();
 		return (
@@ -73,7 +82,7 @@ class LinkListItem extends Component {
 					}
 				</div>
 				<div className={s.upvoteContainer}>
-					<span className={cx(s.upvote, isVoteActive)} onClick={this.onClick.bind(this)} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}></span>
+					<span className={cx(s.upvote, isVoteActive)} onClick={this.handleUpvoteClick} title={this.state.isUpvoted ? 'upvoted' : 'upvote'}>{this.state.isUpvotedButNotReloaded ? votes + 1 : votes}</span>
 				</div>
 				<div className={s.content}>
 					<a className={s.linkTitle} href={url}>
@@ -83,8 +92,7 @@ class LinkListItem extends Component {
 						{title}
 					</a>
 					<span className={s.subTitle}>
-						<span className={s.points}>{votes} points</span>
-						&nbsp;by <span className={s.author}>{user && user.username}</span>
+						by <span className={s.author}>{user && user.username}</span>
 					&nbsp;<span className={s.time}>{fromNow}</span> &middot;&nbsp;
 						<Link className={s.commentLink} to={commentLink}>{commentsCount}&nbsp;comments</Link>
 					</span>

@@ -4,8 +4,6 @@ import reactCookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 // Make sure to export everything in this file that needs exporting
 
-console.log('browserHistory', browserHistory);
-
 export const CHANGE_ROUTE = 'CHANGE_ROUTE';
 
 export function changeRoute(nextState) {
@@ -80,7 +78,6 @@ function shouldFetchLinks(links, page) {
 export function fetchLinksIfNeeded({ name, page }) {
   return (dispatch, getState) => {
     const links = getState().linksByFilter[name];
-    console.log(links);
     if (shouldFetchLinks(links, page)) {
       return dispatch(fetchLinks(name, page));
     }
@@ -229,6 +226,8 @@ export function signupUser(email, username, password) {
       .then(response => {
         if (response.success) {
           dispatch(receiveSignup(response))
+          dispatch(receiveLogin(response));
+          browserHistory.push('/new');
         } else {
           dispatch(signupError(response.message))
         }

@@ -71,8 +71,6 @@ class HomePage extends Component {
       )
     }
 
-    console.log(this.props);
-
     const moreLink = page ? `/${selectedLinksFilter.name}/${Number(page) + 1}` : `/${selectedLinksFilter.name}/2`;
 
     return (

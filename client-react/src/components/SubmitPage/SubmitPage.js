@@ -37,16 +37,24 @@ class SubmitPage extends Component {
     this.state = {
       title: '',
       url: '',
-      isFormSubmitted: false
+      isFormSubmitted: false,
+      form: {},
+      rows: {}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentWillMount() {
     this.context.onSetTitle(pageTitle);
   }
 
+  handleChange(e, form, rows) {
+    this.setState({ form, rows });
+  }
+
   handleSubmit(e, form, rows) {
+    this.setState({ form, rows });
     if (!form.isValid) return;
     const { dispatch } = this.props;
     dispatch(submitLink(rows.title.value, rows.url.value));
@@ -66,20 +74,31 @@ class SubmitPage extends Component {
       )
     }
 
+
+    const { rows, form } = this.state;
+    console.log('this.state.rows', rows, rows.url && rows.url.isEmpty && rows.text.isEmpty);
     return (
       <div className="Inner">
         <div className={s.root}>
-          <Form onSubmit={this.handleSubmit}>
+          <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+            <Content>
+              <p>Only people who are part of this organization can see your post.</p>
+            </Content>
             <FormRow attachToForm minLength="5" label="title" name="title">
               <Message attachToFormRow isFormSubmitted isEmpty>title is required</Message>
               <Message attachToFormRow isFormSubmitted isNotEmpty isNotValid>Title needs to be at least 5 characters long</Message>
             </FormRow>
             <FormRow attachToForm label="url" name="url" type="url">
-              <Message attachToFormRow isFormSubmitted isEmpty>url is required</Message>
+              {form.isSubmitted && rows.url && rows.url.isEmpty && rows.text.isEmpty &&
+                <Message>url or text is required</Message>
+              }
             </FormRow>
-            <Content>
-              <p>Only people who are part of this organization can see your post.</p>
-            </Content>
+            <strong>or</strong>
+            <FormRow textarea attachToForm label="text" name="text">
+              {form.isSubmitted && rows.text && rows.text.isEmpty && rows.url.isEmpty &&
+                <Message>text or url is required</Message>
+              }
+            </FormRow>
             <button className="Button Button--neutral" type="submit">Submit</button>
           </Form>
         </div>

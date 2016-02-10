@@ -80,7 +80,8 @@ class Form extends Component {
       if (child && child.props.attachToForm) {
         return cloneElement(child, {
           isFormSubmitted: this.state.isSubmitted,
-          attachHandler: this.attachHandler
+          attachHandler: this.attachHandler,
+          changeHandler: this.handleChange
         });
       }
       return child

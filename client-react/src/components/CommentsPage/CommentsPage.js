@@ -8,6 +8,7 @@ import Comment from '../Comment';
 import Content from '../Content';
 import LoginPage from '../LoginPage';
 import CommentFormPanel from '../CommentFormPanel';
+import { isEmpty } from 'lodash';
 
 class CommentsPage extends Component {
 
@@ -33,13 +34,18 @@ class CommentsPage extends Component {
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(invalidateComments());
-    this.context.onSetTitle('Comments');
   }
 
   componentDidMount() {
-    const { dispatch, auth, params } = this.props;
+    const { dispatch, auth, params, linkWithComments } = this.props;
     if (auth.isAuthenticated) {
       dispatch(fetchComments(params.linkid));
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!isEmpty(nextProps.linkWithComments.data)) {
+      this.context.onSetTitle(nextProps.linkWithComments.data.title);
     }
   }
 
@@ -59,9 +65,7 @@ class CommentsPage extends Component {
       )
     }
 
-    console.log(linkWithComments.data);
     const comments = linkWithComments.data.comments || [];
-    // return (<div></div>);
     return (
       <div className="Inner">
         <header className={s.header}>

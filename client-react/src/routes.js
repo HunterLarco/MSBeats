@@ -35,7 +35,6 @@ export default function routes (store) {
   });
 
   function globalEnter (nextState) {
-    console.log(nextState);
     store.dispatch(actions.changeRoute(nextState));
   }
 
@@ -63,7 +62,7 @@ export default function routes (store) {
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />
-        <Route path="comments/:linkid" component={CommentsPage} />
+        <Route path=":linkid/*" component={CommentsPage} />
       </Route>
       <Route path="*" component={NotFoundPage} />
     </Route>

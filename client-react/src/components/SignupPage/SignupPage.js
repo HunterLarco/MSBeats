@@ -46,7 +46,8 @@ class SignupPage extends Component {
   }
 
   render() {
-    const { signup, form } = this.props;
+    const { signup } = this.props;
+    const { form } = this.state;
     return (
       <div className="Inner">
         <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>

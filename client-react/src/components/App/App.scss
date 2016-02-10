@@ -23,19 +23,6 @@
 @import '../scss/components/Button.scss';
 @import '../scss/components/Note.scss';
 
-@keyframes appear {
-  0% {
-    opacity: 0.0;
-  }
-  100% {
-    opacity: 1.0;
-  }
-}
-
-:global(.Pane--full-height) > :global(.Inner) div {
-  animation: appear 0.1s normal forwards;
-}
-
 /*
  * Base styles
  * ========================================================================== */
@@ -45,6 +32,10 @@ html {
   font-size: $font-size-90;
   line-height: $line-height-80;
   background-color: $color-tint;
+}
+
+strong {
+  font-weight: bold;
 }
 
 /*

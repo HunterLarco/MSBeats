@@ -28,9 +28,8 @@ class Message extends Component {
     const isShown = this.isShown(state);
     if (isShown) {
       return (<div className={s.root}><div className={s.inner}>{children}</div></div>);
-    } else {
-      return false;
     }
+    return false;
   }
 
 }

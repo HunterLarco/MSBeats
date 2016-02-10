@@ -15,7 +15,8 @@ class FormRow extends Component {
     attachToForm: PropTypes.bool,
     attachHandler: PropTypes.func,
     isFormSubmitted: PropTypes.bool,
-    textarea: PropTypes.bool
+    textarea: PropTypes.bool,
+    changeHandler: PropTypes.func
   };
 
   constructor() {
@@ -50,6 +51,9 @@ class FormRow extends Component {
       isPristine: false,
       isFormSubmitted,
       isEmpty: e.target.value === ''
+    }, () => {
+      // Make sure the Form deals with the latest state3
+      this.props.changeHandler();
     });
   }
 
@@ -62,17 +66,17 @@ class FormRow extends Component {
 
   renderChildren(children) {
     const newChildren = Children.map(children, (child) => {
-      if (child.props.attachToFormRow) {
+      if (child && child.props.attachToFormRow) {
         return cloneElement(child, {
           state: this.state
         });
       }
+      return child;
     });
     return newChildren;
   }
 
   render() {
-    // console.log('render FormRow');
     const { className, label, name, textarea } = this.props
     const type = this.props.type || 'text'
     return (
