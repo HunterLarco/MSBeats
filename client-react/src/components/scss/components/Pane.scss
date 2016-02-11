@@ -1,0 +1,62 @@
+:global .Pane {
+	position: relative;
+
+  &:before,
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+:global .Pane--tint {
+	background-color: $color-tint;
+}
+
+:global .Pane--dark {
+	background-color: $color-dark;
+	color: white;
+}
+
+:global .Pane--white {
+	background-color: white;
+}
+
+:global .Pane--well {
+	background-color: $color-well;
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+	border-radius: 5px;
+}
+
+:global .Pane--full-height {
+	min-height: 100vh;
+	padding-bottom: 70px;
+	box-shadow: 0 1px 4px -2px black;
+}
+
+
+:global .Form {
+  margin-left: -25px;
+  margin-right: -25px;
+  margin-top: 20px;
+
+	@mixin media 0, $bp-hand-s-max {
+		margin-left: 0;
+		margin-right: 0;
+		border-radius: 0;
+		box-shadow: 200px 0 0 0 $color-well, -200px 0 0 0 $color-well;
+	}
+
+	@mixin media $bp-hand-s, $bp-hand-l-max {
+		margin-left: -2%;
+		margin-right: -2%;
+	}
+}
+
+:global .Form-inner {
+	margin-top: 1em;
+	margin-bottom: 1em;
+	@mixin media $bp-hand-s {
+		margin: 25px;
+	}
+}

@@ -54,8 +54,10 @@ def ErrorHandler(error_map):
         return funct(*args, **kwargs)
       except Exception as error:
         import logging
+        import traceback
         logging.error(error)
-        
+        traceback.print_exc()
+
         errorClass = error.__class__
         if errorClass in error_map:
           return {
@@ -66,7 +68,7 @@ def ErrorHandler(error_map):
         else:
           return {
             'success': False,
-            'code': '-1',
+            'code': -1,
             'message': 'Unknown error'
           }
     return helper

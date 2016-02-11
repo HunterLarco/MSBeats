@@ -2,13 +2,18 @@ from google.appengine.ext.webapp import template
 import webapp2
 import os
 
-
 from lib.JsonHelpers import *
 from lib.UserHelpers import *
 from lib.ModelHelpers import *
+from lib.AccessibilityHelpers import *
 from lib.models.User import *
 from lib.models.Link import *
+from lib.models.Invite import *
 from lib.blowfish import BadEncryptionException
+
+
+class CreateLinkValidationException(Exception):
+  pass
 
 
 ERROR_MAP = {
@@ -17,25 +22,46 @@ ERROR_MAP = {
   UnpackedModelFailedException   : ErrorTuple(002, 'Model unpacking failed'),
   AuthorizationFailed            : ErrorTuple(003, 'Authorization failed'),
   BadEncryptionException         : ErrorTuple(004, 'Bad Encryption Exception'),
-  
+
   UserDoesntExistException       : ErrorTuple(100, 'User doesn\'t exist'),
   UserIncorrectPasswordException : ErrorTuple(101, 'Incorrect password'),
   UserEmailInUseException        : ErrorTuple(102, 'Email already in use'),
   UsernameInUseException         : ErrorTuple(103, 'Username already in use'),
-  UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID')
+  UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID'),
+  CreateLinkValidationException  : ErrorTuple(105, 'Url and text are missing'),
+  InviteAlreadyUsed              : ErrorTuple(106, 'Invite already used')
 }
 
 
-class SignupHandler(webapp2.RequestHandler):
+def rankLinkList(links, perpage=30, page=1, user=None):
+  json = []
+  for i, link in enumerate(links):
+    dic = link.toDict(user=user)
+    dic['rank'] = i+1 + perpage*(page-1)
+    json.append(dic)
+  return json
+
+
+class RequestHandler(webapp2.RequestHandler):
+  @AccessControlAllowOrigin()
+  def options(self, *args, **kwargs):
+    pass
+
+
+class SignupHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
+  @UnpackModelByID(Invite, 'inviteid', 'invite')
   @BodyParameters('email', 'password', 'username')
-  def post(self, email=None, password=None, username=None):
+  def post(self, email=None, password=None, username=None, invite=None):
+    invite.use()
     return User.create(email, password, username).toPrivateDict()
 
 
-class LoginHandler(webapp2.RequestHandler):
+class LoginHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
@@ -44,47 +70,126 @@ class LoginHandler(webapp2.RequestHandler):
     return User.login(emailusername, password).toPrivateDict()
 
 
-class LinksHandler(webapp2.RequestHandler):
-  @JSONResponse
-  def get(self):
-    return {
-      'links': map(lambda x: x.toDict(), Link.queryTop())
-    }
-  
+class PostLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
-  @BodyParameters('title', 'artist', 'url')
-  def post(self, title=None, artist=None, url=None, user=None):
-    return Link.create(title, artist, url, user).toDict()
+  @RequireAuth('user')
+  @BodyParameters('title', 'text', 'url')
+  def post(self, title=None, text=None, url=None, user=None):
+    if not text and not title:
+      raise CreateLinkValidationException()
+    else:
+      return Link.create(title, text, url, user).toDict()
 
 
-class VoteHandler(webapp2.RequestHandler):
+class VoteHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
+  @RequireAuth('user')
   @UnpackModelByID(Link, 'linkid', 'link')
   @BodyParameters('upvoted')
   def post(self, link=None, user=None, upvoted=None):
     link.vote(user, upvoted)
 
 
-class UserInfoHandler(webapp2.RequestHandler):
+class UserInfoHandler(RequestHandler):
+  @AccessControlAllowOrigin()
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
-  @RequireAuthByLoginID('loginid', 'user')
+  @RequireAuth('user')
   @UnpackModelByID(User, 'userid', 'target')
   def post(self, target=None, user=None, json=None):
     return target.toPublicDict()
 
 
+class MyLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
+    return {
+      'links': rankLinkList(Link.queryByUser(user, count=perpage), perpage=perpage, user=user, page=page)
+    }
+
+
+class TopLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
+    page = int(page)
+    return {
+      'links': rankLinkList(Link.queryTop(page=page, count=perpage), perpage=perpage, user=user, page=page)
+    }
+
+
+class NewLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
+    page = int(page)
+    return {
+      'links': rankLinkList(Link.queryNew(page=page, count=perpage), perpage=perpage, user=user, page=page)
+    }
+
+
+class TrendingLinksHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @RequireAuth('user')
+  def get(self, page=1, user=None, perpage=30):
+    if not page: page = 1
+    page = int(page)
+    return {
+      'links': rankLinkList(TrendingCounter.queryTrending(page=page, count=perpage), perpage=perpage, user=user, page=page)
+    }
+
+
+class PostLinkCommentsHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @ErrorHandler(ERROR_MAP)
+  @JSONRequest
+  @RequireAuth('user')
+  @UnpackModelByID(Comment, 'commentid', 'root')
+  @BodyParameters('text')
+  def post(self, user=None, text=None, root=None):
+    return root.comment(text, user).toDict(user=user)
+
+
+class GetLinkCommentsHandler(RequestHandler):
+  @AccessControlAllowOrigin()
+  @JSONResponse
+  @ErrorHandler(ERROR_MAP)
+  @JSONRequest
+  @RequireAuth('user')
+  @UnpackModelByID(Link, 'linkid', 'link')
+  def post(self, user=None, link=None, json=None):
+    linkDict = link.toDict()
+    linkDict['comments'] = link.comments.get().toDict()['children']
+    return linkDict
+
+
+# This part here maps the routes to a RequestHandler
 app = webapp2.WSGIApplication([
   ('/api/login/?', LoginHandler),
   ('/api/signup/?', SignupHandler),
-  ('/api/links/?', LinksHandler),
+  ('/api/links/?', PostLinksHandler),
+  ('/api/links/mine(?:/(\d+))?', MyLinksHandler),
+  ('/api/links/top(?:/(\d+))?', TopLinksHandler),
+  ('/api/links/new(?:/(\d+))?', NewLinksHandler),
+  ('/api/links/trending(?:/(\d+))?', TrendingLinksHandler),
   ('/api/links/vote/?', VoteHandler),
-  ('/api/users/info/?', UserInfoHandler)
+  ('/api/users/info/?', UserInfoHandler),
+  ('/api/links/comments/?', PostLinkCommentsHandler),
+  ('/api/links/comments/get/?', GetLinkCommentsHandler)
 ], debug=True)

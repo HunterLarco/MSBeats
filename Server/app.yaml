@@ -1,4 +1,4 @@
-application: msbeats
+application: make-school-news
 version: 0-0-0
 runtime: python27
 api_version: 1
@@ -15,6 +15,16 @@ handlers:
   static_dir: images
 - url: /resources
   static_dir: resources
+
+# CRON SCRIPT
+- url: /cron/.*
+  script: cron.app
+  login: admin
+
+# INTERACTIVE CONSOLE
+- url: /admin/.*
+  script: google.appengine.ext.admin.application
+  login: admin
 
 # MAIN SCRIPT
 - url: .*

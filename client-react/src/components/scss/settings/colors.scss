@@ -1,0 +1,17 @@
+/* Descriptive colors */
+
+$color-primary: #258ebd;
+$color-dark: #2a4550;
+$color-tint: #edf0f2;
+
+/* Functional colors */
+
+$color-text-body: $color-dark;
+$color-text-meta: color(black whiteness(80%));
+$color-link: $color-dark;/* #1a0dab; */
+$color-border: color(white blackness(30%));
+$color-border-darker: color(white blackness(60%));
+
+$color-well: rgb(240, 249, 255);
+$color-note: #FFFBD1;
+$color-note-border: color($color-note blackness(20%));

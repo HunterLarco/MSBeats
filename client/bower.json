@@ -1,0 +1,15 @@
+{
+  "name": "msbeats",
+  "description": "Share music with your Make School buddies",
+  "main": "index.js",
+  "authors": [
+    "Jeroen Ransijn <jssrdesign@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/HunterLarco/MSBeats",
+  "moduleType": [],
+  "dependencies": {
+    "es6-promise": "~3.0.2",
+    "fetch": "~0.11.0"
+  }
+}

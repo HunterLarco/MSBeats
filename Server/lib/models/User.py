@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 from ..blowfish import Cipher
+from ..util import timeutil
 
 
 cipher = Cipher('*&@NFPF)J0f94z')
@@ -37,7 +38,7 @@ class User(ndb.Model):
     return {
       'email'    : self.email,
       'username' : self.username,
-      'created'  : str(self.created),
+      'created'  : timeutil.toTimestamp(self.created),
       'karma'    : self.karma,
       'userid'   : self.key.id(),
       'loginid'  : self.getLoginId()
@@ -47,7 +48,7 @@ class User(ndb.Model):
     return {
       'email'    : self.email,
       'username' : self.username,
-      'created'  : str(self.created),
+      'created'  : timeutil.toTimestamp(self.created),
       'karma'    : self.karma,
       'userid'   : self.key.id()
     }
@@ -55,7 +56,6 @@ class User(ndb.Model):
   @classmethod
   def getByLoginId(cls, loginid):
     identifier = cipher.decrypt(loginid)
-    print(identifier)
     try:
       return cls.get_by_id(int(identifier))
     except:

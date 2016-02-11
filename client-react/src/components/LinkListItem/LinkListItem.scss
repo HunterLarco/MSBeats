@@ -1,0 +1,112 @@
+@import '../variables.scss';
+
+.root {
+  display: flex;
+  margin: 10px 0;
+
+  @mixin media $bp-hand-l {
+    margin-left: -78px;
+  }
+}
+
+.skeleton {
+  opacity: .2;
+}
+
+.index {
+  position: relative;
+  margin-top: 10px;
+  text-align: center;
+  opacity: .3;
+  flex-basis: 33px;
+  font-size: $font-size-70;
+
+  @mixin media 0, $bp-hand-l-max {
+    display: none;
+  }
+}
+
+.titleIndex {
+  @mixin media $bp-hand-l {
+    display: none;
+  }
+}
+
+.upvoteContainer {
+  flex-basis: 46px;
+}
+
+.upvote {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 34px;
+  height: 34px;
+  margin: 2px 0;
+  cursor: pointer;
+  transition: opacity, box-shadow .1s ease-out;
+  opacity: .4;
+  /* Weird cutoff bugfix Chrome */
+  border: 1px solid transparent;
+  background-image: url('./chevron-up.svg');
+  background-repeat: no-repeat;
+  background-position: 50% 10%;
+  background-size: 12px auto;
+  box-shadow: inset -1px 0 0 $color-dark, inset 1px 0 0 $color-dark;
+  text-align: center;
+  font-size: $font-size-70;
+  padding-top: 16px;
+
+  &:active, &:global(.is-active) {
+    cursor: default;
+    opacity: 1.0;
+    // HACK: this is not really a good solution, still need to figure out some PostCSS stuff
+    box-shadow: inset -1px 0 0 rgb(191, 199, 203),
+      inset 1px 0 0 rgb(191, 199, 203);
+  }
+}
+
+.content {
+  overflow: hidden;
+  flex: 1;
+}
+
+.linkTitle {
+  font-weight: 500;
+  margin-right: 4px;
+  color: $color-link;
+
+  @mixin media 0, $bp-hand-s-max {
+    font-size: $font-size-80;
+  }
+}
+
+.small, .linkSource {
+  font-size: $font-size-70;
+  color: $color-text-meta;
+}
+
+.linkSource {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.subTitle {
+  font-size: $font-size-70;
+  display: block;
+  margin-bottom: 5px;
+  color: $color-text-meta;
+
+  @mixin media 0, $bp-hand-l-max {
+    font-size: $font-size-70;
+  }
+}
+
+.commentLink {
+  color: $color-text-meta;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -5,12 +5,12 @@ class AuthorizationFailed(Exception):
   pass
 
 
-def RequireAuthByLoginID(field, newfield):
+def RequireAuth(newfield, header='Authorization'):
   def decorator(funct):
     def helper(self, *args, **kwargs):
-      if not 'json' in kwargs or not field in kwargs['json']:
+      if not header in self.request.headers:
         raise AuthorizationFailed()
-      logintoken = kwargs['json'][field]
+      logintoken = self.request.headers[header]
       try:
         user = User.getByLoginId(logintoken)
       except Exception:
@@ -18,7 +18,6 @@ def RequireAuthByLoginID(field, newfield):
       if not user:
         raise AuthorizationFailed()
       kwargs[newfield] = user
-      del kwargs['json'][field]
       return funct(self, *args, **kwargs)
     return helper
   return decorator

@@ -1,0 +1,40 @@
+@import '../variables.scss';
+
+.root {
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  color: white;
+  flex: 1;
+  display: flex;
+}
+
+.link {
+  color: white;
+
+  &:global(.is-active) {
+    font-weight: bold;
+  }
+}
+
+.left {
+  flex: 1;
+}
+
+.right {
+  text-align: right;
+}
+
+.linkActive {
+  @mixin arrow-on-bottom-reverse 10px, white, 50%, 20px;
+}
+
+.isDisabled {
+  cursor: default;
+  opacity: .5;
+}
+
+.middot {
+  display: inline-block;
+  margin: 0 4px;
+}

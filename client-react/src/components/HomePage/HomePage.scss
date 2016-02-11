@@ -1,0 +1,48 @@
+/**
+ * React Starter Kit (https://www.reactstarterkit.com/)
+ *
+ * Copyright © 2014-2016 Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
+
+@import '../variables.scss';
+
+.root {
+}
+
+.container {
+  margin: 0 auto;
+  padding: 0 0 40px;
+  max-width: $max-content-width;
+}
+
+.filterPane {
+  background-color: $color-well;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);
+  // border-bottom: 1px solid $color-tint;
+  margin-bottom: 15px;
+}
+
+.filters {
+}
+
+.filterLink {
+  display: inline-block;
+  text-transform: uppercase;
+  color: $color-dark;
+  font-size: $font-size-70;
+  letter-spacing: 1px;
+  margin-right: 15px;
+  padding: 10px 0;
+}
+
+.filterLinkActive {
+  box-shadow: inset 0 -1px $color-dark;
+}
+
+.moreButton {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}

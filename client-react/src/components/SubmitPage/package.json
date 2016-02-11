@@ -1,0 +1,6 @@
+{
+  "name": "SubmitPage",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./SubmitPage.js"
+}

@@ -1,0 +1,16 @@
+:global .Container {
+	max-width: $bp-lap-s;
+	margin: 0 auto;
+}
+
+:global .Inner {
+	padding: 0 120px;
+
+	@mixin media 0, $bp-hand-m-max {
+		padding: 0 4%;
+	}
+
+	@mixin media $bp-hand-m, $bp-hand-l-max {
+		padding: 0 10%;
+	}
+}

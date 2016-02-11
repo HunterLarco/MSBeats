@@ -1,0 +1,15 @@
+{
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "globals": {
+    "__DEV__": true
+  },
+  "rules": {
+    "indent": [2, "tab"],
+    space-before-function-paren: [2, { "anonymous": "always", "named": "always" }],
+    "react/jsx-quotes": 0,
+    "semi": 0,
+    comma-dangle: [2, "never"],
+    "jsx-quotes": [2, "prefer-double"]
+  }
+}

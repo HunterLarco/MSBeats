@@ -1,0 +1,181 @@
+@define-mixin arrow-up $size: 10px, $color: black {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-bottom: $size solid $color;
+}
+
+@define-mixin arrow-down $size: 10px, $color: black {
+	width: 0;
+	height: 0;
+	border-left: $size solid transparent;
+	border-right: $size solid transparent;
+	border-top: $size solid $color;
+}
+
+@define-mixin arrow-right $size: 10px, $color: black {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-left: $size solid $color;
+}
+
+@define-mixin arrow-left $size: 10px, $color: black {
+	width: 0;
+	height: 0;
+	border-top: $size solid transparent;
+	border-bottom: $size solid transparent;
+	border-right: $size solid $color;
+}
+
+@define-mixin arrow-on-bottom $size: 10px, $color: black, $left: 50% {
+	position: relative;
+
+	&:after {
+		@mixin arrow-down $size, $color;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size - 1);
+	}
+}
+
+@define-mixin arrow-on-bottom-reverse $size: 10px, $color: black, $left: 50%, $offset: 0 {
+	position: relative;
+
+	&:after {
+		@mixin arrow-up $size, $color;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -$offset;
+	}
+}
+
+@define-mixin arrow-on-bottom-line $size: 10px, $line-color: black, $overlay-color: white, $left: 50% {
+	position: relative;
+	&:before {
+		@mixin arrow-down $size, $overlay-color;
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size - 1);
+		z-index: 2;
+	}
+
+	&:after {
+		@mixin arrow-down $size, $line-color;
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		bottom: -($size);
+	}
+}
+
+@define-mixin arrow-on-top-line $size: 10px, $lineTop: 9px, $line-color: black, $overlay-color: white, $left: 50% {
+	position: relative;
+	&:before {
+		@mixin arrow-up $size, $overlay-color;
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -$lineTop;
+		z-index: 2;
+	}
+
+	&:after {
+		@mixin arrow-up $size, $line-color;
+		pointer-events: none;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -$size;
+	}
+}
+
+@define-mixin arrow-on-top-line-reverse $size: 10px, $line-color: black, $overlay-color: white, $right: 50%, $offset: 0 {
+	position: relative;
+	&:before {
+		@mixin arrow-down $size, $overlay-color;
+		position: absolute;
+		right: $right;
+		content: "";
+		margin-right: -$size;
+		top: -($size + $offset);
+		z-index: 666;
+	}
+
+	&:after {
+		@mixin arrow-down $size, $line-color;
+		position: absolute;
+		right: $right;
+		content: "";
+		margin-right: -$size;
+		top: -($size - 1 + $offset);
+	}
+
+}
+
+@define-mixin arrow-on-right $size: 10px, $color: black, $left: 50% {
+	position: relative;
+
+	&:after {
+		@mixin arrow-right $size, $color;
+		position: absolute;
+		top: $left;
+		content: "";
+		margin-top: -$size;
+		right: -$size;
+	}
+}
+
+@define-mixin arrow-on-left $size: 10px, $color: black, $left: 50% {
+	position: relative;
+
+	&:after {
+		@mixin arrow-left $size, $color;
+		position: absolute;
+		top: $left;
+		content: "";
+		margin-top: -$size;
+		left: -$size;
+	}
+}
+
+@define-mixin arrow-on-top $size: 10px, $color: black, $left: 50% {
+	position: relative;
+
+	&:after {
+		@mixin arrow-up $size, $color;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -$size;
+	}
+}
+
+@define-mixin arrow-on-top-reverse $size: 10px, $color: black, $left: 50% {
+	position: relative;
+
+	&:after {
+		@mixin arrow-down $size, $color;
+		position: absolute;
+		left: $left;
+		content: "";
+		margin-left: -$size;
+		top: -($size + 1);
+		z-index: 1;
+	}
+}

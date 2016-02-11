@@ -1,0 +1,4 @@
+# Ignore ES6 linting for the following files
+index.js
+gulpfile.js
+test/

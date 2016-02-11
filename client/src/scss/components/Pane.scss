@@ -1,0 +1,25 @@
+.Pane {
+	@include clearfix;
+	position: relative;
+
+	&.is-hidden {
+		display: none;
+	}
+}
+
+.Pane--white {
+	background-color: white;
+}
+
+.Pane--dark {
+	background-color: $color-dark;
+	color: white;
+}
+
+.Pane--tint {
+	background-color: $color-tint;
+}
+
+.Pane--primary-tint {
+	background-color: lighten($color-primary, 50%);
+}

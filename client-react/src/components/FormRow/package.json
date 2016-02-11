@@ -1,0 +1,6 @@
+{
+  "name": "FormRow",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FormRow.js"
+}

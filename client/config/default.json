@@ -1,0 +1,7 @@
+{
+  "scripts": [
+		"http://localhost:8081/webpack-dev-server.js",
+		"dist/main.bundle.js"
+	],
+  "stylesheets": ["dist/main.css"]
+}
