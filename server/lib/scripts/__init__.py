@@ -29,15 +29,14 @@ from google.appengine.api import mail
 from google.appengine.ext.webapp import template
 import os
 
-def emailSignup(emailList):
+def emailSignup(emailList, sender="Make News <noreply.make.news@gmail.com>"):
   invites = Invite.createBatch(count=len(emailList))
   for i, email in enumerate(emailList):
     invite = invites[i]
-    sendSignupEmail(email, invite)
+    sendSignupEmail(email, invite, sender=sender)
 
-def sendSignupEmail(email, invite):
-  message = mail.EmailMessage(sender="Make News <noreply.make.news@gmail.com>",
-  subject="You've been invited to Make News!")
+def sendSignupEmail(email, invite, sender):
+  message = mail.EmailMessage(sender=sender, subject="You've been invited to Make News!")
   message.to = email
   
   template_values = { 'signupLink': 'make-school-news.herokuapp.com/signup/{}'.format(invite.key.id()) }

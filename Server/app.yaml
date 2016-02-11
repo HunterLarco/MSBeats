@@ -22,7 +22,7 @@ handlers:
   login: admin
 
 # INTERACTIVE CONSOLE
-- url: /admin/.*
+- url: /admin(/.*)?
   script: google.appengine.ext.admin.application
   login: admin
 
