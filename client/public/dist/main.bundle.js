@@ -5393,6 +5393,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
 	var _classCallCheck2 = __webpack_require__(194);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -5400,10 +5404,6 @@
 	var _createClass2 = __webpack_require__(195);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
 
 	var _Link = __webpack_require__(199);
 
@@ -5463,7 +5463,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.default = (function () {
+	exports.default = function () {
 	  function defineProperties(target, props) {
 	    for (var i = 0; i < props.length; i++) {
 	      var descriptor = props[i];
@@ -5479,7 +5479,7 @@
 	    if (staticProps) defineProperties(Constructor, staticProps);
 	    return Constructor;
 	  };
-	})();
+	}();
 
 /***/ },
 /* 196 */
@@ -5504,6 +5504,10 @@
 
 	"use strict";
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
 	var _classCallCheck2 = __webpack_require__(194);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -5511,10 +5515,6 @@
 	var _createClass2 = __webpack_require__(195);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5571,6 +5571,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
 	var _classCallCheck2 = __webpack_require__(194);
 
 	var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -5578,10 +5582,6 @@
 	var _createClass2 = __webpack_require__(195);
 
 	var _createClass3 = _interopRequireDefault(_createClass2);
-
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
 
 	var _api = __webpack_require__(201);
 

@@ -216,10 +216,10 @@ function signupError(message) {
   }
 }
 
-export function signupUser(email, username, password) {
+export function signupUser(email, username, password, inviteid) {
   return dispatch => {
     dispatch(requestSignup())
-    return UserApiEndpoint.signup(email, username, password)
+    return UserApiEndpoint.signup(email, username, password, inviteid)
       .then(response => {
         if (response.success) {
           dispatch(receiveSignup(response))

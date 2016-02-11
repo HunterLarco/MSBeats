@@ -16,7 +16,9 @@ class FormRow extends Component {
     attachHandler: PropTypes.func,
     isFormSubmitted: PropTypes.bool,
     textarea: PropTypes.bool,
-    changeHandler: PropTypes.func
+    changeHandler: PropTypes.func,
+    disabled: PropTypes.bool,
+    value: PropTypes.string
   };
 
   constructor() {
@@ -35,6 +37,12 @@ class FormRow extends Component {
     if (this.props.attachHandler) {
       this.props.attachHandler(this);
     }
+    
+    this.setState({
+      value: this.props.value,
+      isValid: this.validate(this.props.value),
+      isEmpty: this.props.value === ''
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -77,7 +85,7 @@ class FormRow extends Component {
   }
 
   render() {
-    const { className, label, name, textarea } = this.props
+    const { className, label, name, textarea, disabled, value } = this.props
     const type = this.props.type || 'text'
     return (
       <div className={cx(s.root, className)}>
@@ -90,7 +98,7 @@ class FormRow extends Component {
           {textarea ?
             <textarea ref="input" id={name} name={name} className={s.input} type={type} onChange={this.handleChange} />
           :
-            <input ref="input" id={name} name={name} className={s.input} type={type} onChange={this.handleChange} />
+            <input ref="input" id={name} name={name} value={value} disabled={disabled} className={s.input} type={type} onChange={this.handleChange}/>
           }
         </div>
         <div className={s.messages}>

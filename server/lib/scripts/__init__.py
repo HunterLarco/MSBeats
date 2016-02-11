@@ -2,6 +2,7 @@ import random
 
 from ..models.User import *
 from ..models.Link import *
+from ..models.Invite import *
 
 
 def populateDB(posts=100, minVotes=0, maxVotes=1000):
@@ -18,3 +19,33 @@ def createRandomUser():
 
 def guid(length=10):
   return ''.join(random.choice('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ') for i in range(length))
+
+
+
+
+
+
+from google.appengine.api import mail
+from google.appengine.ext.webapp import template
+import os
+
+def emailSignup(emailList):
+  invites = Invite.createBatch(count=len(emailList))
+  for i, email in enumerate(emailList):
+    invite = invites[i]
+    sendSignupEmail(email, invite)
+
+def sendSignupEmail(email, invite):
+  message = mail.EmailMessage(sender="Make News <noreply.make.news@gmail.com>",
+  subject="You've been invited to Make News!")
+  message.to = email
+  
+  template_values = { 'signupLink': 'make-school-news.herokuapp.com/signup/{}'.format(invite.key.id()) }
+  
+  path = os.path.join(os.path.dirname(__file__), '../emails/invite.txt')
+  message.body = template.render(path, template_values)
+  
+  path = os.path.join(os.path.dirname(__file__), '../emails/invite.html')
+  message.html = template.render(path, template_values)
+  
+  message.send()

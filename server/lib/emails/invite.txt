@@ -1,0 +1,7 @@
+You've been invited to Make News!
+
+Congradulations and welcome to Make News, the Make Mansion curated social network. We look forward to meeting you!
+
+Sign up now at {{signupLink}}.
+
+Build by Make Mansion

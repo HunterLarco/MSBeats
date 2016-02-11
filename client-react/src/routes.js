@@ -58,7 +58,7 @@ export default function routes (store) {
           <IndexRoute onEnter={filters.mine} />
           <Route path=":page" />
         </Route>
-        <Route path="signup" component={SignupPage} />
+        <Route path="signup/:inviteid" component={SignupPage} />
         <Route path="submit" component={SubmitPage} />
         <Route path="about" getComponent={getContextComponent} />
         <Route path="privacy" getComponent={getContextComponent} />

@@ -8,6 +8,7 @@ from lib.ModelHelpers import *
 from lib.AccessibilityHelpers import *
 from lib.models.User import *
 from lib.models.Link import *
+from lib.models.Invite import *
 from lib.blowfish import BadEncryptionException
 
 
@@ -27,7 +28,8 @@ ERROR_MAP = {
   UserEmailInUseException        : ErrorTuple(102, 'Email already in use'),
   UsernameInUseException         : ErrorTuple(103, 'Username already in use'),
   UserBadLoginIDException        : ErrorTuple(104, 'Bad user login ID'),
-  CreateLinkValidationException  : ErrorTuple(105, 'Url and text are missing')
+  CreateLinkValidationException  : ErrorTuple(105, 'Url and text are missing'),
+  InviteAlreadyUsed              : ErrorTuple(106, 'Invite already used')
 }
 
 
@@ -51,8 +53,10 @@ class SignupHandler(RequestHandler):
   @JSONResponse
   @ErrorHandler(ERROR_MAP)
   @JSONRequest
+  @UnpackModelByID(Invite, 'inviteid', 'invite')
   @BodyParameters('email', 'password', 'username')
-  def post(self, email=None, password=None, username=None):
+  def post(self, email=None, password=None, username=None, invite=None):
+    invite.use()
     return User.create(email, password, username).toPrivateDict()
 
 
@@ -74,7 +78,7 @@ class PostLinksHandler(RequestHandler):
   @RequireAuth('user')
   @BodyParameters('title', 'text', 'url')
   def post(self, title=None, text=None, url=None, user=None):
-    if text == "" and title == "":
+    if not text and not title:
       raise CreateLinkValidationException()
     else:
       return Link.create(title, text, url, user).toDict()

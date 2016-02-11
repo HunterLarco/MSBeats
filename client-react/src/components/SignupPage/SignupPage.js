@@ -14,7 +14,8 @@ class SignupPage extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    signup: PropTypes.object.isRequired
+    signup: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   };
 
   static contextTypes = {
@@ -42,18 +43,21 @@ class SignupPage extends Component {
     this.setState({ form, rows });
     if (!form.isValid) return;
     const { dispatch } = this.props;
-    dispatch(signupUser(rows.email.value, rows.username.value, rows.password.value));
+    dispatch(signupUser(rows.email.value, rows.username.value, rows.password.value, rows.inviteid.value));
   }
 
   render() {
-    const { signup } = this.props;
+    const { signup, params } = this.props;
     const { form } = this.state;
     return (
       <div className="Inner">
         <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
           <Content>
-            <p>Only people part of the Make School 2 year program can sign up for now.</p>
+            <p>Welcome to Make News! You can only signup with a valid invite key for now.</p>
           </Content>
+          <FormRow attachToForm label="invite key" name="inviteid" type="text" value={params.inviteid} disabled>
+            <Message attachToFormRow isFormSubmitted isEmpty>invite is required</Message>
+          </FormRow>
           <FormRow attachToForm label="email" name="email" type="email">
             <Message attachToFormRow isFormSubmitted isEmpty>email is required</Message>
           </FormRow>
